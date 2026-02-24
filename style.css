@@ -5,6 +5,22 @@
     box-sizing: border-box;
 }
 
+/* 横向溢出保护 */
+* {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+/* 确保所有容器都不会溢出 */
+.container,
+.wrapper,
+.section,
+.content {
+    max-width: 100vw;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
 :root {
     /* 专业色彩系统 */
     --primary-blue: #0066cc;
@@ -66,6 +82,8 @@ body.dark-theme {
 html {
     scroll-behavior: smooth;
     background: var(--bg-primary);
+    overflow-x: hidden;
+    width: 100%;
 }
 
 body {
@@ -76,6 +94,9 @@ body {
     -webkit-font-smoothing: antialiased;
     background: var(--bg-primary);
     transition: all var(--transition-smooth);
+    width: 100%;
+    max-width: 100vw;
+    min-width: 100%;
 }
 
 /* 高级背景系统 */
@@ -83,9 +104,11 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     z-index: -1;
+    max-width: 100vw;
+    overflow: hidden;
 }
 
 .bg-layer {
@@ -108,6 +131,8 @@ body {
 
 .bg-orbits {
     overflow: hidden;
+    width: 100%;
+    max-width: 100vw;
 }
 
 .orbit {
@@ -153,6 +178,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
+    max-width: 100vw;
     height: 80px;
     background: var(--glass-bg);
     backdrop-filter: blur(20px) saturate(150%);
@@ -160,6 +186,7 @@ body {
     z-index: 1000;
     border-bottom: 1px solid var(--glass-border);
     transition: all var(--transition-smooth);
+    overflow: hidden;
 }
 
 .nav-container {
@@ -167,9 +194,14 @@ body {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 var(--spacing-lg);
+    padding-left: max(var(--spacing-lg), 1rem);
+    padding-right: max(var(--spacing-lg), 1rem);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: hidden;
 }
 
 .nav-left {
@@ -312,10 +344,15 @@ body {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 var(--spacing-lg);
+    padding-left: max(var(--spacing-lg), 1rem);
+    padding-right: max(var(--spacing-lg), 1rem);
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-xl);
     align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .hero-content {
@@ -494,10 +531,13 @@ body {
 
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--spacing-lg);
     max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .product-card {
@@ -509,6 +549,9 @@ body {
     transition: all var(--transition-smooth);
     position: relative;
     overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .product-card::before {
@@ -638,10 +681,15 @@ body {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 var(--spacing-lg);
+    padding-left: max(var(--spacing-lg), 1rem);
+    padding-right: max(var(--spacing-lg), 1rem);
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-xl);
     align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .tech-content {
@@ -749,6 +797,11 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--spacing-lg);
+    padding-left: max(var(--spacing-lg), 1rem);
+    padding-right: max(var(--spacing-lg), 1rem);
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .solutions-title {
@@ -762,8 +815,11 @@ body {
 
 .solutions-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: var(--spacing-lg);
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .solution-card {
@@ -808,6 +864,11 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--spacing-lg);
+    padding-left: max(var(--spacing-lg), 1rem);
+    padding-right: max(var(--spacing-lg), 1rem);
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .stats-grid {
@@ -855,6 +916,11 @@ body {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 var(--spacing-lg);
+    padding-left: max(var(--spacing-lg), 1rem);
+    padding-right: max(var(--spacing-lg), 1rem);
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .footer-content {
@@ -862,6 +928,9 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: var(--spacing-lg);
     margin-bottom: var(--spacing-lg);
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .footer-section h4 {
@@ -929,6 +998,8 @@ body {
     
     .nav-container {
         padding: 0 var(--spacing-md);
+        padding-left: max(var(--spacing-md), 1rem);
+        padding-right: max(var(--spacing-md), 1rem);
     }
     
     .nav-menu {
@@ -938,6 +1009,8 @@ body {
     .hero-container {
         grid-template-columns: 1fr;
         gap: var(--spacing-lg);
+        padding-left: max(var(--spacing-lg), 1rem);
+        padding-right: max(var(--spacing-lg), 1rem);
     }
     
     .hero-title {
@@ -947,22 +1020,68 @@ body {
     .tech-container {
         grid-template-columns: 1fr;
         gap: var(--spacing-lg);
+        padding-left: max(var(--spacing-lg), 1rem);
+        padding-right: max(var(--spacing-lg), 1rem);
     }
     
     .products-grid {
         grid-template-columns: 1fr;
+        gap: var(--spacing-md);
     }
     
     .solutions-grid {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--spacing-md);
     }
     
     .stats-grid {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: var(--spacing-md);
     }
     
     .footer-content {
         grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    
+    /* 确保移动端所有容器都不会溢出 */
+    * {
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+}
+
+/* 针对超小屏幕的额外保护 */
+@media (max-width: 480px) {
+    :root {
+        --spacing-lg: 16px;
+        --spacing-xl: 32px;
+        --spacing-md: 12px;
+        --spacing-sm: 8px;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .tech-title,
+    .solutions-title {
+        font-size: 2rem;
+    }
+    
+    /* 确保超小屏幕也不会横向滚动 */
+    html, body {
+        overflow-x: hidden !important;
+        position: relative;
+    }
+    
+    .professional-nav {
+        max-width: 100vw;
+        overflow-x: hidden;
     }
 }
 
