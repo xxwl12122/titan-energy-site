@@ -1,0 +1,25 @@
+{
+  "name": "duracell-website",
+  "version": "1.0.0",
+  "description": "Professional Duracell-style website with modern animations",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx vercel dev",
+    "build": "npx vercel build",
+    "start": "npx vercel start"
+  },
+  "keywords": [
+    "website",
+    "duracell",
+    "modern",
+    "animations",
+    "glassmorphism"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "vercel": {
+    "buildCommand": "echo 'No build command needed for static site'",
+    "outputDirectory": ".",
+    "installCommand": "echo 'No dependencies to install'"
+  }
+}
