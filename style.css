@@ -1268,52 +1268,71 @@ body {
 /* 手机端标题重叠修复 */
 @media (max-width: 768px) { .hero-title { line-height: 1.5 !important; margin-bottom: 20px !important; } }
 
-/* === 泰坦能源：国际企业级视觉优化 === */
+/* =========================================
+   泰坦能源 - 终极视网膜级 UI 修正补丁
+   ========================================= */
 html { scroll-behavior: smooth !important; }
 
-/* 全局色彩：告别死白，采用高级珍珠灰白底色，文字用深邃黑 */
-body { background-color: #FAFBFC !important; color: #111827 !important; }
-
-/* 顶部导航：高端磨砂玻璃质感 */
-header {
-    background: rgba(255, 255, 255, 0.85) !important;
-    backdrop-filter: blur(12px) !important;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+/* 1. 斩杀幽灵字体：修复大标题颜色镂空和重叠问题 */
+h1, .hero h1, .hero-title, h1 span {
+    color: #111827 !important; /* 扎实的深邃黑 */
+    -webkit-text-fill-color: #111827 !important; /* 强制填充颜色，消灭镂空 */
+    -webkit-text-stroke: 0px transparent !important;
+    background: none !important;
+    font-weight: 800 !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.05em !important;
+    text-shadow: none !important;
 }
 
-/* 卡片高级感：细腻的浅阴影 + 优雅悬浮 */
-.product-card, .tech-item, .feature-box {
-    background: #FFFFFF !important;
-    border: 1px solid #F3F4F6 !important;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    border-radius: 12px !important;
-}
-.product-card:hover, .tech-item:hover, .feature-box:hover {
-    transform: translateY(-6px) !important;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
-    border-color: #E5E7EB !important;
+/* 2. 修复数据面板（NaN等字样）：赋予科技蓝 */
+.stat-number, .number, .stats h3, h3 {
+    color: #0066cc !important;
+    font-weight: 700 !important;
 }
 
-/* 按钮质感：稳重的深碳灰，悬停科技蓝 */
-.btn, button {
-    background: #111827 !important; 
-    color: #FFFFFF !important;
-    border-radius: 6px !important;
+/* 3. 重塑按钮：告别黑砖头，回归高级圆润胶囊形态 */
+.btn, button, a.btn, .cta-button {
+    background: #0066cc !important; /* 苹果同款科技蓝 */
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 999px !important; /* 绝对圆润的胶囊形 */
+    padding: 12px 32px !important;
+    font-size: 16px !important;
     font-weight: 600 !important;
-    transition: all 0.3s ease !important;
+    letter-spacing: 0.5px !important;
+    box-shadow: 0 4px 14px rgba(0, 102, 204, 0.25) !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
 }
-.btn:hover, button:hover {
-    background: #2563EB !important; 
+
+/* 按钮悬停动效：微微浮起 + 阴影扩散 */
+.btn:hover, button:hover, a.btn:hover, .cta-button:hover {
+    background: #005bb5 !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 10px 15px rgba(37, 99, 235, 0.2) !important;
+    box-shadow: 0 8px 20px rgba(0, 102, 204, 0.4) !important;
 }
 
-/* 电池/主图：克制且优雅的微浮动 */
-@keyframes pro-float {
+/* 4. 卡片悬浮优化：轻柔的物理阴影 */
+.product-card, .tech-item {
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    border-radius: 16px !important;
+    border: 1px solid #eaeaea !important;
+    background: #ffffff !important;
+}
+.product-card:hover, .tech-item:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08) !important;
+}
+
+/* 5. 电池主图：保留轻微的呼吸感 */
+@keyframes smooth-float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    50% { transform: translateY(-10px); }
 }
-img, .image-container { animation: pro-float 6s ease-in-out infinite !important; }
-
-/* 强制缓存刷新戳: 02/24/2026 22:06:32 */
+img, .image-container {
+    animation: smooth-float 5s ease-in-out infinite !important;
+}
