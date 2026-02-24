@@ -1,4 +1,4 @@
-# Duracell Website
+﻿# Duracell Website
 
 A professional, modern website inspired by Duracell's official design with advanced animations and glassmorphism effects.
 
