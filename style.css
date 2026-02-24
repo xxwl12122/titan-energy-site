@@ -1,14 +1,31 @@
-/* === 专业 Duracell 风格 === */
+/* === 专业 南孚工业风 === */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* 横向溢出保护 */
+/* 横向溢出保护 - 最严格模式 */
 * {
     max-width: 100vw;
     overflow-x: hidden;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+html {
+    max-width: 100vw;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+}
+
+body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+    min-width: 100vw;
 }
 
 /* 确保所有容器都不会溢出 */
@@ -19,6 +36,43 @@
     max-width: 100vw;
     overflow-x: hidden;
     box-sizing: border-box;
+    width: 100%;
+}
+
+/* 防止任何元素溢出 */
+img,
+video,
+iframe,
+svg,
+canvas {
+    max-width: 100vw;
+    height: auto;
+    overflow: hidden;
+}
+
+/* 防止负margin导致的溢出 */
+*[margin-left="-"],
+*[margin-right="-"] {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* 超严格横向溢出保护 */
+@media (max-width: 768px) {
+    * {
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+    }
+    
+    html, body {
+        overflow-x: hidden !important;
+        position: relative;
+        width: 100vw;
+        max-width: 100vw;
+    }
 }
 
 :root {
@@ -83,7 +137,11 @@ html {
     scroll-behavior: smooth;
     background: var(--bg-primary);
     overflow-x: hidden;
-    width: 100%;
+    width: 100vw;
+    max-width: 100vw;
+    position: relative;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -94,9 +152,12 @@ body {
     -webkit-font-smoothing: antialiased;
     background: var(--bg-primary);
     transition: all var(--transition-smooth);
-    width: 100%;
+    width: 100vw;
     max-width: 100vw;
-    min-width: 100%;
+    min-width: 100vw;
+    margin: 0;
+    padding: 0;
+    position: relative;
 }
 
 /* 高级背景系统 */
@@ -183,10 +244,11 @@ body {
     background: var(--glass-bg);
     backdrop-filter: blur(20px) saturate(150%);
     -webkit-backdrop-filter: blur(20px) saturate(150%);
-    z-index: 9999;
+    z-index: 99999;
     border-bottom: 1px solid var(--glass-border);
     transition: all var(--transition-smooth);
     overflow: hidden;
+    max-width: 100vw;
 }
 
 .nav-container {
@@ -304,7 +366,7 @@ body {
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
-    z-index: 10000;
+    z-index: 100000;
 }
 
 .search-btn,
@@ -322,8 +384,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10001;
+    z-index: 100001;
     position: relative;
+    min-width: 40px;
+    min-height: 40px;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .search-btn:hover,

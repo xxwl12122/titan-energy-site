@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('页面加载完成，初始化交互功能...');
     // 注册插件
     gsap.registerPlugin(ScrollTrigger);
 
@@ -21,131 +22,92 @@ document.addEventListener('DOMContentLoaded', () => {
         themeToggle.textContent = '☀️';
     }
     
-    themeToggle.addEventListener('click', () => {
-        isDarkTheme = !isDarkTheme;
-        document.body.classList.toggle('dark-theme');
-        themeToggle.textContent = isDarkTheme ? '☀️' : '🌙';
-        localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
-        ScrollTrigger.refresh();
-    });
+    // 确保主题切换按钮存在
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            console.log('切换主题按钮被点击');
+            isDarkTheme = !isDarkTheme;
+            document.body.classList.toggle('dark-theme');
+            themeToggle.textContent = isDarkTheme ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+            ScrollTrigger.refresh();
+            console.log('主题已切换为:', isDarkTheme ? '深色' : '浅色');
+        });
+    } else {
+        console.warn('主题切换按钮未找到');
+    }
 
     // 2. 搜索按钮功能
     const searchBtn = document.querySelector('.search-btn');
     let searchOverlay = null;
     
-    searchBtn.addEventListener('click', () => {
-        // 如果搜索覆盖层已存在，则移除
-        if (searchOverlay) {
-            searchOverlay.remove();
-            searchOverlay = null;
-            return;
-        }
-        
-        // 创建搜索覆盖层
-        searchOverlay = document.createElement('div');
-        searchOverlay.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1002;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        `;
-        
-        // 创建搜索框
-        const searchContainer = document.createElement('div');
-        searchContainer.style.cssText = `
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            max-width: 500px;
-            width: 90%;
-            transform: scale(0.8);
-            transition: transform 0.3s ease;
-        `;
-        
-        const searchInput = document.createElement('input');
-        searchInput.type = 'text';
-        searchInput.placeholder = '搜索产品、技术或解决方案...';
-        searchInput.style.cssText = `
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            outline: none;
-            transition: border-color 0.3s ease;
-        `;
-        
-        searchInput.addEventListener('focus', () => {
-            searchInput.style.borderColor = '#0066cc';
-        });
-        
-        searchInput.addEventListener('blur', () => {
-            searchInput.style.borderColor = '#e0e0e0';
-        });
-        
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                const searchTerm = searchInput.value.trim();
-                if (searchTerm) {
-                    alert(`搜索: ${searchTerm}`);
+    if (searchBtn) {
+        searchBtn.addEventListener('click', () => {
+            console.log('搜索按钮被点击');
+            // 如果搜索覆盖层已存在，则移除
+            if (searchOverlay) {
+                searchOverlay.remove();
+                searchOverlay = null;
+                return;
+            }
+            
+            // 创建搜索覆盖层
+            searchOverlay = document.createElement('div');
+            searchOverlay.className = 'search-overlay';
+            searchOverlay.innerHTML = `
+                <div class="search-container">
+                    <button class="search-close">×</button>
+                    <input type="text" class="search-input" placeholder="搜索产品、技术或解决方案..." />
+                </div>
+            `;
+            
+            document.body.appendChild(searchOverlay);
+            
+            // 获取元素
+            const searchContainer = searchOverlay.querySelector('.search-container');
+            const searchInput = searchOverlay.querySelector('.search-input');
+            const closeBtn = searchOverlay.querySelector('.search-close');
+            
+            // 事件监听
+            closeBtn.addEventListener('click', () => {
+                searchOverlay.remove();
+                searchOverlay = null;
+            });
+            
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const searchTerm = searchInput.value.trim();
+                    if (searchTerm) {
+                        console.log('搜索:', searchTerm);
+                        alert(`搜索: ${searchTerm}`);
+                        searchOverlay.remove();
+                        searchOverlay = null;
+                    }
+                }
+            });
+            
+            // 点击背景关闭
+            searchOverlay.addEventListener('click', (e) => {
+                if (e.target === searchOverlay) {
                     searchOverlay.remove();
                     searchOverlay = null;
                 }
-            }
+            });
+            
+            // 动画显示
+            setTimeout(() => {
+                searchOverlay.style.opacity = '1';
+                searchContainer.style.transform = 'scale(1)';
+            }, 10);
+            
+            // 聚焦输入框
+            setTimeout(() => {
+                searchInput.focus();
+            }, 300);
         });
-        
-        const closeBtn = document.createElement('button');
-        closeBtn.textContent = '✕';
-        closeBtn.style.cssText = `
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #666;
-            transition: color 0.3s ease;
-        `;
-        
-        closeBtn.addEventListener('click', () => {
-            searchOverlay.remove();
-            searchOverlay = null;
-        });
-        
-        searchContainer.appendChild(closeBtn);
-        searchContainer.appendChild(searchInput);
-        searchOverlay.appendChild(searchContainer);
-        document.body.appendChild(searchOverlay);
-        
-        // 动画显示
-        setTimeout(() => {
-            searchOverlay.style.opacity = '1';
-            searchContainer.style.transform = 'scale(1)';
-        }, 10);
-        
-        // 聚焦输入框
-        setTimeout(() => {
-            searchInput.focus();
-        }, 300);
-        
-        // 点击背景关闭
-        searchOverlay.addEventListener('click', (e) => {
-            if (e.target === searchOverlay) {
-                searchOverlay.remove();
-                searchOverlay = null;
-            }
-        });
-    });
+    } else {
+        console.warn('搜索按钮未找到');
+    }
 
     // 2. 导航栏滚动效果
     const navbar = document.querySelector('.professional-nav');
@@ -584,58 +546,74 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenu = document.querySelector('.mobile-menu');
     const navMenu = document.querySelector('.nav-menu');
     
-    // 初始化移动端菜单状态
-    if (window.innerWidth <= 768) {
-        navMenu.style.display = 'none';
+    // 确保元素存在
+    if (mobileMenu && navMenu) {
+        // 初始化移动端菜单状态
+        if (window.innerWidth <= 768) {
+            navMenu.style.display = 'none';
+        }
+        
+        mobileMenu.addEventListener('click', () => {
+            console.log('汉堡菜单被点击');
+            const isHidden = navMenu.style.display === 'none' || navMenu.style.display === '';
+            
+            if (isHidden) {
+                navMenu.style.display = 'flex';
+                navMenu.style.position = 'absolute';
+                navMenu.style.top = '100%';
+                navMenu.style.left = '0';
+                navMenu.style.right = '0';
+                navMenu.style.background = 'var(--glass-bg)';
+                navMenu.style.flexDirection = 'column';
+                navMenu.style.padding = '1rem';
+                navMenu.style.borderTop = '1px solid var(--glass-border)';
+                navMenu.style.boxShadow = 'var(--shadow-md)';
+                navMenu.style.zIndex = '100002';
+                
+                gsap.from(navMenu, {
+                    opacity: 0,
+                    y: -20,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+                
+                mobileMenu.textContent = '✕';
+                console.log('菜单已展开');
+            } else {
+                navMenu.style.display = 'none';
+                mobileMenu.textContent = '☰';
+                console.log('菜单已收起');
+            }
+        });
+        
+        // 窗口大小改变时处理菜单
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navMenu.style.display = 'flex';
+                navMenu.style.position = 'static';
+                navMenu.style.top = 'auto';
+                navMenu.style.left = 'auto';
+                navMenu.style.right = 'auto';
+                navMenu.style.flexDirection = 'row';
+                navMenu.style.padding = '0';
+                navMenu.style.borderTop = 'none';
+                navMenu.style.boxShadow = 'none';
+                navMenu.style.zIndex = 'auto';
+                mobileMenu.textContent = '☰';
+            } else {
+                navMenu.style.display = 'none';
+                mobileMenu.textContent = '☰';
+            }
+        });
+    } else {
+        console.warn('汉堡菜单或导航菜单未找到');
     }
     
-    mobileMenu.addEventListener('click', () => {
-        const isHidden = navMenu.style.display === 'none' || navMenu.style.display === '';
-        
-        if (isHidden) {
-            navMenu.style.display = 'flex';
-            navMenu.style.position = 'absolute';
-            navMenu.style.top = '100%';
-            navMenu.style.left = '0';
-            navMenu.style.right = '0';
-            navMenu.style.background = 'var(--glass-bg)';
-            navMenu.style.flexDirection = 'column';
-            navMenu.style.padding = '1rem';
-            navMenu.style.borderTop = '1px solid var(--glass-border)';
-            navMenu.style.boxShadow = 'var(--shadow-md)';
-            
-            gsap.from(navMenu, {
-                opacity: 0,
-                y: -20,
-                duration: 0.3,
-                ease: "power2.out"
-            });
-            
-            mobileMenu.textContent = '✕';
-        } else {
-            navMenu.style.display = 'none';
-            mobileMenu.textContent = '☰';
-        }
-    });
-    
-    // 窗口大小改变时处理菜单
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) {
-            navMenu.style.display = 'flex';
-            navMenu.style.position = 'static';
-            navMenu.style.top = 'auto';
-            navMenu.style.left = 'auto';
-            navMenu.style.right = 'auto';
-            navMenu.style.flexDirection = 'row';
-            navMenu.style.padding = '0';
-            navMenu.style.borderTop = 'none';
-            navMenu.style.boxShadow = 'none';
-            mobileMenu.textContent = '☰';
-        } else {
-            navMenu.style.display = 'none';
-            mobileMenu.textContent = '☰';
-        }
-    });
+    // 确保所有按钮都能被点击
+    console.log('按钮状态检查:');
+    console.log('主题切换按钮:', themeToggle ? '存在' : '不存在');
+    console.log('搜索按钮:', searchBtn ? '存在' : '不存在');
+    console.log('汉堡菜单:', mobileMenu ? '存在' : '不存在');
 
     // 27. 添加滚动进度条
     const progressBar = document.createElement('div');
