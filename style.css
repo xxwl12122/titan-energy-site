@@ -1268,7 +1268,7 @@ body {
 /* 手机端标题重叠修复 */
 @media (max-width: 768px) { .hero-title { line-height: 1.5 !important; margin-bottom: 20px !important; } }
 
-/* --- 泰坦能源专属特效（安全追加版） --- */
+/* --- 泰坦能源专属特效 --- */
 :root { --bg-color: #0f172a; --text-color: #f8fafc; --accent-color: #38bdf8; }
 body { background-color: var(--bg-color) !important; color: var(--text-color) !important; transition: background-color 0.5s ease; }
 html { scroll-behavior: smooth !important; }
@@ -1276,3 +1276,5 @@ html { scroll-behavior: smooth !important; }
 .hero-image, img[src*="battery"], .image-container { animation: titan-float 3s ease-in-out infinite !important; filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.3)); }
 .btn, button { transition: all 0.3s ease !important; }
 .btn:hover, button:hover { box-shadow: 0 0 20px var(--accent-color) !important; transform: translateY(-2px); }
+
+/* Force Update: 02/24/2026 21:46:13 */
