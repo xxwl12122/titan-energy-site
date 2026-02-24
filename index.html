@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>钛坦能量</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark {
+            background-color: #1a1a1a;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background: rgba(255,255,255,0.4);
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin-bottom: 2rem;
+            border-radius: 15px;
+        }
+
+        body.dark .hero {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        body.dark .hero h1 {
+            color: #ecf0f1;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        body.dark .hero p {
+            color: #bdc3c7;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        body.dark .feature-card {
+            background: #2c3e50;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        body.dark .feature-card h3 {
+            color: #74b9ff;
+        }
+
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-overlay.active {
+            display: flex;
+        }
+
+        .search-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        body.dark .search-box {
+            background: #2c3e50;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            outline: none;
+        }
+
+        body.dark .search-input {
+            background: #34495e;
+            color: white;
+            border-color: #555;
+        }
+
+        .close-search {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        body.dark .close-search {
+            color: #bdc3c7;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            transition: right 0.3s;
+            z-index: 1500;
+            padding: 2rem;
+        }
+
+        body.dark .menu-overlay {
+            background: #2c3e50;
+        }
+
+        .menu-overlay.active {
+            right: 0;
+        }
+
+        .menu-item {
+            display: block;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+            color: #333;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        body.dark .menu-item {
+            color: #ecf0f1;
+            border-bottom-color: #555;
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        body.dark .close-menu {
+            color: #bdc3c7;
+        }
+
+        /* 手机端样式 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .nav-buttons {
+                gap: 10px;
+            }
+            
+            .nav-btn {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+        }
+
+        /* 电脑端修复 overflow 问题 */
+        @media (min-width: 769px) {
+            .container {
+                overflow-x: hidden;
+            }
+            
+            .hero {
+                overflow: hidden;
+            }
+            
+            .features {
+                overflow-x: hidden;
+            }
+            
+            .feature-card {
+                overflow: hidden;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">钛坦能量</div>
+                <div class="nav-buttons">
+                    <button class="nav-btn" id="searchBtn">搜索</button>
+                    <button class="nav-btn" id="themeBtn">深浅色</button>
+                    <button class="nav-btn" id="menuBtn">菜单</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="hero">
+                <h1>钛坦能量</h1>
+                <p>为您的数字生活提供源源不断的动力，让每一个创意都能绽放光芒</p>
+            </section>
+
+            <section class="features">
+                <div class="feature-card">
+                    <h3>高性能</h3>
+                    <p>采用最新的技术架构，为您提供极速的响应体验，让工作更加高效。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>稳定可靠</h3>
+                    <p>多重保障机制确保服务的稳定性，让您无后顾之忧地专注于核心业务。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>智能创新</h3>
+                    <p>集成人工智能技术，为您提供智能化的解决方案，助力业务增长。</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 搜索覆盖层 -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-box">
+            <button class="close-search" id="closeSearch">×</button>
+            <input type="text" class="search-input" placeholder="搜索钛坦能量...">
+        </div>
+    </div>
+
+    <!-- 菜单覆盖层 -->
+    <div class="menu-overlay" id="menuOverlay">
+        <button class="close-menu" id="closeMenu">×</button>
+        <nav>
+            <a href="#" class="menu-item">首页</a>
+            <a href="#" class="menu-item">产品介绍</a>
+            <a href="#" class="menu-item">解决方案</a>
+            <a href="#" class="menu-item">关于我们</a>
+            <a href="#" class="menu-item">联系我们</a>
+        </nav>
+    </div>
+
+    <script>
+        // 搜索功能
+        const searchBtn = document.getElementById('searchBtn');
+        const searchOverlay = document.getElementById('searchOverlay');
+        const closeSearch = document.getElementById('closeSearch');
+        const searchInput = document.querySelector('.search-input');
+
+        searchBtn.addEventListener('click', () => {
+            searchOverlay.classList.add('active');
+            searchInput.focus();
+        });
+
+        closeSearch.addEventListener('click', () => {
+            searchOverlay.classList.remove('active');
+            searchInput.value = '';
+        });
+
+        searchOverlay.addEventListener('click', (e) => {
+            if (e.target === searchOverlay) {
+                searchOverlay.classList.remove('active');
+                searchInput.value = '';
+            }
+        });
+
+        // 主题切换功能
+        const themeBtn = document.getElementById('themeBtn');
+        const body = document.body;
+
+        themeBtn.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            const isDark = body.classList.contains('dark');
+            themeBtn.textContent = isDark ? '浅色' : '深浅色';
+            themeBtn.classList.toggle('active', isDark);
+        });
+
+        // 菜单功能
+        const menuBtn = document.getElementById('menuBtn');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const closeMenu = document.getElementById('closeMenu');
+
+        menuBtn.addEventListener('click', () => {
+            menuOverlay.classList.add('active');
+        });
+
+        closeMenu.addEventListener('click', () => {
+            menuOverlay.classList.remove('active');
+        });
+
+        menuOverlay.addEventListener('click', (e) => {
+            if (e.target === menuOverlay) {
+                menuOverlay.classList.remove('active');
+            }
+        });
+
+        // 菜单项点击事件
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert(`您点击了: ${item.textContent}`);
+                menuOverlay.classList.remove('active');
+            });
+        });
+
+        // 搜索功能
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const searchTerm = searchInput.value.trim();
+                if (searchTerm) {
+                    alert(`搜索: ${searchTerm}`);
+                    searchOverlay.classList.remove('active');
+                    searchInput.value = '';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
