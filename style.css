@@ -1268,61 +1268,52 @@ body {
 /* 手机端标题重叠修复 */
 @media (max-width: 768px) { .hero-title { line-height: 1.5 !important; margin-bottom: 20px !important; } }
 
-/* === 泰坦能源高级特效 (安全追加，绝不破坏骨架) === */
-:root {
-    --bg-gradient: linear-gradient(135deg, #0a0e1a 0%, #0d1b2a 50%, #1b263b 100%);
-    --text-primary: #f0f4f8;
-    --text-secondary: #b0c4de;
-    --accent-glow: #00d2ff;
-    --card-bg: rgba(255, 255, 255, 0.05);
-}
-
+/* === 泰坦能源：国际企业级视觉优化 === */
 html { scroll-behavior: smooth !important; }
-body {
-    background: var(--bg-gradient) !important;
-    color: var(--text-primary) !important;
-}
-h1, h2, h3, h4 { color: var(--text-primary) !important; }
-p, li, span { color: var(--text-secondary) !important; }
 
-/* 导航栏玻璃化 */
+/* 全局色彩：告别死白，采用高级珍珠灰白底色，文字用深邃黑 */
+body { background-color: #FAFBFC !important; color: #111827 !important; }
+
+/* 顶部导航：高端磨砂玻璃质感 */
 header {
-    background: rgba(10, 14, 26, 0.8) !important;
-    backdrop-filter: blur(15px) !important;
-    border-bottom: 1px solid rgba(0, 210, 255, 0.1);
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(12px) !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
 }
 
-/* 卡片悬停发光 */
-.product-card, .tech-item {
-    background: var(--card-bg) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    transition: all 0.3s ease !important;
+/* 卡片高级感：细腻的浅阴影 + 优雅悬浮 */
+.product-card, .tech-item, .feature-box {
+    background: #FFFFFF !important;
+    border: 1px solid #F3F4F6 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border-radius: 12px !important;
 }
-.product-card:hover, .tech-item:hover {
-    transform: translateY(-8px) !important;
-    border-color: var(--accent-glow) !important;
-    box-shadow: 0 10px 25px -5px rgba(0, 210, 255, 0.3) !important;
+.product-card:hover, .tech-item:hover, .feature-box:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
+    border-color: #E5E7EB !important;
 }
 
-/* 按钮炫酷渐变 */
+/* 按钮质感：稳重的深碳灰，悬停科技蓝 */
 .btn, button {
-    background: linear-gradient(90deg, #00c6ff, #0072ff) !important;
-    color: white !important;
-    border: none !important;
+    background: #111827 !important; 
+    color: #FFFFFF !important;
+    border-radius: 6px !important;
+    font-weight: 600 !important;
     transition: all 0.3s ease !important;
 }
 .btn:hover, button:hover {
-    transform: scale(1.05) !important;
-    box-shadow: 0 0 20px rgba(0, 198, 255, 0.6) !important;
+    background: #2563EB !important; 
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 15px rgba(37, 99, 235, 0.2) !important;
 }
 
-/* 电池呼吸灯动画 */
-@keyframes titan-float {
-    0%, 100% { transform: translateY(0); filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.2)); }
-    50% { transform: translateY(-15px); filter: drop-shadow(0 0 30px rgba(0, 210, 255, 0.5)); }
+/* 电池/主图：克制且优雅的微浮动 */
+@keyframes pro-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
 }
-img, .image-container {
-    animation: titan-float 4s ease-in-out infinite !important;
-}
+img, .image-container { animation: pro-float 6s ease-in-out infinite !important; }
 
-/* 强制缓存刷新戳: 02/24/2026 22:00:29 */
+/* 强制缓存刷新戳: 02/24/2026 22:06:32 */
