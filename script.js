@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', => {
+document.addEventListener('DOMContentLoaded', () => {
     // 注册插件
     gsap.registerPlugin(ScrollTrigger);
 
@@ -13,12 +13,138 @@ document.addEventListener('DOMContentLoaded', => {
     const themeToggle = document.querySelector('.theme-toggle');
     let isDarkTheme = false;
     
+    // 初始化主题
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        isDarkTheme = true;
+        document.body.classList.add('dark-theme');
+        themeToggle.textContent = '☀️';
+    }
+    
     themeToggle.addEventListener('click', () => {
         isDarkTheme = !isDarkTheme;
         document.body.classList.toggle('dark-theme');
         themeToggle.textContent = isDarkTheme ? '☀️' : '🌙';
         localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
         ScrollTrigger.refresh();
+    });
+
+    // 2. 搜索按钮功能
+    const searchBtn = document.querySelector('.search-btn');
+    let searchOverlay = null;
+    
+    searchBtn.addEventListener('click', () => {
+        // 如果搜索覆盖层已存在，则移除
+        if (searchOverlay) {
+            searchOverlay.remove();
+            searchOverlay = null;
+            return;
+        }
+        
+        // 创建搜索覆盖层
+        searchOverlay = document.createElement('div');
+        searchOverlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1002;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        `;
+        
+        // 创建搜索框
+        const searchContainer = document.createElement('div');
+        searchContainer.style.cssText = `
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        `;
+        
+        const searchInput = document.createElement('input');
+        searchInput.type = 'text';
+        searchInput.placeholder = '搜索产品、技术或解决方案...';
+        searchInput.style.cssText = `
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        `;
+        
+        searchInput.addEventListener('focus', () => {
+            searchInput.style.borderColor = '#0066cc';
+        });
+        
+        searchInput.addEventListener('blur', () => {
+            searchInput.style.borderColor = '#e0e0e0';
+        });
+        
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const searchTerm = searchInput.value.trim();
+                if (searchTerm) {
+                    alert(`搜索: ${searchTerm}`);
+                    searchOverlay.remove();
+                    searchOverlay = null;
+                }
+            }
+        });
+        
+        const closeBtn = document.createElement('button');
+        closeBtn.textContent = '✕';
+        closeBtn.style.cssText = `
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+        `;
+        
+        closeBtn.addEventListener('click', () => {
+            searchOverlay.remove();
+            searchOverlay = null;
+        });
+        
+        searchContainer.appendChild(closeBtn);
+        searchContainer.appendChild(searchInput);
+        searchOverlay.appendChild(searchContainer);
+        document.body.appendChild(searchOverlay);
+        
+        // 动画显示
+        setTimeout(() => {
+            searchOverlay.style.opacity = '1';
+            searchContainer.style.transform = 'scale(1)';
+        }, 10);
+        
+        // 聚焦输入框
+        setTimeout(() => {
+            searchInput.focus();
+        }, 300);
+        
+        // 点击背景关闭
+        searchOverlay.addEventListener('click', (e) => {
+            if (e.target === searchOverlay) {
+                searchOverlay.remove();
+                searchOverlay = null;
+            }
+        });
     });
 
     // 2. 导航栏滚动效果
@@ -180,7 +306,7 @@ document.addEventListener('DOMContentLoaded', => {
             });
         });
 
-        item.addEventListener('mouseleave', () => {
+        card.addEventListener('mouseleave', () => {
             gsap.to(card, {
                 y: 0,
                 duration: 0.3,
@@ -458,14 +584,57 @@ document.addEventListener('DOMContentLoaded', => {
     const mobileMenu = document.querySelector('.mobile-menu');
     const navMenu = document.querySelector('.nav-menu');
     
+    // 初始化移动端菜单状态
+    if (window.innerWidth <= 768) {
+        navMenu.style.display = 'none';
+    }
+    
     mobileMenu.addEventListener('click', () => {
-        navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
-        gsap.from(navMenu, {
-            opacity: 0,
-            x: -20,
-            duration: 0.3,
-            ease: "power2.out"
-        });
+        const isHidden = navMenu.style.display === 'none' || navMenu.style.display === '';
+        
+        if (isHidden) {
+            navMenu.style.display = 'flex';
+            navMenu.style.position = 'absolute';
+            navMenu.style.top = '100%';
+            navMenu.style.left = '0';
+            navMenu.style.right = '0';
+            navMenu.style.background = 'var(--glass-bg)';
+            navMenu.style.flexDirection = 'column';
+            navMenu.style.padding = '1rem';
+            navMenu.style.borderTop = '1px solid var(--glass-border)';
+            navMenu.style.boxShadow = 'var(--shadow-md)';
+            
+            gsap.from(navMenu, {
+                opacity: 0,
+                y: -20,
+                duration: 0.3,
+                ease: "power2.out"
+            });
+            
+            mobileMenu.textContent = '✕';
+        } else {
+            navMenu.style.display = 'none';
+            mobileMenu.textContent = '☰';
+        }
+    });
+    
+    // 窗口大小改变时处理菜单
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            navMenu.style.display = 'flex';
+            navMenu.style.position = 'static';
+            navMenu.style.top = 'auto';
+            navMenu.style.left = 'auto';
+            navMenu.style.right = 'auto';
+            navMenu.style.flexDirection = 'row';
+            navMenu.style.padding = '0';
+            navMenu.style.borderTop = 'none';
+            navMenu.style.boxShadow = 'none';
+            mobileMenu.textContent = '☰';
+        } else {
+            navMenu.style.display = 'none';
+            mobileMenu.textContent = '☰';
+        }
     });
 
     // 27. 添加滚动进度条
