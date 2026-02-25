@@ -2,25 +2,32 @@
   --bg-primary: #FAFBFC;
   --text-primary: #111827;
   --primary-blue: #0066cc;
-  --glass-bg: rgba(250,251,252,0.95);
+  
+  /* 按钮样式 */
+  --btn-radius: 999px;
+  --btn-shadow: 0 4px 14px rgba(0,102,204,0.25);
+  --btn-hover-shadow: 0 8px 20px rgba(0,102,204,0.4);
 }
 
-button, .primary-btn, .product-btn {
-  border-radius: 999px !important;
+/* 胶囊按钮体系 */
+button, .btn {
+  border-radius: var(--btn-radius) !important;
   background: var(--primary-blue) !important;
-  box-shadow: 0 4px 14px rgba(0,102,204,0.25) !important;
+  color: white !important;
+  padding: 12px 32px !important;
+  border: none !important;
+  box-shadow: var(--btn-shadow) !important;
   transition: all 0.3s cubic-bezier(0.25,0.8,0.25,1) !important;
 }
 
-button:hover, .primary-btn:hover {
+button:hover, .btn:hover {
   transform: translateY(-2px) !important;
-  box-shadow: 0 8px 20px rgba(0,102,204,0.4) !important;
+  box-shadow: var(--btn-hover-shadow) !important;
 }
 
-.professional-nav {
-  background: var(--glass-bg) !important;
+body {
+  background: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
 }
 
-body.dark-theme {
-  display: none !important;
-}
+/* 删除所有暗黑模式相关样式 */
