@@ -1431,3 +1431,27 @@ img[src*="battery"], .hero-image img {
 }
 
 /* 更新时间戳：02/25/2026 13:23:36 */
+
+/* === 修复右上角幽灵图标按钮 === */
+/* 赋予高级质感的实体白灰底色和深色图标 */
+header button, nav button, .header-right button, .theme-toggle, .search-btn, [class*="icon"] {
+    background-color: #ffffff !important;
+    color: #1e293b !important; /* 强制图标变为深邃黑 */
+    border: 1px solid #e2e8f0 !important; /* 增加极细的边框勾勒轮廓 */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06) !important; /* 增加柔和的实体悬浮阴影 */
+    transition: all 0.3s ease !important;
+}
+
+/* 鼠标放上去有清晰的按压感 */
+header button:hover, nav button:hover, .header-right button:hover, .theme-toggle:hover {
+    background-color: #f1f5f9 !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* 确保锚点跳转时，标题不会被顶部的导航栏遮挡！ */
+h2[id], section[id] {
+    scroll-margin-top: 100px !important;
+}
+
+/* 更新时间戳: 02/25/2026 13:41:15 */
