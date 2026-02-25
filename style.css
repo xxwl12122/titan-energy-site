@@ -360,9 +360,9 @@ body {
 .search-btn,
 .theme-toggle,
 .mobile-menu {
-    background: #f1f5f9;
+    background: rgba(0,0,0,0.05);
     border: 1px solid #e2e8f0;
-    color: #334155;
+    color: #1e293b; /* 更深的图标颜色 */
     padding: var(--spacing-xs);
     border-radius: 50%;
     cursor: pointer;
@@ -1321,6 +1321,11 @@ h1, .hero h1, .hero-title, h1 span {
     font-weight: 600 !important;
     box-shadow: 0 4px 14px rgba(0, 102, 204, 0.25) !important;
     transition: all 0.3s ease !important;
+}
+
+/* 按钮按压效果 */
+.btn:active, button:active, a.btn:active, .cta-button:active {
+    transform: scale(0.96) !important;
 }
 .btn:hover, button:hover, a.btn:hover, .cta-button:hover {
     background: #005bb5 !important;
