@@ -1455,3 +1455,30 @@ h2[id], section[id] {
 }
 
 /* 更新时间戳: 02/25/2026 13:41:15 */
+
+/* === 破除右上角幽灵图标按钮 === */
+/* 给搜索和主题按钮强制加上浅灰底色和深色图标，彰显高级感 */
+header button, .header-right button, .theme-toggle, .search-btn {
+    background-color: #f8fafc !important; /* 浅灰白底色 */
+    color: #0f172a !important; /* 图标深邃黑 */
+    border: 1px solid #cbd5e1 !important; /* 增加精致边框 */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05) !important;
+    border-radius: 50% !important; /* 确保是圆润的 */
+}
+/* 图标内部路径也强制变黑 */
+header button svg, .header-right button svg, header button path, .header-right button path {
+    stroke: #0f172a !important;
+    fill: none !important;
+}
+/* 鼠标悬停时的按压反馈 */
+header button:hover, .header-right button:hover {
+    background-color: #e2e8f0 !important;
+    transform: scale(0.95) !important;
+}
+
+/* 修复点击导航跳转后，标题被顶部导航栏挡住一半的问题 */
+h2[id], section[id] {
+    scroll-margin-top: 100px !important;
+}
+
+/* 强制云端更新戳: 02/25/2026 13:54:44 */
