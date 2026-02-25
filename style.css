@@ -1123,15 +1123,17 @@ body {
     
     .hero-title {
         font-size: 2rem;
+        line-height: 1.2 !important;
+        margin-bottom: 1rem !important;
     }
     
     .section-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     
     .tech-title,
     .solutions-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     
     /* 确保超小屏幕也不会横向滚动 */
@@ -1143,6 +1145,20 @@ body {
     .professional-nav {
         max-width: 100vw;
         overflow-x: hidden;
+        height: 60px;
+    }
+    
+    /* 移动端电池尺寸调整 */
+    .battery-model {
+        width: 120px;
+        height: 240px;
+        margin: 0 auto;
+    }
+    
+    /* 移动端按钮间距优化 */
+    .hero-actions {
+        flex-direction: column;
+        gap: 12px;
     }
 }
 
