@@ -282,19 +282,21 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const animateStats = () => {
         statNumbers.forEach(stat => {
-            const target = parseInt(stat.getAttribute('data-target'));
-            const current = 0;
+            const targetText = stat.getAttribute('data-target') || stat.textContent.trim();
+            const target = parseInt(targetText.replace(/[^0-9]/g, '')) || 0;
+            let current = 0;
             const increment = target / 50;
+            const suffix = targetText.match(/[M%+]/)?.[0] || '+';
             
             const updateNumber = () => {
                 const currentValue = Math.floor(current);
-                stat.textContent = currentValue + (stat.textContent.includes('M') ? 'M+' : stat.textContent.includes('%') ? '%' : '+');
+                stat.textContent = currentValue + suffix;
                 
                 if (currentValue < target) {
                     current += increment;
                     requestAnimationFrame(updateNumber);
                 } else {
-                    stat.textContent = stat.textContent.includes('M') ? '100M+' : stat.textContent.includes('%') ? '99.9%' : target + '+';
+                    stat.textContent = target + suffix;
                 }
             };
             
