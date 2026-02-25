@@ -438,10 +438,11 @@ body {
 
 .hero-title {
     font-family: var(--font-accent);
-    font-size: clamp(3rem, 8vw, 5rem);
+    font-size: clamp(2.8rem, 8vw, 4.5rem);
     font-weight: 700;
-    line-height: 0.9;
-    letter-spacing: -2px;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    word-spacing: 2px;
     margin-bottom: var(--spacing-lg);
     color: var(--text-primary);
 }
@@ -1299,6 +1300,10 @@ h1, .hero h1, .hero-title, h1 span {
     background: #005bb5 !important;
     transform: translateY(-2px) !important;
     box-shadow: 0 8px 20px rgba(0, 102, 204, 0.4) !important;
+}
+.btn:active, button:active, a.btn:active, .cta-button:active {
+    transform: scale(0.96) !important;
+    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3) !important;
 }
 
 /* 数据面板数字变蓝 */
