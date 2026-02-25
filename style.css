@@ -1317,3 +1317,45 @@ h1, .hero h1, .hero-title, h1 span {
 }
 
 /* 强制云端更新戳: 02/25/2026 13:11:17 */
+
+/* === 终极视觉抢救补丁 === */
+
+/* 1. 彻底干掉大标题的镂空和重影，拉开行距 */
+.hero h1, h1, .hero-title, .hero-content h1 {
+    color: #111827 !important; /* 强制纯黑色 */
+    -webkit-text-fill-color: initial !important; /* 取消透明填充 */
+    -webkit-text-stroke: 0 !important; /* 取消文字描边 */
+    background: transparent !important; /* 取消背景裁剪 */
+    text-shadow: none !important; 
+    line-height: 1.4 !important; /* 拉开行距，不让字挤在一起 */
+    letter-spacing: 2px !important;
+    font-weight: 800 !important;
+}
+
+/* 2. 修复导航栏点击遮挡问题 (留出80px的顶部边距) */
+h2[id], section[id] {
+    scroll-margin-top: 80px !important;
+}
+
+/* 3. 确保苹果风胶囊按钮完美居中和发光 */
+.btn, button, .cta-button, a.btn {
+    background: #0066cc !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 999px !important;
+    padding: 12px 32px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3) !important;
+    transition: all 0.3s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+}
+.btn:hover, button:hover, .cta-button:hover, a.btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(0, 102, 204, 0.5) !important;
+    background: #005bb5 !important;
+}
+
+/* 强制云端更新戳: 02/25/2026 13:17:37 */
