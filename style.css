@@ -1359,3 +1359,54 @@ h2[id], section[id] {
 }
 
 /* 强制云端更新戳: 02/25/2026 13:17:37 */
+
+/* === 泰坦能源：国际化视觉修正补丁 === */
+
+/* 1. 彻底斩断镂空字、重影字，回归大厂质感 */
+h1, .hero h1, .hero-title, h1 span {
+    color: #111827 !important; /* 坚实的碳素黑 */
+    -webkit-text-fill-color: #111827 !important;
+    -webkit-text-stroke: 0px transparent !important;
+    background: none !important;
+    text-shadow: none !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -1px !important;
+}
+
+/* 2. 背景换成珍珠灰白，拒绝廉价死黑 */
+body { background-color: #F8FAFC !important; color: #1e293b !important; }
+
+/* 3. 苹果风科技蓝胶囊按钮 (解决“黑砖头”问题) */
+.btn, button, .cta-button, a.btn {
+    background: #0066cc !important; /* 经典科技蓝 */
+    color: #ffffff !important;
+    border-radius: 50px !important; /* 完美圆角 */
+    padding: 12px 36px !important;
+    font-weight: 600 !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(0, 102, 204, 0.2) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+}
+.btn:hover, button:hover {
+    transform: translateY(-2px) !important;
+    background: #0052a3 !important;
+    box-shadow: 0 8px 25px rgba(0, 102, 204, 0.4) !important;
+}
+
+/* 4. 修复跳转遮挡：给标题留出“呼吸空间” */
+h2[id] { scroll-margin-top: 100px !important; }
+
+/* 5. 电池主图加入高级悬浮感 */
+@keyframes titan-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+img[src*="battery"], .hero-image img {
+    animation: titan-float 5s ease-in-out infinite !important;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.1)) !important;
+}
+
+/* 更新时间戳：02/25/2026 13:23:36 */
