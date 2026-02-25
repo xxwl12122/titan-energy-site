@@ -360,9 +360,9 @@ body {
 .search-btn,
 .theme-toggle,
 .mobile-menu {
-    background: none;
-    border: 1px solid var(--glass-border);
-    color: var(--text-primary);
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    color: #334155;
     padding: var(--spacing-xs);
     border-radius: 50%;
     cursor: pointer;
@@ -381,6 +381,7 @@ body {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .search-btn:hover,
