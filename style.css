@@ -81,7 +81,7 @@ body {
     --primary-dark: #004499;
     --accent-orange: #ff6b35;
     --accent-green: #28a745;
-    --text-primary: #1a1a1a;
+    --text-primary: #1e293b; /* 从纯黑改为deep slate */
     --text-secondary: #666666;
     --text-light: #ffffff;
     
@@ -442,7 +442,7 @@ body {
     font-size: clamp(2.8rem, 8vw, 4.5rem);
     font-weight: 700;
     line-height: 1.1;
-    letter-spacing: -1.5px;
+    letter-spacing: 2px;
     word-spacing: 2px;
     margin-bottom: var(--spacing-lg);
     color: var(--text-primary);
