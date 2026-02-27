@@ -169,6 +169,37 @@ document.addEventListener('DOMContentLoaded', () => {
         ease: "sine.inOut"
     });
 
+    // 3D倾斜效果
+    const tiltElement = document.querySelector('.tilt-element');
+    const tiltContainer = document.querySelector('.tilt-container');
+    
+    if (tiltElement && tiltContainer) {
+        // 初始化变换原点
+        tiltElement.style.transformOrigin = 'center center';
+        
+        tiltContainer.addEventListener('mousemove', (e) => {
+            const rect = tiltContainer.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // 计算中心点
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            // 计算旋转角度 (最大±10度)
+            const rotateY = ((x - centerX) / centerX) * 10;
+            const rotateX = ((centerY - y) / centerY) * 10;
+            
+            // 应用变换
+            tiltElement.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+        
+        // 鼠标离开时重置
+        tiltContainer.addEventListener('mouseleave', () => {
+            tiltElement.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        });
+    }
+
     // 5. 产品卡片动画
     gsap.to(".products-section", {
         opacity: 1,

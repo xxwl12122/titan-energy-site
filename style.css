@@ -550,16 +550,29 @@ body {
     justify-content: center;
 }
 
-.battery-model {
+/* 3D倾斜容器 */
+.tilt-container {
+    perspective: 1000px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 3D倾斜元素 */
+.tilt-element {
     width: 200px;
     height: 400px;
     background: linear-gradient(135deg, var(--primary-blue), var(--accent-orange));
     border-radius: 20px;
     position: relative;
-    animation: float-battery 3s ease-in-out infinite;
     box-shadow: var(--shadow-xl);
+    transition: transform 0.1s ease-out;
+    transform-style: preserve-3d;
 }
 
+/* 3D倾斜动画 */
 @keyframes float-battery {
     0%, 100% { transform: translateY(0px) rotate(0deg); }
     50% { transform: translateY(-20px) rotate(2deg); }
