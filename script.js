@@ -86,6 +86,12 @@ mobileMenuBtn.addEventListener('click', function() {
     document.body.style.overflow = 'hidden'; // 防止背景滚动
 });
 
+// 确保移动端菜单存在
+const mobileDrawer = document.querySelector('.mobile-drawer');
+if (!mobileDrawer) {
+    console.error('移动端侧边栏菜单未找到');
+}
+
 // 关闭移动端侧边栏菜单
 const drawerCloseBtn = document.querySelector('.drawer-close');
 drawerCloseBtn.addEventListener('click', function() {
