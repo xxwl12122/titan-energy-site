@@ -38,3 +38,51 @@ document.querySelectorAll('.nav-link, .dropdown-item').forEach(link => {
         }
     });
 });
+
+// 恢复右上角功能按钮的点击事件
+// 1. 搜索按钮
+const searchBtn = document.querySelector('.search-btn');
+const searchOverlay = document.createElement('div');
+searchOverlay.className = 'search-overlay';
+searchOverlay.innerHTML = `
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="搜索产品...">
+        <button class="search-close">×</button>
+    </div>
+`;
+document.body.appendChild(searchOverlay);
+
+searchBtn.addEventListener('click', function() {
+    searchOverlay.style.display = 'flex';
+    setTimeout(() => {
+        searchOverlay.style.opacity = '1';
+        searchOverlay.querySelector('.search-container').style.transform = 'scale(1)';
+    }, 10);
+});
+
+searchOverlay.querySelector('.search-close').addEventListener('click', function() {
+    searchOverlay.style.opacity = '0';
+    searchOverlay.querySelector('.search-container').style.transform = 'scale(0.8)';
+    setTimeout(() => {
+        searchOverlay.style.display = 'none';
+    }, 300);
+});
+
+// 2. 主题切换按钮
+const themeToggle = document.querySelector('.theme-toggle');
+
+themeToggle.addEventListener('click', function() {
+    document.body.classList.toggle('dark-theme');
+    // 更新图标
+    this.textContent = document.body.classList.contains('dark-theme') ? '☀️' : '🌙';
+});
+
+// 3. 移动端菜单按钮
+const mobileMenuBtn = document.querySelector('.mobile-menu');
+
+mobileMenuBtn.addEventListener('click', function() {
+    // 这里可以添加展开/收起移动端菜单的逻辑
+    // 由于原HTML中没有移动端菜单的结构，这里先用一个简单的提示
+    alert('移动端菜单功能待实现');
+    // 通常这里会操作一个包含菜单项的div，切换其显示/隐藏
+});
