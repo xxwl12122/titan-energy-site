@@ -1,8 +1,4 @@
-// 平滑滚动锚点
-// 确保 html 元素有 scroll-behavior: smooth
-// 这已在 CSS 中设置
-
-// 导航栏滚动效果
+// 导航栏滚动效果 (基于页面滚动)
 window.addEventListener('scroll', function() {
     const nav = document.querySelector('.professional-nav');
     if (window.scrollY > 100) {
@@ -18,4 +14,29 @@ window.addEventListener('load', function() {
     if (window.scrollY > 100) {
         nav.classList.add('scrolled');
     }
+});
+
+// 导航链接点击平滑滚动
+// 为所有导航链接添加点击事件监听器
+document.querySelectorAll('.nav-link, .dropdown-item').forEach(link => {
+    link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        
+        // 只处理内部锚点链接
+        if (href && href.startsWith('#')) {
+            e.preventDefault(); // 阻止默认的跳转行为
+            const targetElement = document.querySelector(href);
+            
+            if (targetElement) {
+                // 使用 scrollIntoView 实现平滑滚动
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // 可选：更新URL，但不重新加载页面
+                // history.pushState(null, null, href);
+            }
+        }
+    });
 });
