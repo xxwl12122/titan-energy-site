@@ -77,9 +77,9 @@ body {
 
 :root {
     /* 专业色彩系统 */
-    --primary-blue: #0066cc;
-    --primary-dark: #004499;
-    --accent-orange: #ff6b35;
+    --primary-blue: #004d99;
+    --primary-dark: #003366;
+    --accent-orange: #cc5529;
     --accent-green: #28a745;
     --text-primary: #1e293b; /* 从纯黑改为deep slate */
     --text-secondary: #666666;
@@ -629,6 +629,28 @@ body {
     box-sizing: border-box;
 }
 
+/* 红蓝流光边框动画 */
+@keyframes neonFlow {
+    0%, 100% {
+        box-shadow: 0 0 8px #ff0000, 0 0 16px #ff0000, 0 0 24px #ff0000, 0 0 32px #ff0000;
+    }
+    25% {
+        box-shadow: 0 0 8px #0000ff, 0 0 16px #0000ff, 0 0 24px #0000ff, 0 0 32px #0000ff;
+    }
+    50% {
+        box-shadow: 0 0 8px #00ff00, 0 0 16px #00ff00, 0 0 24px #00ff00, 0 0 32px #00ff00;
+    }
+    75% {
+        box-shadow: 0 0 8px #ffff00, 0 0 16px #ffff00, 0 0 24px #ffff00, 0 0 32px #ffff00;
+    }
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+    animation: neonFlow 2s infinite ease-in-out;
+}
+
 .product-card::before {
     content: '';
     position: absolute;
@@ -684,15 +706,15 @@ body {
 }
 
 .battery-icon.coppertop {
-    background: linear-gradient(135deg, #ff6b35, #f7931e);
+    background: linear-gradient(135deg, #cc5529, #c6751a);
 }
 
 .battery-icon.lithium {
-    background: linear-gradient(135deg, #0066cc, #004499);
+    background: linear-gradient(135deg, #004d99, #003366);
 }
 
 .battery-icon.optimum {
-    background: linear-gradient(135deg, #28a745, #20c997);
+    background: linear-gradient(135deg, #1e8c39, #189f6e);
 }
 
 .product-name {
