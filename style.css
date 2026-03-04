@@ -1229,6 +1229,7 @@ body.dark-theme .professional-nav.scrolled {
     align-items: center;
     justify-content: center;
     opacity: 0;
+    pointer-events: none;
     transition: opacity 0.3s ease;
 }
 
@@ -1240,22 +1241,29 @@ body.dark-theme .professional-nav.scrolled {
     max-width: 500px;
     width: 90%;
     transform: scale(0.8);
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
     position: relative;
+    border: 1px solid #e0e0e0;
+    overflow: hidden; /* 防止内容溢出 */
 }
 
 .search-input {
-    width: 100%;
+    width: calc(100% - 120px); /* 调整宽度，为按钮和关闭按钮留出空间 */
     padding: 1rem;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
+    border: 2px solid var(--primary-blue);
+    border-radius: 8px 0 0 8px; /* 圆角只在左侧 */
     font-size: 1.1rem;
     outline: none;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
+    float: left;
+    margin-right: 10px;
+    background: #f8f9fa;
+    box-sizing: border-box;
 }
 
 .search-input:focus {
-    border-color: var(--primary-blue);
+    border-color: #003366;
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2);
 }
 
 .search-close {
@@ -1267,11 +1275,41 @@ body.dark-theme .professional-nav.scrolled {
     font-size: 1.5rem;
     cursor: pointer;
     color: #666;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    z-index: 10;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #f1f5f9;
+    border: 1px solid #e2e8f0;
 }
 
 .search-close:hover {
-    color: var(--primary-blue);
+    color: #003366;
+    background-color: #e2e8f0;
+    border-color: #cbd5e1;
+}
+
+.search-btn-submit {
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0 8px 8px 0; /* 圆角只在右侧 */
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    float: left;
+    clear: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.3); /* 按钮与输入框之间的分隔线 */
+}
+
+.search-btn-submit:hover {
+    background: #003366;
+    transform: translateY(-2px);
 }
 
 /* 确保按钮点击区域足够大 */

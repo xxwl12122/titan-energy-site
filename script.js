@@ -81,8 +81,23 @@ themeToggle.addEventListener('click', function() {
 const mobileMenuBtn = document.querySelector('.mobile-menu');
 
 mobileMenuBtn.addEventListener('click', function() {
-    // 这里可以添加展开/收起移动端菜单的逻辑
-    // 由于原HTML中没有移动端菜单的结构，这里先用一个简单的提示
-    alert('移动端菜单功能待实现');
-    // 通常这里会操作一个包含菜单项的div，切换其显示/隐藏
+    // 展开移动端侧边栏菜单
+    document.querySelector('.mobile-drawer').classList.add('open');
+    document.body.style.overflow = 'hidden'; // 防止背景滚动
+});
+
+// 关闭移动端侧边栏菜单
+const drawerCloseBtn = document.querySelector('.drawer-close');
+drawerCloseBtn.addEventListener('click', function() {
+    document.querySelector('.mobile-drawer').classList.remove('open');
+    document.body.style.overflow = ''; // 恢复背景滚动
+});
+
+// 点击遮罩层关闭菜单
+const mobileDrawer = document.querySelector('.mobile-drawer');
+mobileDrawer.addEventListener('click', function(e) {
+    if (e.target === mobileDrawer) {
+        mobileDrawer.classList.remove('open');
+        document.body.style.overflow = '';
+    }
 });

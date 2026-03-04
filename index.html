@@ -51,6 +51,13 @@
             </div>
             <div class="nav-right">
                 <button class="search-btn">🔍</button>
+                <div class="search-overlay">
+                    <div class="search-container">
+                        <input type="text" class="search-input" placeholder="输入关键词搜索...">
+                        <button class="search-btn-submit">搜索</button>
+                        <button class="search-close">×</button>
+                    </div>
+                </div>
                 <button class="theme-toggle">🌙</button>
                 <button class="mobile-menu">☰</button>
             </div>
@@ -334,6 +341,23 @@
             </div>
         </div>
     </footer>
+
+    <!-- 移动端侧边栏菜单 -->
+    <nav class="mobile-drawer">
+        <div class="drawer-header">
+            <a href="#hero" class="logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">泰坦能量</span>
+            </a>
+            <button class="drawer-close">×</button>
+        </div>
+        <div class="drawer-body">
+            <a href="#products" class="drawer-link">产品系列</a>
+            <a href="#technology" class="drawer-link">技术创新</a>
+            <a href="#solutions" class="drawer-link">解决方案</a>
+            <a href="#about" class="drawer-link">关于我们</a>
+        </div>
+    </nav>
 
     <!-- GSAP & ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
