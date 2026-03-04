@@ -42,31 +42,25 @@ document.querySelectorAll('.nav-link, .dropdown-item').forEach(link => {
 // 恢复右上角功能按钮的点击事件
 // 1. 搜索按钮
 const searchBtn = document.querySelector('.search-btn');
-const searchOverlay = document.createElement('div');
-searchOverlay.className = 'search-overlay';
-searchOverlay.innerHTML = `
-    <div class="search-container">
-        <input type="text" class="search-input" placeholder="搜索产品...">
-        <button class="search-close">×</button>
-    </div>
-`;
-document.body.appendChild(searchOverlay);
+const searchOverlay = document.querySelector('.search-overlay');
 
-searchBtn.addEventListener('click', function() {
-    searchOverlay.style.display = 'flex';
-    setTimeout(() => {
-        searchOverlay.style.opacity = '1';
-        searchOverlay.querySelector('.search-container').style.transform = 'scale(1)';
-    }, 10);
-});
+if (searchBtn && searchOverlay) {
+    searchBtn.addEventListener('click', function() {
+        searchOverlay.style.display = 'flex';
+        setTimeout(() => {
+            searchOverlay.style.opacity = '1';
+            searchOverlay.querySelector('.search-container').style.transform = 'scale(1)';
+        }, 10);
+    });
 
-searchOverlay.querySelector('.search-close').addEventListener('click', function() {
-    searchOverlay.style.opacity = '0';
-    searchOverlay.querySelector('.search-container').style.transform = 'scale(0.8)';
-    setTimeout(() => {
-        searchOverlay.style.display = 'none';
-    }, 300);
-});
+    searchOverlay.querySelector('.search-close').addEventListener('click', function() {
+        searchOverlay.style.opacity = '0';
+        searchOverlay.querySelector('.search-container').style.transform = 'scale(0.8)';
+        setTimeout(() => {
+            searchOverlay.style.display = 'none';
+        }, 300);
+    });
+}
 
 // 2. 主题切换按钮
 const themeToggle = document.querySelector('.theme-toggle');
@@ -81,6 +75,7 @@ themeToggle.addEventListener('click', function() {
 const mobileMenuBtn = document.querySelector('.mobile-menu');
 const mobileDrawer = document.querySelector('.mobile-drawer');
 const drawerCloseBtn = document.querySelector('.drawer-close');
+const drawerLinks = document.querySelectorAll('.drawer-link');
 
 // 确保元素存在
 if (mobileMenuBtn && mobileDrawer && drawerCloseBtn) {
@@ -99,6 +94,14 @@ if (mobileMenuBtn && mobileDrawer && drawerCloseBtn) {
             mobileDrawer.classList.remove('open');
             document.body.style.overflow = '';
         }
+    });
+    
+    // 点击菜单项后关闭
+    drawerLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            mobileDrawer.classList.remove('open');
+            document.body.style.overflow = '';
+        });
     });
 } else {
     console.error('移动端菜单相关元素未找到');
