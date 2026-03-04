@@ -1256,6 +1256,8 @@ body.dark-theme .professional-nav.scrolled {
     border: 1px solid var(--glass-border);
     overflow: hidden;
     z-index: 1000000;
+    opacity: 1;
+    display: block;
 }
 
 .search-overlay.active .search-container {
