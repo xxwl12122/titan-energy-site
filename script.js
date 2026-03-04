@@ -79,31 +79,27 @@ themeToggle.addEventListener('click', function() {
 
 // 3. 移动端菜单按钮
 const mobileMenuBtn = document.querySelector('.mobile-menu');
-
-mobileMenuBtn.addEventListener('click', function() {
-    // 展开移动端侧边栏菜单
-    document.querySelector('.mobile-drawer').classList.add('open');
-    document.body.style.overflow = 'hidden'; // 防止背景滚动
-});
-
-// 确保移动端菜单存在
 const mobileDrawer = document.querySelector('.mobile-drawer');
-if (!mobileDrawer) {
-    console.error('移动端侧边栏菜单未找到');
-}
-
-// 关闭移动端侧边栏菜单
 const drawerCloseBtn = document.querySelector('.drawer-close');
-drawerCloseBtn.addEventListener('click', function() {
-    document.querySelector('.mobile-drawer').classList.remove('open');
-    document.body.style.overflow = ''; // 恢复背景滚动
-});
 
-// 点击遮罩层关闭菜单
-const mobileDrawer = document.querySelector('.mobile-drawer');
-mobileDrawer.addEventListener('click', function(e) {
-    if (e.target === mobileDrawer) {
+// 确保元素存在
+if (mobileMenuBtn && mobileDrawer && drawerCloseBtn) {
+    mobileMenuBtn.addEventListener('click', function() {
+        mobileDrawer.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    });
+
+    drawerCloseBtn.addEventListener('click', function() {
         mobileDrawer.classList.remove('open');
         document.body.style.overflow = '';
-    }
-});
+    });
+
+    mobileDrawer.addEventListener('click', function(e) {
+        if (e.target === mobileDrawer) {
+            mobileDrawer.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+    });
+} else {
+    console.error('移动端菜单相关元素未找到');
+}

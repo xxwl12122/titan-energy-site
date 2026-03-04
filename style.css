@@ -1246,7 +1246,7 @@ body.dark-theme .professional-nav.scrolled {
     position: relative;
     border: 1px solid #e0e0e0;
     overflow: hidden;
-    z-index: 1003; /* 确保搜索容器在最上层 */
+    z-index: 1003;
 }
 
 /* 搜索输入框 */
@@ -1262,7 +1262,7 @@ body.dark-theme .professional-nav.scrolled {
     margin-right: 10px;
     background: #f8f9fa;
     box-sizing: border-box;
-    z-index: 1004; /* 确保输入框在最上层 */
+    z-index: 1004;
     position: relative;
 }
 
