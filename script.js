@@ -33,10 +33,8 @@ document.querySelectorAll('.nav-link, .dropdown-item').forEach(link => {
                     behavior: 'smooth',
                     block: 'start'
                 });
-                
-                // 可选：更新URL，但不重新加载页面
-                // history.pushState(null, null, href);
             }
+            // 如果目标元素不存在，则不执行任何操作，保持当前页面位置
         }
     });
 });
