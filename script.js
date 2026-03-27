@@ -1,108 +1,282 @@
-// 导航栏滚动效果 (基于页面滚动)
-window.addEventListener('scroll', function() {
-    const nav = document.querySelector('.professional-nav');
-    if (window.scrollY > 100) {
-        nav.classList.add('scrolled');
-    } else {
-        nav.classList.remove('scrolled');
-    }
-});
+const body = document.body;
+const topbar = document.querySelector(".topbar");
+const themeToggle = document.querySelector(".theme-toggle");
+const themeToggleText = document.querySelector(".theme-toggle-text");
+const searchOverlay = document.getElementById("searchOverlay");
+const searchToggle = document.querySelector(".search-toggle");
+const searchClose = document.querySelector(".search-close");
+const searchForm = document.getElementById("searchForm");
+const searchInput = document.getElementById("siteSearch");
+const searchFeedback = document.getElementById("searchFeedback");
+const tagButtons = document.querySelectorAll(".tag-button");
+const menuToggle = document.querySelector(".mobile-menu-entry");
+const mobilePanel = document.getElementById("mobilePanel");
+const mobileBackdrop = document.querySelector(".mobile-backdrop");
+const mobileClose = document.querySelector(".mobile-close");
+const mobileLinks = document.querySelectorAll(".mobile-nav a");
+const scrollButtons = document.querySelectorAll("[data-scroll]");
+const sections = document.querySelectorAll("[data-search]");
+const revealTargets = document.querySelectorAll(".reveal");
+const counters = document.querySelectorAll("[data-count]");
+const yearTarget = document.getElementById("year");
+const heroStage = document.querySelector(".hero-stage");
 
-// 页面加载时检查初始滚动位置
-window.addEventListener('load', function() {
-    const nav = document.querySelector('.professional-nav');
-    if (window.scrollY > 100) {
-        nav.classList.add('scrolled');
-    }
-});
-
-// 导航链接点击平滑滚动
-// 为所有导航链接添加点击事件监听器
-document.querySelectorAll('.nav-link, .dropdown-item').forEach(link => {
-    link.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        
-        // 只处理内部锚点链接
-        if (href && href.startsWith('#')) {
-            e.preventDefault(); // 阻止默认的跳转行为
-            const targetElement = document.querySelector(href);
-            
-            if (targetElement) {
-                // 使用 scrollIntoView 实现平滑滚动
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-            // 如果目标元素不存在，则不执行任何操作，保持当前页面位置
-        }
-    });
-});
-
-// 恢复右上角功能按钮的点击事件
-// 1. 搜索按钮
-const searchBtn = document.querySelector('.search-btn');
-const searchOverlay = document.querySelector('.search-overlay');
-
-if (searchBtn && searchOverlay) {
-    searchBtn.addEventListener('click', function() {
-        searchOverlay.style.display = 'flex';
-        setTimeout(() => {
-            searchOverlay.style.opacity = '1';
-            searchOverlay.querySelector('.search-container').style.transform = 'scale(1)';
-        }, 10);
-    });
-
-    searchOverlay.querySelector('.search-close').addEventListener('click', function() {
-        searchOverlay.style.opacity = '0';
-        searchOverlay.querySelector('.search-container').style.transform = 'scale(0.8)';
-        setTimeout(() => {
-            searchOverlay.style.display = 'none';
-        }, 300);
-    });
+if (yearTarget) {
+    yearTarget.textContent = new Date().getFullYear().toString();
 }
 
-// 2. 主题切换按钮
-const themeToggle = document.querySelector('.theme-toggle');
+const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+const storedTheme = window.localStorage.getItem("titan-theme");
+const initialTheme = storedTheme || (prefersDark ? "dark" : "light");
 
-themeToggle.addEventListener('click', function() {
-    document.body.classList.toggle('dark-theme');
-    // 更新图标
-    this.textContent = document.body.classList.contains('dark-theme') ? '☀️' : '🌙';
+applyTheme(initialTheme);
+
+function applyTheme(theme) {
+    body.dataset.theme = theme;
+    if (themeToggleText) {
+        themeToggleText.textContent = theme === "dark" ? "昼" : "夜";
+    }
+}
+
+themeToggle?.addEventListener("click", () => {
+    const nextTheme = body.dataset.theme === "dark" ? "light" : "dark";
+    window.localStorage.setItem("titan-theme", nextTheme);
+    applyTheme(nextTheme);
 });
 
-// 3. 移动端菜单按钮
-const mobileMenuBtn = document.querySelector('.mobile-menu');
-const mobileDrawer = document.querySelector('.mobile-drawer');
-const drawerCloseBtn = document.querySelector('.drawer-close');
-const drawerLinks = document.querySelectorAll('.drawer-link');
+function syncTopbar() {
+    if (!topbar) {
+        return;
+    }
 
-// 确保元素存在
-if (mobileMenuBtn && mobileDrawer && drawerCloseBtn) {
-    mobileMenuBtn.addEventListener('click', function() {
-        mobileDrawer.classList.add('open');
-        document.body.style.overflow = 'hidden';
-    });
+    topbar.classList.toggle("scrolled", window.scrollY > 12);
+}
 
-    drawerCloseBtn.addEventListener('click', function() {
-        mobileDrawer.classList.remove('open');
-        document.body.style.overflow = '';
-    });
+syncTopbar();
+window.addEventListener("scroll", syncTopbar, { passive: true });
 
-    mobileDrawer.addEventListener('click', function(e) {
-        if (e.target === mobileDrawer) {
-            mobileDrawer.classList.remove('open');
-            document.body.style.overflow = '';
+function setBodyLock(locked) {
+    body.classList.toggle("no-scroll", locked);
+}
+
+function openSearch(query = "") {
+    if (!searchOverlay) {
+        return;
+    }
+
+    searchOverlay.hidden = false;
+    setBodyLock(true);
+    if (searchInput) {
+        searchInput.value = query;
+        window.setTimeout(() => searchInput.focus(), 30);
+    }
+}
+
+function closeSearch() {
+    if (!searchOverlay) {
+        return;
+    }
+
+    searchOverlay.hidden = true;
+    setBodyLock(Boolean(mobilePanel && !mobilePanel.hidden));
+    if (searchFeedback) {
+        searchFeedback.textContent = "";
+    }
+}
+
+function openMobilePanel() {
+    if (!mobilePanel || !menuToggle) {
+        return;
+    }
+
+    mobilePanel.hidden = false;
+    menuToggle.setAttribute("aria-expanded", "true");
+    setBodyLock(true);
+}
+
+function closeMobilePanel() {
+    if (!mobilePanel || !menuToggle) {
+        return;
+    }
+
+    mobilePanel.hidden = true;
+    menuToggle.setAttribute("aria-expanded", "false");
+    setBodyLock(Boolean(searchOverlay && !searchOverlay.hidden));
+}
+
+searchToggle?.addEventListener("click", () => openSearch());
+searchClose?.addEventListener("click", closeSearch);
+searchOverlay?.addEventListener("click", (event) => {
+    if (event.target === searchOverlay) {
+        closeSearch();
+    }
+});
+
+menuToggle?.addEventListener("click", openMobilePanel);
+mobileBackdrop?.addEventListener("click", closeMobilePanel);
+mobileClose?.addEventListener("click", closeMobilePanel);
+mobileLinks.forEach((link) => link.addEventListener("click", closeMobilePanel));
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+        closeSearch();
+        closeMobilePanel();
+    }
+});
+
+function scrollToTarget(selector) {
+    const target = document.querySelector(selector);
+    if (!target) {
+        return false;
+    }
+
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    return true;
+}
+
+scrollButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        const selector = button.getAttribute("data-scroll");
+        if (selector) {
+            scrollToTarget(selector);
         }
     });
-    
-    // 点击菜单项后关闭
-    drawerLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            mobileDrawer.classList.remove('open');
-            document.body.style.overflow = '';
-        });
+});
+
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+        const selector = link.getAttribute("href");
+        if (!selector || selector === "#") {
+            return;
+        }
+
+        const found = scrollToTarget(selector);
+        if (found) {
+            event.preventDefault();
+        }
     });
-} else {
-    console.error('移动端菜单相关元素未找到');
+});
+
+function searchSection(query) {
+    const normalized = query.trim().toLowerCase();
+
+    if (!normalized) {
+        if (searchFeedback) {
+            searchFeedback.textContent = "试试输入“产品”、“技术”或“联系”。";
+        }
+        return;
+    }
+
+    const match = Array.from(sections).find((section) => {
+        const keywords = (section.getAttribute("data-search") || "").toLowerCase();
+        return keywords.includes(normalized);
+    });
+
+    if (match) {
+        match.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (searchFeedback) {
+            const title = match.querySelector("h2")?.textContent || "目标区块";
+            searchFeedback.textContent = `已为你定位到“${title}”。`;
+        }
+        window.setTimeout(closeSearch, 380);
+        return;
+    }
+
+    if (searchFeedback) {
+        searchFeedback.textContent = "没有直接匹配到结果，试试“产品”、“技术”、“行业”、“交付”或“联系”。";
+    }
+}
+
+searchForm?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    searchSection(searchInput?.value || "");
+});
+
+tagButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        const query = button.getAttribute("data-query") || "";
+        if (searchInput) {
+            searchInput.value = query;
+        }
+        searchSection(query);
+    });
+});
+
+const revealObserver = new IntersectionObserver(
+    (entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    },
+    { threshold: 0.14 }
+);
+
+revealTargets.forEach((target) => revealObserver.observe(target));
+
+function animateCounter(element) {
+    const targetValue = Number.parseFloat(element.dataset.count || "0");
+    const decimals = Number.parseInt(element.dataset.decimals || "0", 10);
+    const suffix = element.dataset.suffix || "";
+    const duration = 1200;
+    const start = performance.now();
+
+    function frame(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const value = targetValue * eased;
+        const formatted = decimals > 0 ? value.toFixed(decimals) : Math.round(value).toString();
+        element.textContent = `${formatted}${suffix}`;
+
+        if (progress < 1) {
+            requestAnimationFrame(frame);
+        } else {
+            const finalValue = decimals > 0 ? targetValue.toFixed(decimals) : Math.round(targetValue).toString();
+            element.textContent = `${finalValue}${suffix}`;
+        }
+    }
+
+    requestAnimationFrame(frame);
+}
+
+const counterObserver = new IntersectionObserver(
+    (entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                counterObserver.unobserve(entry.target);
+            }
+        });
+    },
+    { threshold: 0.5 }
+);
+
+counters.forEach((counter) => counterObserver.observe(counter));
+
+if (heroStage && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const resetHeroStage = () => {
+        heroStage.style.setProperty("--tilt-x", "0deg");
+        heroStage.style.setProperty("--tilt-y", "0deg");
+        heroStage.style.setProperty("--pointer-x", "52%");
+        heroStage.style.setProperty("--pointer-y", "38%");
+    };
+
+    resetHeroStage();
+
+    heroStage.addEventListener("pointermove", (event) => {
+        const rect = heroStage.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width;
+        const y = (event.clientY - rect.top) / rect.height;
+        const tiltY = (x - 0.5) * 10;
+        const tiltX = (0.5 - y) * 8;
+
+        heroStage.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
+        heroStage.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
+        heroStage.style.setProperty("--pointer-x", `${(x * 100).toFixed(1)}%`);
+        heroStage.style.setProperty("--pointer-y", `${(y * 100).toFixed(1)}%`);
+    });
+
+    heroStage.addEventListener("pointerleave", resetHeroStage);
 }

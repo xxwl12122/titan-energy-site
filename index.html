@@ -1,374 +1,425 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>泰坦能量 | 专业能源解决方案</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Professional Fonts -->
+    <meta name="description" content="泰坦能量为工业自动化、医疗检测、物联网终端与户外设备提供稳定耐用的能源解决方案。">
+    <meta name="theme-color" content="#0f1724">
+    <title>泰坦能量 | 工业级能源解决方案</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <div class="site-shell">
+        <header class="topbar" id="top">
+            <div class="container nav-row">
+                <a href="#hero" class="brand" aria-label="返回泰坦能量首页">
+                    <span class="brand-mark" aria-hidden="true"></span>
+                    <span class="brand-copy">
+                        <strong>泰坦能量</strong>
+                        <small>TITAN ENERGY SYSTEMS</small>
+                    </span>
+                </a>
+                <nav class="desktop-nav" aria-label="主导航">
+                    <a href="#products">产品矩阵</a>
+                    <a href="#technology">核心技术</a>
+                    <a href="#scenarios">应用场景</a>
+                    <a href="#process">交付流程</a>
+                    <a href="#contact">获取方案</a>
+                </nav>
+                <div class="nav-actions">
+                    <button class="icon-button search-toggle" type="button" aria-label="打开站内搜索">
+                        <span aria-hidden="true">搜</span>
+                    </button>
+                    <button class="icon-button theme-toggle" type="button" aria-label="切换主题">
+                        <span class="theme-toggle-text">夜</span>
+                    </button>
+                    <a class="nav-cta" href="#contact">获取方案</a>
+                </div>
+                <button class="mobile-menu-entry" type="button" aria-label="打开移动菜单" aria-expanded="false" aria-controls="mobilePanel">
+                    <span class="mobile-menu-label">Menu</span>
+                </button>
+            </div>
+        </header>
 
-    <!-- 高级背景系统 -->
-    <div class="advanced-bg">
-        <canvas id="energy-particles" class="bg-layer"></canvas>
-        <div class="bg-layer bg-gradient"></div>
-        <div class="bg-layer bg-noise"></div>
-        <div class="bg-layer bg-orbits">
-            <div class="orbit orbit-1"></div>
-            <div class="orbit orbit-2"></div>
-            <div class="orbit orbit-3"></div>
+        <div class="search-overlay" id="searchOverlay" hidden>
+            <div class="search-card" role="dialog" aria-modal="true" aria-labelledby="searchTitle">
+                <div class="search-head">
+                    <div>
+                        <p class="eyebrow">站内直达</p>
+                        <h2 id="searchTitle">快速定位你想看的内容</h2>
+                    </div>
+                    <button class="search-close" type="button" aria-label="关闭搜索">关闭</button>
+                </div>
+                <p class="search-hint">输入“产品 / 技术 / 行业 / 联系 / 交付”等关键词，页面会自动跳转到最相关的区块。</p>
+                <form class="search-form" id="searchForm">
+                    <label class="sr-only" for="siteSearch">搜索页面内容</label>
+                    <input id="siteSearch" class="search-input" type="search" placeholder="例如：工业、锂电、方案、交付" autocomplete="off">
+                    <button class="search-submit" type="submit">立即跳转</button>
+                </form>
+                <p class="search-feedback" id="searchFeedback" aria-live="polite"></p>
+                <div class="search-tags">
+                    <button type="button" class="tag-button" data-query="产品">产品</button>
+                    <button type="button" class="tag-button" data-query="技术">技术</button>
+                    <button type="button" class="tag-button" data-query="行业">行业</button>
+                    <button type="button" class="tag-button" data-query="交付">交付</button>
+                    <button type="button" class="tag-button" data-query="联系">联系</button>
+                </div>
+            </div>
         </div>
+
+        <div class="mobile-panel" id="mobilePanel" hidden>
+            <button class="mobile-backdrop" type="button" aria-label="关闭移动菜单"></button>
+            <aside class="mobile-drawer" aria-label="移动导航">
+                <div class="mobile-head">
+                    <div class="brand brand-inline">
+                        <span class="brand-mark" aria-hidden="true"></span>
+                        <span class="brand-copy">
+                            <strong>泰坦能量</strong>
+                            <small>TITAN ENERGY SYSTEMS</small>
+                        </span>
+                    </div>
+                    <button class="mobile-close" type="button" aria-label="关闭移动菜单">关闭</button>
+                </div>
+                <nav class="mobile-nav">
+                    <a href="#products">产品矩阵</a>
+                    <a href="#technology">核心技术</a>
+                    <a href="#scenarios">应用场景</a>
+                    <a href="#process">交付流程</a>
+                    <a href="#contact">获取方案</a>
+                </nav>
+                <div class="mobile-card">
+                    <p>面向高强度场景的工业级供能方案</p>
+                    <a href="#contact" class="solid-link">预约沟通</a>
+                </div>
+            </aside>
+        </div>
+
+        <main>
+            <section class="hero" id="hero" data-search="首页 首屏 能源 工业 稳定">
+                <div class="hero-aura hero-aura-left" aria-hidden="true"></div>
+                <div class="hero-aura hero-aura-right" aria-hidden="true"></div>
+                <div class="container hero-grid">
+                    <div class="hero-copy">
+                        <p class="eyebrow reveal" style="--reveal-delay: 40ms;">工业级能源解决方案</p>
+                        <h1 class="hero-title reveal" style="--reveal-delay: 120ms;">
+                            为高强度场景打造
+                            <span>更稳的能源底座</span>
+                        </h1>
+                        <p class="hero-text reveal" style="--reveal-delay: 200ms;">
+                            泰坦能量聚焦工业自动化、医疗检测、物联网终端与户外设备，
+                            通过长寿命电芯、稳定输出架构与快速选型支持，帮助项目从样机到量产更快落地。
+                        </p>
+                        <div class="hero-actions reveal" style="--reveal-delay: 280ms;">
+                            <button class="primary-button" type="button" data-scroll="#products">查看产品矩阵</button>
+                            <button class="secondary-button" type="button" data-scroll="#contact">获取项目方案</button>
+                        </div>
+                        <div class="hero-metrics reveal" style="--reveal-delay: 360ms;">
+                            <article class="metric-card">
+                                <strong class="metric-value" data-count="48" data-suffix="h">0h</strong>
+                                <span>快速选型反馈</span>
+                            </article>
+                            <article class="metric-card">
+                                <strong class="metric-value" data-count="99.92" data-decimals="2" data-suffix="%">0%</strong>
+                                <span>供能稳定度</span>
+                            </article>
+                            <article class="metric-card">
+                                <strong class="metric-value" data-count="120" data-suffix="+">0+</strong>
+                                <span>场景适配经验</span>
+                            </article>
+                        </div>
+                        <button class="hero-scroll reveal" style="--reveal-delay: 440ms;" type="button" data-scroll="#products">
+                            <span class="hero-scroll-icon" aria-hidden="true"></span>
+                            Scroll to explore
+                        </button>
+                    </div>
+
+                    <div class="hero-panel">
+                        <article class="hero-stage reveal" style="--reveal-delay: 160ms;">
+                            <div class="hero-stage-top">
+                                <span>Power Ring Motion</span>
+                                <span>LIVE</span>
+                            </div>
+                            <div class="battery-capsule" aria-hidden="true">
+                                <div class="battery-shadow"></div>
+                                <div class="battery-body"></div>
+                                <div class="battery-head"></div>
+                                <div class="battery-ring"></div>
+                                <div class="battery-core"></div>
+                                <span class="energy-spark spark-a"></span>
+                                <span class="energy-spark spark-b"></span>
+                                <span class="energy-spark spark-c"></span>
+                            </div>
+                            <div class="hero-stage-foot">
+                                <strong>更接近国际站的能量环主视觉</strong>
+                                <p>用更聚焦的主物体、发光边缘和滚动揭示，放大品牌首屏记忆点。</p>
+                            </div>
+                        </article>
+
+                        <div class="hero-panel-grid">
+                            <article class="signal-card reveal" style="--reveal-delay: 280ms;">
+                                <div class="signal-head">
+                                    <span>能源状态面板</span>
+                                    <span>LIVE</span>
+                                </div>
+                                <div class="signal-bars" aria-hidden="true">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                                <div class="signal-foot">
+                                    <strong>多场景稳定输出</strong>
+                                    <p>从低温到高频唤醒场景，输出曲线更平稳。</p>
+                                </div>
+                            </article>
+
+                            <article class="note-card reveal" style="--reveal-delay: 360ms;">
+                                <p>项目常见诉求</p>
+                                <ul>
+                                    <li>更长续航但不增加体积</li>
+                                    <li>更稳输出减少误报和掉线</li>
+                                    <li>更快完成样品验证与批量切换</li>
+                                </ul>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="trust-strip" aria-label="服务行业">
+                <div class="trust-marquee reveal">
+                    <div class="trust-track">
+                        <span>工业自动化</span>
+                        <span>医疗检测</span>
+                        <span>物联网终端</span>
+                        <span>户外设备</span>
+                        <span>安防监测</span>
+                        <span>工业自动化</span>
+                        <span>医疗检测</span>
+                        <span>物联网终端</span>
+                        <span>户外设备</span>
+                        <span>安防监测</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section products-section" id="products" data-search="产品 电池 锂电 工业 供电">
+                <div class="container">
+                    <div class="section-head reveal">
+                        <p class="eyebrow">产品矩阵</p>
+                        <h2>围绕寿命、峰值与环境适配建立完整组合</h2>
+                        <p>不是把所有电池堆在一起，而是按使用场景拆出更清晰的选型路径。</p>
+                    </div>
+                    <div class="product-grid">
+                        <article class="product-card reveal">
+                            <div class="product-kicker">Classic Core</div>
+                            <h3>超能经典系列</h3>
+                            <p>面向遥测终端、手持设备与中低频工作场景，强调耐用、稳定与成本平衡。</p>
+                            <ul class="feature-list">
+                                <li>低自放电，适合待机型设备</li>
+                                <li>输出曲线稳定，减少误触发</li>
+                                <li>支持长周期库存管理</li>
+                            </ul>
+                        </article>
+                        <article class="product-card featured reveal">
+                            <div class="product-kicker">Titan Pulse</div>
+                            <h3>锂能专业系列</h3>
+                            <p>针对高频唤醒、脉冲负载和温差环境设计，适合物联节点与专业终端设备。</p>
+                            <ul class="feature-list">
+                                <li>高峰值输出能力更充足</li>
+                                <li>低温和震动场景表现稳定</li>
+                                <li>支持定制封装与接口方案</li>
+                            </ul>
+                        </article>
+                        <article class="product-card reveal">
+                            <div class="product-kicker">Prime Reserve</div>
+                            <h3>长续航旗舰系列</h3>
+                            <p>服务医疗监测、户外巡检与关键备份供电，优先保障长寿命与连续可靠性。</p>
+                            <ul class="feature-list">
+                                <li>更高能量密度，缩小整机空间</li>
+                                <li>支持安全防护与追溯管理</li>
+                                <li>适合重要设备长期运行</li>
+                            </ul>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section technology-section" id="technology" data-search="技术 研发 稳定 输出 寿命">
+                <div class="container technology-grid">
+                    <div class="technology-copy">
+                        <div class="section-head reveal">
+                            <p class="eyebrow">核心技术</p>
+                            <h2>把性能参数翻译成实际业务收益</h2>
+                            <p>我们关注的不只是实验室里的漂亮数据，而是项目上线后能不能少返修、少中断、少换电。</p>
+                        </div>
+                        <div class="capability-list">
+                            <article class="capability-card reveal">
+                                <h3>稳定输出架构</h3>
+                                <p>通过更稳的放电曲线与负载响应，降低设备误报、重启与掉线概率。</p>
+                            </article>
+                            <article class="capability-card reveal">
+                                <h3>环境适配能力</h3>
+                                <p>覆盖低温、振动、周期唤醒和户外部署等典型复杂场景。</p>
+                            </article>
+                            <article class="capability-card reveal">
+                                <h3>项目协同交付</h3>
+                                <p>从选型建议、样品验证到量产切换，提供更清晰的项目节奏支持。</p>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="technology-panel reveal">
+                        <div class="panel-top">
+                            <p>性能总览</p>
+                            <strong>Deployment Ready</strong>
+                        </div>
+                        <div class="panel-matrix">
+                            <div class="panel-row">
+                                <span>输出稳定</span>
+                                <strong>99.92%</strong>
+                            </div>
+                            <div class="panel-row">
+                                <span>交期响应</span>
+                                <strong>48h</strong>
+                            </div>
+                            <div class="panel-row">
+                                <span>寿命优化</span>
+                                <strong>3.6x</strong>
+                            </div>
+                            <div class="panel-row">
+                                <span>适配行业</span>
+                                <strong>12+</strong>
+                            </div>
+                        </div>
+                        <div class="panel-note">
+                            <p>建议从设备峰值电流、待机时长、工作温度和维护频率四个维度做选型。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section scenarios-section" id="scenarios" data-search="行业 场景 医疗 工业 物联 户外">
+                <div class="container">
+                    <div class="section-head reveal">
+                        <p class="eyebrow">应用场景</p>
+                        <h2>针对不同工作条件给出不同方案重点</h2>
+                        <p>同样是“续航要长”，工业传感器和医疗终端的判断标准并不一样。</p>
+                    </div>
+                    <div class="scenario-grid">
+                        <article class="scenario-card reveal">
+                            <span class="scenario-index">01</span>
+                            <h3>工业自动化</h3>
+                            <p>强调持续稳定与维护便利，减少停机和人工巡检频次。</p>
+                        </article>
+                        <article class="scenario-card reveal">
+                            <span class="scenario-index">02</span>
+                            <h3>医疗检测设备</h3>
+                            <p>优先供电可靠性与长期使用一致性，支持关键时刻稳定运行。</p>
+                        </article>
+                        <article class="scenario-card reveal">
+                            <span class="scenario-index">03</span>
+                            <h3>物联网终端</h3>
+                            <p>适配高频唤醒、无线传输与空间受限场景，兼顾峰值和体积。</p>
+                        </article>
+                        <article class="scenario-card reveal">
+                            <span class="scenario-index">04</span>
+                            <h3>户外巡检设备</h3>
+                            <p>覆盖温差、震动与长时间离线环境，降低现场换电风险。</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section process-section" id="process" data-search="交付 流程 打样 量产 项目">
+                <div class="container">
+                    <div class="section-head reveal">
+                        <p class="eyebrow">交付流程</p>
+                        <h2>从评估到量产，把项目推进节奏说清楚</h2>
+                        <p>把“咨询一下”变成真正可执行的项目动作，减少反复沟通和不必要试错。</p>
+                    </div>
+                    <div class="timeline">
+                        <article class="timeline-item reveal">
+                            <span>01</span>
+                            <div>
+                                <h3>需求评估</h3>
+                                <p>确认设备功耗模型、使用周期、环境条件与结构限制。</p>
+                            </div>
+                        </article>
+                        <article class="timeline-item reveal">
+                            <span>02</span>
+                            <div>
+                                <h3>样品验证</h3>
+                                <p>对比多种供电方案，在真实工作场景下校验续航与峰值响应。</p>
+                            </div>
+                        </article>
+                        <article class="timeline-item reveal">
+                            <span>03</span>
+                            <div>
+                                <h3>量产导入</h3>
+                                <p>明确规格、包装、防护与追溯要求，平滑完成批量切换。</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section cta-section" id="contact" data-search="联系 咨询 方案 沟通 合作">
+                <div class="container cta-grid">
+                    <div class="cta-copy reveal">
+                        <p class="eyebrow">获取方案</p>
+                        <h2>如果你已经有项目需求，现在就可以进入方案沟通阶段</h2>
+                        <p>告诉我们设备类型、使用频率和部署环境，我们会更快给出可执行的选型建议。</p>
+                    </div>
+                    <div class="cta-card reveal">
+                        <div class="cta-item">
+                            <span>邮件咨询</span>
+                            <a href="mailto:sales@titanenergy.cn">sales@titanenergy.cn</a>
+                        </div>
+                        <div class="cta-item">
+                            <span>项目热线</span>
+                            <a href="tel:400-820-2048">400-820-2048</a>
+                        </div>
+                        <div class="cta-item">
+                            <span>服务时间</span>
+                            <strong>工作日 09:00 - 18:00</strong>
+                        </div>
+                        <button class="primary-button wide" type="button" data-scroll="#hero">回到顶部查看概览</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="container footer-row">
+                <div>
+                    <div class="brand brand-inline">
+                        <span class="brand-mark" aria-hidden="true"></span>
+                        <span class="brand-copy">
+                            <strong>泰坦能量</strong>
+                            <small>TITAN ENERGY SYSTEMS</small>
+                        </span>
+                    </div>
+                    <p class="footer-text">更稳的能源底座，服务更严苛的工作现场。</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#products">产品矩阵</a>
+                    <a href="#technology">核心技术</a>
+                    <a href="#scenarios">应用场景</a>
+                    <a href="#contact">获取方案</a>
+                </div>
+                <p class="footer-copy">© <span id="year"></span> 泰坦能量. All rights reserved.</p>
+            </div>
+        </footer>
     </div>
 
-    <!-- 专业导航栏 -->
-    <nav class="professional-nav">
-        <div class="nav-container">
-            <div class="nav-left">
-                <a href="#products" class="logo">
-                    <span class="logo-icon">⚡</span>
-                    <span class="logo-text">泰坦能量</span>
-                </a>
-                <div class="nav-menu">
-                    <div class="nav-item">
-                        <a href="#products" class="nav-link">产品系列</a>
-                    </div>
-                    <div class="nav-item">
-                        <a href="#technology" class="nav-link">技术创新</a>
-                    </div>
-                    <div class="nav-item">
-                        <a href="#solutions" class="nav-link">解决方案</a>
-                    </div>
-                    <div class="nav-item">
-                        <a href="#about" class="nav-link">关于我们</a>
-                    </div>
-                </div>
-            </div>
-            <div class="nav-right">
-                <button class="search-btn">🔍</button>
-                <div class="search-overlay">
-                    <div class="search-container">
-                        <input type="text" class="search-input" placeholder="输入关键词搜索...">
-                        <button class="search-btn-submit">搜索</button>
-                        <button class="search-close">×</button>
-                    </div>
-                </div>
-                <button class="theme-toggle">🌙</button>
-                <button class="mobile-menu">☰</button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- 英雄区域 -->
-    <section id="hero" class="hero-section">
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-badge">超能动力 · 智连未来</div>
-                <h1 class="hero-title">
-                    <span class="title-line">泰坦能量</span>
-                    <span class="title-line">驱动未来</span>
-                    <span class="title-line">智领科技</span>
-                </h1>
-                <p class="hero-subtitle">工业级能源解决方案，为您的设备提供持久强劲的动力支持</p>
-                <div class="hero-actions">
-                    <button class="primary-btn large">探索产品</button>
-                    <button class="secondary-btn large">技术文档</button>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">50+</div>
-                        <div class="stat-label">年技术沉淀</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">100M+</div>
-                        <div class="stat-label">用户信赖</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">99.9%</div>
-                        <div class="stat-label">品质保障</div>
-                    </div>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <div class="battery-showcase tilt-container">
-                    <div class="battery-model tilt-element"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 产品展示 -->
-    <section id="products" class="products-section">
-        <div class="section-header">
-            <h2 class="section-title">产品系列</h2>
-            <p class="section-subtitle">为不同需求提供专业解决方案</p>
-        </div>
-        <div class="products-grid">
-            <div class="product-card featured">
-                <div class="product-badge">经典系列</div>
-                <div class="product-image">
-                    <div class="battery-icon coppertop"></div>
-                </div>
-                <h3 class="product-name">超能经典</h3>
-                <p class="product-description">日常设备的可靠选择，持久稳定的电力供应</p>
-                <div class="product-features">
-                    <div class="feature">
-                        <span class="feature-icon">⚡</span>
-                        <span class="feature-text">POWER BOOST™ 技术</span>
-                    </div>
-                    <div class="feature">
-                        <span class="feature-icon">🔋</span>
-                        <span class="feature-text">长寿命设计</span>
-                    </div>
-                    <div class="feature">
-                        <span class="feature-icon">🛡️</span>
-                        <span class="feature-text">防漏电保护</span>
-                    </div>
-                </div>
-                <button class="product-btn">了解更多</button>
-            </div>
-            <div class="product-card">
-                <div class="product-badge">专业系列</div>
-                <div class="product-image">
-                    <div class="battery-icon lithium"></div>
-                </div>
-                <h3 class="product-name">锂能专业</h3>
-                <p class="product-description">高性能锂电池，为专业设备提供强劲动力</p>
-                <div class="product-features">
-                    <div class="feature">
-                        <span class="feature-icon">🚀</span>
-                        <span class="feature-text">超长续航</span>
-                    </div>
-                    <div class="feature">
-                        <span class="feature-icon">❄️</span>
-                        <span class="feature-text">低温性能</span>
-                    </div>
-                    <div class="feature">
-                        <span class="feature-icon">👶</span>
-                        <span class="feature-text">儿童安全设计</span>
-                    </div>
-                </div>
-                <button class="product-btn">了解更多</button>
-            </div>
-            <div class="product-card">
-                <div class="product-badge">旗舰系列</div>
-                <div class="product-image">
-                    <div class="battery-icon optimum"></div>
-                </div>
-                <h3 class="product-name">超能旗舰</h3>
-                <p class="product-description">4倍超能 BOOST™ 配方，性能卓越</p>
-                <div class="product-features">
-                    <div class="feature">
-                        <span class="feature-icon">⚡</span>
-                        <span class="feature-text">4倍动力提升</span>
-                    </div>
-                    <div class="feature">
-                        <span class="feature-icon">🎯</span>
-                        <span class="feature-text">精准匹配</span>
-                    </div>
-                    <div class="feature">
-                        <span class="feature-icon">🔬</span>
-                        <span class="feature-text">实验室认证</span>
-                    </div>
-                </div>
-                <button class="product-btn">了解更多</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- 技术创新 -->
-    <section id="technology" class="technology-section">
-        <div class="tech-container">
-            <div class="tech-content">
-                <h2 class="tech-title">技术创新</h2>
-                <p class="tech-subtitle">持续突破能源技术的边界</p>
-                <div class="tech-features">
-                    <div class="tech-item">
-                        <div class="tech-icon">🔬</div>
-                        <h3>超能 BOOST™ 技术</h3>
-                        <p>专利配方，显著提升电池性能和寿命</p>
-                    </div>
-                    <div class="tech-item">
-                        <div class="tech-icon">🛡️</div>
-                        <h3>儿童安全防护</h3>
-                        <p>苦味涂层和防儿童开启包装，保护儿童安全</p>
-                    </div>
-                    <div class="tech-item">
-                        <div class="tech-icon">🌱</div>
-                        <h3>环保可持续</h3>
-                        <p>可回收材料，减少环境负担</p>
-                    </div>
-                </div>
-            </div>
-            <div class="tech-visual">
-                <div class="tech-animation">
-                    <div class="power-flow"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 应用场景 -->
-    <section id="solutions" class="solutions-section">
-        <div class="solutions-container">
-            <h2 class="solutions-title">应用场景</h2>
-            <div class="solutions-grid">
-                <div class="solution-card">
-                    <div class="solution-icon">🏠</div>
-                    <h3>家庭应用</h3>
-                    <p>遥控器、玩具、时钟等家用设备的理想选择</p>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-icon">🏃</div>
-                    <h3>运动户外</h3>
-                    <p>运动装备、户外设备、GPS 等高性能应用</p>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-icon">🏥</div>
-                    <h3>医疗设备</h3>
-                    <p>血糖仪、体温计、医疗监测设备等专业应用</p>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-icon">🏭</div>
-                    <h3>工业应用</h3>
-                    <p>工业设备、传感器、物联网设备等商业应用</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 数据展示 -->
-    <section id="stats" class="stats-section">
-        <div class="stats-container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number" data-target="50">0</div>
-                    <div class="stat-label">年行业沉淀</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" data-target="100">0</div>
-                    <div class="stat-label">百万用户信赖</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" data-target="99">0</div>
-                    <div class="stat-label">%品质保障</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" data-target="24">0</div>
-                    <div class="stat-label">小时技术支持</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 关于我们 -->
-    <section id="about" class="about-section">
-        <div class="about-container">
-            <div class="section-header">
-                <h2 class="section-title">关于我们</h2>
-                <p class="section-subtitle">泰坦能量，驱动未来的力量</p>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>泰坦能量成立于20世纪70年代，是一家专注于高性能电池研发与制造的全球领先企业。我们致力于为工业、消费电子和医疗设备提供持久、安全、可靠的能源解决方案。</p>
-                    <p>凭借超过50年的技术沉淀和对品质的极致追求，泰坦能量已成为全球数百万用户的信赖之选。我们的研发中心遍布全球，持续投入创新，以POWER BOOST™等专利技术引领行业发展。</p>
-                </div>
-                <div class="about-visual">
-                    <div class="about-image"></div>
-                </div>
-            </div>
-            <div class="about-values">
-                <div class="value-card">
-                    <h3>创新驱动</h3>
-                    <p>我们坚信，持续的技术创新是企业发展的核心动力。</p>
-                </div>
-                <div class="value-card">
-                    <h3>品质至上</h3>
-                    <p>从原材料到成品，我们执行最严格的品控标准。</p>
-                </div>
-                <div class="value-card">
-                    <h3>客户为本</h3>
-                    <p>我们的一切努力，都是为了更好地服务我们的客户。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 页脚 -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>产品系列</h4>
-                    <ul>
-                        <li><a href="#coppertop">超能经典系列</a></li>
-                        <li><a href="#lithium">锂能专业系列</a></li>
-                        <li><a href="#optimum">超能旗舰系列</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>技术中心</h4>
-                    <ul>
-                        <li><a href="#innovation">超能 BOOST™ 技术</a></li>
-                        <li><a href="#safety">安全防护</a></li>
-                        <li><a href="#research">研发创新</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>客户支持</h4>
-                    <ul>
-                        <li><a href="#contact">联系我们</a></li>
-                        <li><a href="#warranty">质保承诺</a></li>
-                        <li><a href="#faq">技术问答</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>关注我们</h4>
-                    <div class="social-links">
-                        <a href="#products" class="social-link">📧</a>
-                        <a href="#products" class="social-link">📱</a>
-                        <a href="#products" class="social-link">💼</a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 泰坦能量. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- 移动端侧边栏菜单 -->
-    <nav class="mobile-drawer">
-        <div class="drawer-header">
-            <a href="#hero" class="logo">
-                <span class="logo-icon">⚡</span>
-                <span class="logo-text">泰坦能量</span>
-            </a>
-            <button class="drawer-close">×</button>
-        </div>
-        <div class="drawer-body">
-            <a href="#products" class="drawer-link">产品系列</a>
-            <a href="#technology" class="drawer-link">技术创新</a>
-            <a href="#solutions" class="drawer-link">解决方案</a>
-            <a href="#about" class="drawer-link">关于我们</a>
-        </div>
-    </nav>
-
-    <!-- GSAP & ScrollTrigger -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <noscript>页面的搜索、数字动画和移动菜单需要开启 JavaScript。</noscript>
     <script src="script.js"></script>
-    <script src="particles.js"></script>
 </body>
-
 </html>
-
-
-
-
-
