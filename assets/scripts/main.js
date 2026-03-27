@@ -25,9 +25,8 @@ if (yearTarget) {
     yearTarget.textContent = new Date().getFullYear().toString();
 }
 
-const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 const storedTheme = window.localStorage.getItem("titan-theme");
-const initialTheme = storedTheme || (prefersDark ? "dark" : "light");
+const initialTheme = storedTheme || "dark";
 
 applyTheme(initialTheme);
 
@@ -130,7 +129,9 @@ function scrollToTarget(selector) {
         return false;
     }
 
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    const topbarHeight = topbar?.offsetHeight || 0;
+    const topOffset = target.getBoundingClientRect().top + window.scrollY - topbarHeight - 18;
+    window.scrollTo({ top: Math.max(topOffset, 0), behavior: "smooth" });
     return true;
 }
 
