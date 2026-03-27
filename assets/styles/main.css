@@ -1137,6 +1137,10 @@ body[data-theme="light"] .section-surface::before {
   gap: 18px;
 }
 
+.scenario-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .product-card,
 .scenario-card,
 .capability-card,
@@ -1618,6 +1622,8 @@ body[data-theme="light"] .technology-visual {
 .scenario-card {
   position: relative;
   overflow: hidden;
+  display: grid;
+  align-content: start;
 }
 
 .scenario-card::after {
@@ -1628,6 +1634,55 @@ body[data-theme="light"] .technology-visual {
   height: 144px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(255, 157, 96, 0.12), transparent 68%);
+}
+
+.scenario-visual {
+  margin: -6px -6px 18px;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  aspect-ratio: 16 / 9;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.scenario-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.scenario-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.scenario-meta span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(236, 241, 247, 0.72);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+
+body[data-theme="light"] .scenario-visual,
+body[data-theme="light"] .scenario-meta span {
+  border-color: var(--line);
+}
+
+body[data-theme="light"] .scenario-meta span {
+  color: var(--muted);
+  background: rgba(15, 63, 103, 0.05);
 }
 
 .timeline-item {
@@ -2222,6 +2277,11 @@ body[data-theme="light"] .technology-visual {
 
   .product-visual {
     min-height: 180px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .scenario-visual {
     margin-left: 0;
     margin-right: 0;
   }
