@@ -1,11 +1,26 @@
-# 泰坦能量 (Titan Energy)
+# 泰坦能量官网
 
-基于顶级工业设计美学的现代能源官网解决方案，集成 GSAP 物理动效与极致视觉体验。
+一个部署在 Vercel 的静态品牌站点，使用原生 `HTML + CSS + JavaScript` 构建。
 
-## 技术栈
+## 线上地址
 
-- **HTML5**: 语义化标记
-- **CSS3**: 现代CSS特性与动画
-- **JavaScript**: 原生JS与GSAP动画库
-- **GSAP**: 专业级动画引擎
-- **Vercel**: 部署平台
+- [生产环境](https://titan-energy-site.vercel.app)
+
+## 项目文件
+
+- `index.html`: 页面结构
+- `style.css`: 视觉样式与动画
+- `script.js`: 交互逻辑
+- `vercel.json`: Vercel 部署配置
+
+## 本地预览
+
+直接用浏览器打开 `index.html` 即可，或使用任意静态文件服务。
+
+## 部署
+
+项目已链接到 Vercel，可直接执行：
+
+```bash
+vercel --prod
+```
