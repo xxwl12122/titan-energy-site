@@ -602,13 +602,10 @@ body[data-theme="light"] .topbar .brand-copy strong {
 .hero-stage {
   position: relative;
   min-height: 520px;
-  padding: 24px 28px 28px;
+  padding: 22px 24px 24px;
   border-radius: 36px;
   overflow: hidden;
-  background:
-    radial-gradient(circle at var(--pointer-x, 52%) var(--pointer-y, 38%), rgba(255, 194, 129, 0.24), transparent 24%),
-    linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 40px 80px rgba(0, 0, 0, 0.34);
   transform: perspective(1200px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
@@ -618,27 +615,27 @@ body[data-theme="light"] .topbar .brand-copy strong {
 .hero-stage::before {
   content: "";
   position: absolute;
-  inset: -20% auto -10% -35%;
-  width: 48%;
-  background: linear-gradient(115deg, transparent 16%, rgba(255, 255, 255, 0.14) 48%, transparent 82%);
-  transform: rotate(8deg);
-  opacity: 0.42;
-  animation: stage-sheen 7.2s linear infinite;
+  inset: 0;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.09), transparent 24%),
+    linear-gradient(180deg, rgba(4, 7, 12, 0.06), rgba(4, 7, 12, 0.14) 38%, rgba(4, 7, 12, 0.86));
+  pointer-events: none;
 }
 
 .hero-stage::after {
   content: "";
   position: absolute;
-  inset: auto -15% -45% 15%;
-  height: 240px;
-  background: radial-gradient(circle, rgba(255, 150, 74, 0.26), transparent 68%);
-  filter: blur(30px);
+  inset: 0;
+  background:
+    radial-gradient(circle at var(--pointer-x, 72%) var(--pointer-y, 54%), rgba(255, 173, 112, 0.26), transparent 22%),
+    linear-gradient(180deg, rgba(3, 5, 9, 0) 0%, rgba(3, 5, 9, 0.2) 56%, rgba(3, 5, 9, 0.96) 100%);
+  pointer-events: none;
 }
 
 .hero-stage-top,
 .hero-stage-foot {
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
 
 .hero-stage-top {
@@ -646,6 +643,10 @@ body[data-theme="light"] .topbar .brand-copy strong {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  position: absolute;
+  top: 22px;
+  left: 24px;
+  right: 24px;
 }
 
 .hero-stage-top span:first-child {
@@ -662,6 +663,21 @@ body[data-theme="light"] .topbar .brand-copy strong {
   color: #88f8ca;
   font-size: 0.76rem;
   font-weight: 700;
+}
+
+.hero-stage-media {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.hero-stage-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 78% center;
+  transform: scale(1.02);
 }
 
 .battery-capsule {
@@ -778,11 +794,22 @@ body[data-theme="light"] .topbar .brand-copy strong {
   color: #fff;
   font-family: var(--font-heading);
   font-size: 1.16rem;
+  max-width: 24ch;
 }
 
 .hero-stage-foot p {
   margin-top: 8px;
   color: rgba(236, 241, 247, 0.68);
+  max-width: 40ch;
+}
+
+.hero-stage-foot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 118px 28px 28px;
+  background: linear-gradient(180deg, transparent, rgba(3, 5, 9, 0.76) 48%, rgba(3, 5, 9, 0.98));
 }
 
 .signal-card,
@@ -1208,9 +1235,10 @@ body[data-theme="light"] .cta-card {
 .product-visual {
   display: grid;
   place-items: center;
+  aspect-ratio: 4 / 3;
   min-height: 220px;
   margin: -6px -6px 18px;
-  padding: 14px;
+  padding: 0;
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background:
@@ -1222,8 +1250,10 @@ body[data-theme="light"] .cta-card {
 .product-visual img {
   display: block;
   width: 100%;
-  height: auto;
-  filter: drop-shadow(0 22px 34px rgba(0, 0, 0, 0.28));
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: saturate(1.02) drop-shadow(0 22px 34px rgba(0, 0, 0, 0.28));
 }
 
 .product-specs {
@@ -1922,6 +1952,20 @@ body[data-theme="light"] .card-meta span {
     min-height: 460px;
   }
 
+  .hero-stage-top {
+    top: 20px;
+    left: 20px;
+    right: 20px;
+  }
+
+  .hero-stage-foot {
+    padding: 98px 24px 24px;
+  }
+
+  .hero-stage-media img {
+    object-position: 74% center;
+  }
+
   .battery-capsule {
     height: 330px;
   }
@@ -2017,6 +2061,20 @@ body[data-theme="light"] .card-meta span {
   .hero-stage {
     min-height: 390px;
     padding: 20px;
+  }
+
+  .hero-stage-top {
+    top: 18px;
+    left: 18px;
+    right: 18px;
+  }
+
+  .hero-stage-foot {
+    padding: 86px 20px 20px;
+  }
+
+  .hero-stage-media img {
+    object-position: 72% center;
   }
 
   .battery-capsule {
