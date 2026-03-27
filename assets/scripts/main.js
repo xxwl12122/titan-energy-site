@@ -163,7 +163,7 @@ function searchSection(query) {
 
     if (!normalized) {
         if (searchFeedback) {
-            searchFeedback.textContent = "试试输入“产品”、“技术”或“联系”。";
+            searchFeedback.textContent = "试试输入“产品”、“参数”、“技术”或“联系”。";
         }
         return;
     }
@@ -184,7 +184,7 @@ function searchSection(query) {
     }
 
     if (searchFeedback) {
-        searchFeedback.textContent = "没有直接匹配到结果，试试“产品”、“技术”、“行业”、“交付”或“联系”。";
+        searchFeedback.textContent = "没有直接匹配到结果，试试“产品”、“参数”、“技术”、“行业”、“交付”或“联系”。";
     }
 }
 

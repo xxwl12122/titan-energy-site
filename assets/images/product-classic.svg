@@ -1,0 +1,36 @@
+<svg width="800" height="520" viewBox="0 0 800 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="classicBg" x1="90" y1="40" x2="690" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1D2430"/>
+      <stop offset="1" stop-color="#090C12"/>
+    </linearGradient>
+    <linearGradient id="classicBody" x1="158" y1="303" x2="648" y2="167" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7F2EE"/>
+      <stop offset="0.42" stop-color="#E5D7CC"/>
+      <stop offset="0.74" stop-color="#A49082"/>
+      <stop offset="1" stop-color="#2A211D"/>
+    </linearGradient>
+    <radialGradient id="classicCap" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(583 184) rotate(90) scale(103)">
+      <stop stop-color="#FFF6EE"/>
+      <stop offset="0.38" stop-color="#E9D7C1"/>
+      <stop offset="0.74" stop-color="#A7774A"/>
+      <stop offset="1" stop-color="#2A1D17"/>
+    </radialGradient>
+    <filter id="classicShadow" x="108" y="92" width="586" height="320" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="28" stdDeviation="26" flood-color="#000000" flood-opacity="0.34"/>
+    </filter>
+  </defs>
+  <rect width="800" height="520" rx="40" fill="url(#classicBg)"/>
+  <circle cx="644" cy="118" r="92" fill="#F08B54" fill-opacity="0.16"/>
+  <circle cx="116" cy="420" r="102" fill="#4D90D2" fill-opacity="0.1"/>
+  <g filter="url(#classicShadow)">
+    <ellipse cx="406" cy="334" rx="244" ry="44" fill="#F08B54" fill-opacity="0.18"/>
+    <path d="M158 303C158 271.519 183.519 246 215 246H478C509.481 246 535 271.519 535 303V316C535 347.481 509.481 373 478 373H215C183.519 373 158 347.481 158 316V303Z" fill="url(#classicBody)"/>
+    <rect x="187" y="262" width="245" height="96" rx="48" fill="#233F67"/>
+    <rect x="201" y="276" width="90" height="14" rx="7" fill="#4D90D2" fill-opacity="0.52"/>
+    <circle cx="583" cy="298" r="92" fill="url(#classicCap)"/>
+    <circle cx="583" cy="298" r="58" fill="#FFE0B5" fill-opacity="0.74"/>
+    <circle cx="583" cy="298" r="40" fill="#FFF5EA"/>
+    <circle cx="583" cy="298" r="74" stroke="#FFC77D" stroke-opacity="0.6" stroke-width="18"/>
+  </g>
+</svg>

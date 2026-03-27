@@ -5,10 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="泰坦能量为工业自动化、医疗检测、物联网终端与户外设备提供稳定耐用的能源解决方案。">
     <meta name="theme-color" content="#0f1724">
+    <meta property="og:title" content="泰坦能量 | 工业级能源解决方案">
+    <meta property="og:description" content="聚焦工业自动化、医疗检测、物联网终端与户外设备的稳定供能方案，支持快速选型、打样验证与量产导入。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://titan-energy-site.vercel.app/">
+    <meta property="og:image" content="https://titan-energy-site.vercel.app/assets/images/share-cover.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="泰坦能量工业级能源解决方案分享图">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="泰坦能量 | 工业级能源解决方案">
+    <meta name="twitter:description" content="为工业自动化、医疗检测、物联网终端与户外设备提供稳定耐用的能源底座。">
+    <meta name="twitter:image" content="https://titan-energy-site.vercel.app/assets/images/share-cover.png">
     <title>泰坦能量 | 工业级能源解决方案</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
     <link rel="stylesheet" href="assets/styles/main.css">
 </head>
 <body>
@@ -53,15 +66,16 @@
                     </div>
                     <button class="search-close" type="button" aria-label="关闭搜索">关闭</button>
                 </div>
-                <p class="search-hint">输入“产品 / 技术 / 行业 / 联系 / 交付”等关键词，页面会自动跳转到最相关的区块。</p>
+                <p class="search-hint">输入“产品 / 参数 / 技术 / 行业 / 联系 / 交付”等关键词，页面会自动跳转到最相关的区块。</p>
                 <form class="search-form" id="searchForm">
                     <label class="sr-only" for="siteSearch">搜索页面内容</label>
-                    <input id="siteSearch" class="search-input" type="search" placeholder="例如：工业、锂电、方案、交付" autocomplete="off">
+                    <input id="siteSearch" class="search-input" type="search" placeholder="例如：工业、参数、锂电、方案、交付" autocomplete="off">
                     <button class="search-submit" type="submit">立即跳转</button>
                 </form>
                 <p class="search-feedback" id="searchFeedback" aria-live="polite"></p>
                 <div class="search-tags">
                     <button type="button" class="tag-button" data-query="产品">产品</button>
+                    <button type="button" class="tag-button" data-query="参数">参数</button>
                     <button type="button" class="tag-button" data-query="技术">技术</button>
                     <button type="button" class="tag-button" data-query="行业">行业</button>
                     <button type="button" class="tag-button" data-query="交付">交付</button>
@@ -219,9 +233,26 @@
                     </div>
                     <div class="product-grid">
                         <article class="product-card reveal">
+                            <div class="product-visual">
+                                <img src="assets/images/product-classic.svg" alt="超能经典系列产品展示图" loading="lazy">
+                            </div>
                             <div class="product-kicker">Classic Core</div>
                             <h3>超能经典系列</h3>
                             <p>面向遥测终端、手持设备与中低频工作场景，强调耐用、稳定与成本平衡。</p>
+                            <div class="product-specs" aria-label="超能经典系列参数">
+                                <div class="product-spec">
+                                    <span>标称容量</span>
+                                    <strong>2400-3200mAh</strong>
+                                </div>
+                                <div class="product-spec">
+                                    <span>温度范围</span>
+                                    <strong>-20°C 至 60°C</strong>
+                                </div>
+                                <div class="product-spec">
+                                    <span>峰值负载</span>
+                                    <strong>2.5A</strong>
+                                </div>
+                            </div>
                             <ul class="feature-list">
                                 <li>低自放电，适合待机型设备</li>
                                 <li>输出曲线稳定，减少误触发</li>
@@ -233,9 +264,26 @@
                             </div>
                         </article>
                         <article class="product-card featured reveal">
+                            <div class="product-visual">
+                                <img src="assets/images/product-pulse.svg" alt="锂能专业系列产品展示图" loading="lazy">
+                            </div>
                             <div class="product-kicker">Titan Pulse</div>
                             <h3>锂能专业系列</h3>
                             <p>针对高频唤醒、脉冲负载和温差环境设计，适合物联节点与专业终端设备。</p>
+                            <div class="product-specs" aria-label="锂能专业系列参数">
+                                <div class="product-spec">
+                                    <span>标称容量</span>
+                                    <strong>1800-2800mAh</strong>
+                                </div>
+                                <div class="product-spec">
+                                    <span>温度范围</span>
+                                    <strong>-40°C 至 85°C</strong>
+                                </div>
+                                <div class="product-spec">
+                                    <span>峰值负载</span>
+                                    <strong>5.0A</strong>
+                                </div>
+                            </div>
                             <ul class="feature-list">
                                 <li>高峰值输出能力更充足</li>
                                 <li>低温和震动场景表现稳定</li>
@@ -247,9 +295,26 @@
                             </div>
                         </article>
                         <article class="product-card reveal">
+                            <div class="product-visual">
+                                <img src="assets/images/product-prime.svg" alt="长续航旗舰系列产品展示图" loading="lazy">
+                            </div>
                             <div class="product-kicker">Prime Reserve</div>
                             <h3>长续航旗舰系列</h3>
                             <p>服务医疗监测、户外巡检与关键备份供电，优先保障长寿命与连续可靠性。</p>
+                            <div class="product-specs" aria-label="长续航旗舰系列参数">
+                                <div class="product-spec">
+                                    <span>标称容量</span>
+                                    <strong>3500-5200mAh</strong>
+                                </div>
+                                <div class="product-spec">
+                                    <span>温度范围</span>
+                                    <strong>-30°C 至 70°C</strong>
+                                </div>
+                                <div class="product-spec">
+                                    <span>典型寿命</span>
+                                    <strong>10 年+</strong>
+                                </div>
+                            </div>
                             <ul class="feature-list">
                                 <li>更高能量密度，缩小整机空间</li>
                                 <li>支持安全防护与追溯管理</li>
@@ -260,6 +325,89 @@
                                 <span>长续航优先</span>
                             </div>
                         </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section parameters-section" id="parameters" data-search="参数 规格 容量 温度 电流 寿命 封装 对比">
+                <div class="container section-surface">
+                    <div class="section-head reveal">
+                        <p class="eyebrow">参数模块</p>
+                        <h2>把选型关键参数做成可直接沟通的对比模块</h2>
+                        <p>先把客户最常问的容量、温区、峰值电流、寿命和封装能力摆出来，沟通效率会比单纯写文案高很多。</p>
+                    </div>
+                    <div class="parameter-layout">
+                        <article class="spec-summary reveal">
+                            <div class="spec-summary-head">
+                                <p>Selection Snapshot</p>
+                                <strong>项目先看这 5 项</strong>
+                            </div>
+                            <div class="summary-bars" aria-hidden="true">
+                                <span style="--bar-height: 76%;"></span>
+                                <span style="--bar-height: 54%;"></span>
+                                <span style="--bar-height: 94%;"></span>
+                                <span style="--bar-height: 66%;"></span>
+                                <span style="--bar-height: 88%;"></span>
+                            </div>
+                            <ul class="summary-points">
+                                <li>设备峰值电流决定是否需要脉冲型方案</li>
+                                <li>工作温区会直接影响低温表现和寿命预估</li>
+                                <li>维护周期和空间限制决定容量与封装策略</li>
+                            </ul>
+                        </article>
+
+                        <div class="spec-board reveal">
+                            <div class="spec-board-head">
+                                <span>Series Comparison</span>
+                                <strong>产品参数对比</strong>
+                            </div>
+                            <div class="spec-table-wrap">
+                                <div class="spec-table" role="table" aria-label="产品参数对比表">
+                                    <div class="spec-row spec-row-head" role="row">
+                                        <span role="columnheader">关键参数</span>
+                                        <span role="columnheader">超能经典</span>
+                                        <span role="columnheader">锂能专业</span>
+                                        <span role="columnheader">长续航旗舰</span>
+                                    </div>
+                                    <div class="spec-row" role="row">
+                                        <span role="rowheader">适配设备</span>
+                                        <span>遥测终端 / 手持设备</span>
+                                        <span>物联节点 / 专业终端</span>
+                                        <span>医疗监测 / 关键备份</span>
+                                    </div>
+                                    <div class="spec-row" role="row">
+                                        <span role="rowheader">标称容量</span>
+                                        <span>2400-3200mAh</span>
+                                        <span>1800-2800mAh</span>
+                                        <span>3500-5200mAh</span>
+                                    </div>
+                                    <div class="spec-row" role="row">
+                                        <span role="rowheader">峰值输出</span>
+                                        <span>2.5A</span>
+                                        <span>5.0A</span>
+                                        <span>3.2A</span>
+                                    </div>
+                                    <div class="spec-row" role="row">
+                                        <span role="rowheader">工作温区</span>
+                                        <span>-20°C 至 60°C</span>
+                                        <span>-40°C 至 85°C</span>
+                                        <span>-30°C 至 70°C</span>
+                                    </div>
+                                    <div class="spec-row" role="row">
+                                        <span role="rowheader">典型寿命</span>
+                                        <span>5-7 年</span>
+                                        <span>6-8 年</span>
+                                        <span>10 年+</span>
+                                    </div>
+                                    <div class="spec-row" role="row">
+                                        <span role="rowheader">封装能力</span>
+                                        <span>标准电芯 / 常规端子</span>
+                                        <span>定制接口 / 焊片 / Pack</span>
+                                        <span>安全防护 / 可追溯包装</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
