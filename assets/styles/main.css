@@ -1521,6 +1521,70 @@ body[data-theme="light"] .card-meta span {
     linear-gradient(180deg, rgba(20, 24, 31, 0.9), rgba(12, 15, 21, 0.96));
 }
 
+.technology-visual {
+  position: relative;
+  overflow: hidden;
+  margin: -4px -4px 22px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  aspect-ratio: 4 / 3;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.technology-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(7, 10, 15, 0.02), rgba(7, 10, 15, 0.14) 42%, rgba(7, 10, 15, 0.92)),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 24%);
+  pointer-events: none;
+}
+
+.technology-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.technology-visual-copy {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 18px;
+  z-index: 1;
+}
+
+.technology-visual-copy span {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(236, 241, 247, 0.74);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.technology-visual-copy strong {
+  display: block;
+  margin-top: 12px;
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 1.08rem;
+  line-height: 1.35;
+  max-width: 18ch;
+}
+
+body[data-theme="light"] .technology-visual {
+  border-color: var(--line);
+}
+
 .panel-matrix {
   margin-top: 22px;
   border-top: 1px solid var(--line);
@@ -1996,6 +2060,10 @@ body[data-theme="light"] .card-meta span {
   .search-form {
     grid-template-columns: 1fr;
   }
+
+  .technology-visual {
+    aspect-ratio: 16 / 10;
+  }
 }
 
 @media (max-width: 640px) {
@@ -2161,6 +2229,16 @@ body[data-theme="light"] .card-meta span {
   .spec-summary,
   .spec-board {
     padding: 22px;
+  }
+
+  .technology-visual-copy {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .technology-visual-copy strong {
+    font-size: 1rem;
   }
 
   .spec-summary-head,
