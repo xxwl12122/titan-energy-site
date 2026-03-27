@@ -6,11 +6,26 @@
 
 - [生产环境](https://titan-energy-site.vercel.app)
 
-## 项目文件
+## 目录结构
 
-- `index.html`: 页面结构
-- `style.css`: 视觉样式与动画
-- `script.js`: 交互逻辑
+```text
+.
+├─ index.html
+├─ assets
+│  ├─ scripts
+│  │  └─ main.js
+│  └─ styles
+│     └─ main.css
+├─ vercel.json
+├─ .vercelignore
+└─ README.md
+```
+
+## 核心文件
+
+- `index.html`: 页面结构与内容入口
+- `assets/styles/main.css`: 全站样式、动画和响应式规则
+- `assets/scripts/main.js`: 搜索、导航、主题切换、滚动和首屏交互
 - `vercel.json`: Vercel 部署配置
 
 ## 本地预览
