@@ -2,9 +2,23 @@
 
 一个部署在 Vercel 的静态品牌站点，使用原生 `HTML + CSS + JavaScript` 构建。
 
-## 线上地址
+## 直接进入网页
+
+如果你是从 GitHub 仓库页进入，这里就可以直接打开站点：
 
 - [生产环境](https://titan-energy-site.vercel.app)
+- [GitHub Pages](https://xxwl12122.github.io/titan-energy-site/)
+- [GitHub 仓库](https://github.com/xxwl12122/titan-energy-site)
+
+## 部署说明
+
+- `Vercel` 作为主生产环境
+- `GitHub Pages` 作为 GitHub 侧直接访问入口
+
+推送到 `main` 后：
+
+- Vercel 会继续走现有生产部署
+- GitHub Pages 会通过 Actions 自动同步静态页面
 
 ## 目录结构
 
@@ -32,7 +46,7 @@
 
 直接用浏览器打开 `index.html` 即可，或使用任意静态文件服务。
 
-## 部署
+## 手动部署
 
 项目已链接到 Vercel，可直接执行：
 

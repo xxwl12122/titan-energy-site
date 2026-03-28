@@ -21,7 +21,9 @@ const revealTargets = document.querySelectorAll(".reveal");
 const counters = document.querySelectorAll("[data-count]");
 const yearTarget = document.getElementById("year");
 const sectionRail = document.querySelector(".section-rail");
+const hero = document.querySelector(".hero");
 const heroStage = document.querySelector(".hero-stage");
+const heroParallaxTargets = document.querySelectorAll(".hero [data-parallax-speed]");
 const magneticButtons = document.querySelectorAll(".nav-cta, .primary-button, .secondary-button, .solid-link, .search-submit");
 const breatheTargets = document.querySelectorAll(".metric-card, .technology-panel");
 const spotlightTargets = document.querySelectorAll(".section-surface, .hero-stage, .technology-visual, .process-visual, .scenario-card-featured .scenario-visual");
@@ -199,6 +201,28 @@ function updateDepthMotion() {
     });
 }
 
+function updateHeroParallax() {
+    if (!hero || prefersReducedMotion.matches) {
+        return;
+    }
+
+    const rect = hero.getBoundingClientRect();
+    const viewportHeight = window.innerHeight || 1;
+    const centerOffset = ((rect.top + rect.height / 2) - viewportHeight / 2) / viewportHeight;
+
+    heroParallaxTargets.forEach((target) => {
+        const speed = Number.parseFloat(target.dataset.parallaxSpeed || "0");
+        const shift = clamp(centerOffset * speed * -120, -28, 28);
+
+        target.style.setProperty("--parallax-shift", `${shift.toFixed(2)}px`);
+    });
+
+    if (heroStage) {
+        const mediaShift = clamp(centerOffset * -22, -14, 14);
+        heroStage.style.setProperty("--hero-media-shift", `${mediaShift.toFixed(2)}px`);
+    }
+}
+
 function updatePageSignals() {
     const documentHeight = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
     const progress = clamp(window.scrollY / documentHeight, 0, 1);
@@ -230,6 +254,7 @@ function schedulePageSignals() {
     requestAnimationFrame(() => {
         updatePageSignals();
         updateDepthMotion();
+        updateHeroParallax();
         pageSignalTicking = false;
     });
 }
@@ -237,6 +262,7 @@ function schedulePageSignals() {
 setCurrentSection(activeSectionId);
 updatePageSignals();
 updateDepthMotion();
+updateHeroParallax();
 window.addEventListener("scroll", schedulePageSignals, { passive: true });
 window.addEventListener("resize", schedulePageSignals);
 

@@ -156,6 +156,7 @@
             </div>
             <nav class="section-rail-nav">
                 <a href="#hero">首页</a>
+                <a href="#trust">信任</a>
                 <a href="#products">产品</a>
                 <a href="#parameters">参数</a>
                 <a href="#technology">技术</a>
@@ -168,10 +169,10 @@
 
         <main>
             <section class="hero" id="hero" data-search="首页 首屏 能源 工业 稳定">
-                <div class="hero-aura hero-aura-left" aria-hidden="true"></div>
-                <div class="hero-aura hero-aura-right" aria-hidden="true"></div>
+                <div class="hero-aura hero-aura-left" data-parallax-speed="-0.22" aria-hidden="true"></div>
+                <div class="hero-aura hero-aura-right" data-parallax-speed="0.18" aria-hidden="true"></div>
                 <div class="container hero-grid">
-                    <div class="hero-copy">
+                    <div class="hero-copy" data-parallax-speed="-0.08">
                         <p class="eyebrow reveal" style="--reveal-delay: 40ms;">工业级能源解决方案</p>
                         <h1 class="hero-title reveal" style="--reveal-delay: 120ms;">
                             为高强度场景打造
@@ -211,7 +212,7 @@
                     </div>
 
                     <div class="hero-panel">
-                        <article class="hero-stage reveal" style="--reveal-delay: 160ms;">
+                        <article class="hero-stage reveal" data-parallax-speed="0.12" style="--reveal-delay: 160ms;">
                             <div class="hero-stage-top">
                                 <span>工业供能模组</span>
                                 <span>在线展示</span>
@@ -271,6 +272,79 @@
                         <span>物联网终端</span>
                         <span>户外设备</span>
                         <span>安防监测</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section trust-proof-section" id="trust" data-search="客户 信任 合作 验证 保障 项目 方法">
+                <div class="container section-surface trust-proof-grid">
+                    <div class="trust-proof-copy">
+                        <div class="section-head reveal">
+                            <p class="eyebrow">客户信任区</p>
+                            <h2>保密项目不堆 Logo，也能把合作可信度讲清楚</h2>
+                            <p>我们不展示客户名称，但把常见合作团队、决策关注点和交付承诺公开出来，让访问者先看到合作方式，再决定要不要继续聊。</p>
+                        </div>
+                        <div class="trust-proof-tags reveal">
+                            <span>保密项目协同</span>
+                            <span>验证路径前置</span>
+                            <span>交付窗口明确</span>
+                        </div>
+                    </div>
+                    <article class="trust-proof-panel reveal">
+                        <div class="trust-proof-panel-head">
+                            <span>Delivery Trust</span>
+                            <strong>项目真正关心的是节奏、风险和换型成本</strong>
+                        </div>
+                        <div class="trust-proof-stats">
+                            <article>
+                                <span>首轮判断</span>
+                                <strong>48h</strong>
+                                <p>先给建议，再决定是否进入样品验证。</p>
+                            </article>
+                            <article>
+                                <span>风险输出</span>
+                                <strong>3 层</strong>
+                                <p>功耗、环境和结构限制分层提示。</p>
+                            </article>
+                            <article>
+                                <span>规格冻结</span>
+                                <strong>30d</strong>
+                                <p>把验证回看、封装和批量切换压进同一节奏。</p>
+                            </article>
+                        </div>
+                        <p class="trust-proof-note">对外不公开品牌名，但对内会把验证逻辑、交付边界和下一步动作说清楚。</p>
+                    </article>
+                    <div class="trust-client-wall reveal">
+                        <article class="trust-client-card">
+                            <span>产线集成商</span>
+                            <strong>更看重异常恢复、维护窗口和停线代价</strong>
+                            <p>优先把供能稳定性和现场维护节奏讲透。</p>
+                        </article>
+                        <article class="trust-client-card">
+                            <span>医疗设备团队</span>
+                            <strong>更关心长期一致性和关键时刻不断电</strong>
+                            <p>会先核对峰值瞬态、寿命和长期表现。</p>
+                        </article>
+                        <article class="trust-client-card">
+                            <span>IoT 终端团队</span>
+                            <strong>更在意峰值电流、体积限制和待机时长</strong>
+                            <p>通常会同时评估脉冲输出和封装策略。</p>
+                        </article>
+                        <article class="trust-client-card">
+                            <span>巡检设备厂商</span>
+                            <strong>更关注低温离线部署和补能频次</strong>
+                            <p>会先把工作温区、维护周期和余量算清楚。</p>
+                        </article>
+                        <article class="trust-client-card">
+                            <span>方案集成商</span>
+                            <strong>希望更快拿到建议清单和验证路径</strong>
+                            <p>不是只看型号，而是看能不能尽快推进项目。</p>
+                        </article>
+                        <article class="trust-client-card">
+                            <span>海外项目组</span>
+                            <strong>更重视批量切换稳定性和追溯要求</strong>
+                            <p>需要更早冻结规格、接口和包装边界。</p>
+                        </article>
                     </div>
                 </div>
             </section>
@@ -692,11 +766,17 @@
                     </div>
                     <div class="proof-stack">
                         <article class="proof-card proof-card-featured reveal">
-                            <div class="proof-card-top">
-                                <span>工业产线传感节点</span>
-                                <strong>先把停线风险压下来，再谈更长续航</strong>
+                            <div class="proof-cover">
+                                <img src="assets/images/scene-industrial.jpg" srcset="assets/images/scene-industrial-960.jpg 960w, assets/images/scene-industrial.jpg 1600w" sizes="(max-width: 640px) calc(100vw - 88px), (max-width: 1080px) calc(100vw - 108px), 56vw" alt="工业产线传感节点案例封面图" loading="lazy" decoding="async" width="1600" height="893">
+                                <div class="proof-cover-copy">
+                                    <span>Case File 01</span>
+                                    <strong>工业产线传感节点</strong>
+                                    <p>先把停线风险压下来，再谈更长续航</p>
+                                </div>
                             </div>
-                            <p>这类项目通常会先校核峰值电流、唤醒频率和现场维护节奏，再决定容量、接口和封装策略。</p>
+                            <div class="proof-card-body">
+                                <p>这类项目通常会先校核峰值电流、唤醒频率和现场维护节奏，再决定容量、接口和封装策略。</p>
+                            </div>
                             <div class="proof-metrics">
                                 <div>
                                     <span>项目关注</span>
@@ -714,22 +794,34 @@
                         </article>
                         <div class="proof-side">
                             <article class="proof-card reveal">
-                                <div class="proof-card-top">
-                                    <span>医疗检测终端</span>
-                                    <strong>优先稳定一致性与关键时刻可靠供能</strong>
+                                <div class="proof-cover proof-cover-compact">
+                                    <img src="assets/images/scene-medical.jpg" srcset="assets/images/scene-medical-960.jpg 960w, assets/images/scene-medical.jpg 1600w" sizes="(max-width: 640px) calc(100vw - 88px), (max-width: 1080px) calc(100vw - 108px), 34vw" alt="医疗检测终端案例封面图" loading="lazy" decoding="async" width="1600" height="893">
+                                    <div class="proof-cover-copy">
+                                        <span>Case File 02</span>
+                                        <strong>医疗检测终端</strong>
+                                        <p>优先稳定一致性与关键时刻可靠供能</p>
+                                    </div>
                                 </div>
-                                <p>更关注长期使用一致性、峰值瞬态和关键节点不掉电。</p>
+                                <div class="proof-card-body">
+                                    <p>更关注长期使用一致性、峰值瞬态和关键节点不掉电。</p>
+                                </div>
                                 <div class="proof-mini-tags">
                                     <span>长期一致性</span>
                                     <span>关键时刻稳定</span>
                                 </div>
                             </article>
                             <article class="proof-card reveal">
-                                <div class="proof-card-top">
-                                    <span>户外巡检设备</span>
-                                    <strong>把低温、离线和补能频次一起算清楚</strong>
+                                <div class="proof-cover proof-cover-compact">
+                                    <img src="assets/images/scene-outdoor.jpg" srcset="assets/images/scene-outdoor-960.jpg 960w, assets/images/scene-outdoor.jpg 1600w" sizes="(max-width: 640px) calc(100vw - 88px), (max-width: 1080px) calc(100vw - 108px), 34vw" alt="户外巡检设备案例封面图" loading="lazy" decoding="async" width="1600" height="893">
+                                    <div class="proof-cover-copy">
+                                        <span>Case File 03</span>
+                                        <strong>户外巡检设备</strong>
+                                        <p>把低温、离线和补能频次一起算清楚</p>
+                                    </div>
                                 </div>
-                                <p>先明确工作温区和维护周期，再决定是拉长续航还是增加峰值余量。</p>
+                                <div class="proof-card-body">
+                                    <p>先明确工作温区和维护周期，再决定是拉长续航还是增加峰值余量。</p>
+                                </div>
                                 <div class="proof-mini-tags">
                                     <span>耐温差</span>
                                     <span>离线部署</span>
