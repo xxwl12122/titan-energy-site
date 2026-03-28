@@ -16,12 +16,16 @@ const mobileClose = document.querySelector(".mobile-close");
 const mobileLinks = document.querySelectorAll(".mobile-nav a");
 const scrollButtons = document.querySelectorAll("[data-scroll]");
 const sections = document.querySelectorAll("[data-search]");
+const navigationLinks = document.querySelectorAll(".desktop-nav a[href^='#'], .mobile-nav a[href^='#'], .footer-links a[href^='#'], .section-rail-nav a[href^='#']");
 const revealTargets = document.querySelectorAll(".reveal");
 const counters = document.querySelectorAll("[data-count]");
 const yearTarget = document.getElementById("year");
+const sectionRail = document.querySelector(".section-rail");
 const heroStage = document.querySelector(".hero-stage");
 const magneticButtons = document.querySelectorAll(".nav-cta, .primary-button, .secondary-button, .solid-link, .search-submit");
 const breatheTargets = document.querySelectorAll(".metric-card, .technology-panel");
+const spotlightTargets = document.querySelectorAll(".section-surface, .hero-stage, .technology-visual, .process-visual, .scenario-card-featured .scenario-visual");
+const depthTargets = document.querySelectorAll(".hero-aura, .hero-stage, .technology-visual, .process-visual, .scenario-card-featured .scenario-visual");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 if (yearTarget) {
@@ -160,6 +164,81 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
         }
     });
 });
+
+let activeSectionId = sections[0]?.id || "hero";
+let pageSignalTicking = false;
+
+function setCurrentSection(sectionId) {
+    navigationLinks.forEach((link) => {
+        const hash = (link.getAttribute("href") || "").replace(/^#/, "");
+        const isCurrent = hash === sectionId;
+
+        link.classList.toggle("is-current", isCurrent);
+        if (isCurrent) {
+            link.setAttribute("aria-current", "page");
+        } else {
+            link.removeAttribute("aria-current");
+        }
+    });
+}
+
+function updateDepthMotion() {
+    if (prefersReducedMotion.matches) {
+        return;
+    }
+
+    const viewportHeight = window.innerHeight || 1;
+
+    depthTargets.forEach((target) => {
+        const rect = target.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const offset = (center - viewportHeight / 2) / viewportHeight;
+        const depthShift = clamp(offset * -18, -16, 16);
+
+        target.style.setProperty("--depth-shift", `${depthShift.toFixed(2)}px`);
+    });
+}
+
+function updatePageSignals() {
+    const documentHeight = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+    const progress = clamp(window.scrollY / documentHeight, 0, 1);
+    const topOffset = window.scrollY + (topbar?.offsetHeight || 0) + Math.min(window.innerHeight * 0.28, 220);
+    let nextSectionId = activeSectionId;
+
+    sections.forEach((section) => {
+        if (topOffset >= section.offsetTop) {
+            nextSectionId = section.id;
+        }
+    });
+
+    if (sectionRail) {
+        sectionRail.style.setProperty("--rail-progress", progress.toFixed(3));
+    }
+
+    if (nextSectionId !== activeSectionId) {
+        activeSectionId = nextSectionId;
+        setCurrentSection(activeSectionId);
+    }
+}
+
+function schedulePageSignals() {
+    if (pageSignalTicking) {
+        return;
+    }
+
+    pageSignalTicking = true;
+    requestAnimationFrame(() => {
+        updatePageSignals();
+        updateDepthMotion();
+        pageSignalTicking = false;
+    });
+}
+
+setCurrentSection(activeSectionId);
+updatePageSignals();
+updateDepthMotion();
+window.addEventListener("scroll", schedulePageSignals, { passive: true });
+window.addEventListener("resize", schedulePageSignals);
 
 function searchSection(query) {
     const normalized = query.trim().toLowerCase();
@@ -307,6 +386,14 @@ const counterObserver = new IntersectionObserver(
 
 counters.forEach((counter) => counterObserver.observe(counter));
 
+function resetSpotlight(target) {
+    target.style.setProperty("--spotlight-x", "50%");
+    target.style.setProperty("--spotlight-y", "50%");
+    target.style.setProperty("--drift-x", "0px");
+    target.style.setProperty("--drift-y", "0px");
+    target.classList.remove("is-spotlight-active");
+}
+
 function resetMagnetic(button) {
     button.style.setProperty("--magnetic-x", "0px");
     button.style.setProperty("--magnetic-y", "0px");
@@ -314,6 +401,27 @@ function resetMagnetic(button) {
 }
 
 if (!prefersReducedMotion.matches) {
+    spotlightTargets.forEach((target) => {
+        resetSpotlight(target);
+
+        target.addEventListener("pointermove", (event) => {
+            const rect = target.getBoundingClientRect();
+            const x = clamp((event.clientX - rect.left) / rect.width, 0, 1);
+            const y = clamp((event.clientY - rect.top) / rect.height, 0, 1);
+            const driftX = (x - 0.5) * 10;
+            const driftY = (y - 0.5) * 8;
+
+            target.style.setProperty("--spotlight-x", `${(x * 100).toFixed(1)}%`);
+            target.style.setProperty("--spotlight-y", `${(y * 100).toFixed(1)}%`);
+            target.style.setProperty("--drift-x", `${driftX.toFixed(2)}px`);
+            target.style.setProperty("--drift-y", `${driftY.toFixed(2)}px`);
+            target.classList.add("is-spotlight-active");
+        });
+
+        target.addEventListener("pointerleave", () => resetSpotlight(target));
+        target.addEventListener("pointercancel", () => resetSpotlight(target));
+    });
+
     magneticButtons.forEach((button) => {
         resetMagnetic(button);
 
