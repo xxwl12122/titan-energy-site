@@ -1,8 +1,10 @@
 const body = document.body;
 const topbar = document.querySelector(".topbar");
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const themeToggle = document.querySelector(".theme-toggle");
 const themeToggleText = document.querySelector(".theme-toggle-text");
 const searchOverlay = document.getElementById("searchOverlay");
+const searchCard = document.querySelector(".search-card");
 const searchToggle = document.querySelector(".search-toggle");
 const searchClose = document.querySelector(".search-close");
 const searchForm = document.getElementById("searchForm");
@@ -11,6 +13,7 @@ const searchFeedback = document.getElementById("searchFeedback");
 const tagButtons = document.querySelectorAll(".tag-button");
 const menuToggle = document.querySelector(".mobile-menu-entry");
 const mobilePanel = document.getElementById("mobilePanel");
+const mobileDrawer = document.querySelector(".mobile-drawer");
 const mobileBackdrop = document.querySelector(".mobile-backdrop");
 const mobileClose = document.querySelector(".mobile-close");
 const mobileLinks = document.querySelectorAll(".mobile-nav a");
@@ -45,6 +48,8 @@ const connection = navigator.connection || navigator.mozConnection || navigator.
 const motionLite = prefersReducedMotion.matches
     || Boolean(connection?.saveData)
     || (typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 4);
+let searchReturnFocusTarget = null;
+let mobileReturnFocusTarget = null;
 
 body.classList.toggle("motion-lite", motionLite);
 
@@ -59,6 +64,9 @@ applyTheme(initialTheme);
 
 function applyTheme(theme) {
     body.dataset.theme = theme;
+    if (themeColorMeta) {
+        themeColorMeta.setAttribute("content", theme === "dark" ? "#0f1724" : "#f3efe7");
+    }
     if (themeToggleText) {
         themeToggleText.textContent = theme === "dark" ? "昼" : "夜";
     }
@@ -90,6 +98,7 @@ function openSearch(query = "") {
         return;
     }
 
+    searchReturnFocusTarget = document.activeElement instanceof HTMLElement ? document.activeElement : searchToggle;
     searchOverlay.hidden = false;
     setBodyLock(true);
     if (searchInput) {
@@ -99,7 +108,7 @@ function openSearch(query = "") {
 }
 
 function closeSearch() {
-    if (!searchOverlay) {
+    if (!searchOverlay || searchOverlay.hidden) {
         return;
     }
 
@@ -108,6 +117,9 @@ function closeSearch() {
     if (searchFeedback) {
         searchFeedback.textContent = "";
     }
+    if (searchReturnFocusTarget instanceof HTMLElement) {
+        searchReturnFocusTarget.focus();
+    }
 }
 
 function openMobilePanel() {
@@ -115,19 +127,23 @@ function openMobilePanel() {
         return;
     }
 
+    mobileReturnFocusTarget = document.activeElement instanceof HTMLElement ? document.activeElement : menuToggle;
     mobilePanel.hidden = false;
     menuToggle.setAttribute("aria-expanded", "true");
     setBodyLock(true);
 }
 
 function closeMobilePanel() {
-    if (!mobilePanel || !menuToggle) {
+    if (!mobilePanel || !menuToggle || mobilePanel.hidden) {
         return;
     }
 
     mobilePanel.hidden = true;
     menuToggle.setAttribute("aria-expanded", "false");
     setBodyLock(Boolean(searchOverlay && !searchOverlay.hidden));
+    if (mobileReturnFocusTarget instanceof HTMLElement) {
+        mobileReturnFocusTarget.focus();
+    }
 }
 
 function closeCustomSelects(except = null) {
@@ -157,6 +173,7 @@ function syncCustomSelect(selectRoot) {
 
     options.forEach((option) => {
         option.classList.toggle("is-selected", option.dataset.value === selectedValue);
+        option.setAttribute("aria-selected", option.dataset.value === selectedValue ? "true" : "false");
     });
 }
 
@@ -192,6 +209,47 @@ function focusProjectField(field) {
     field.focus();
 }
 
+function getFocusableElements(container) {
+    if (!container) {
+        return [];
+    }
+
+    return Array.from(
+        container.querySelectorAll('a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])')
+    ).filter((element) => element instanceof HTMLElement && !element.hidden);
+}
+
+function trapFocus(event, container) {
+    const focusableElements = getFocusableElements(container);
+    if (!focusableElements.length) {
+        return;
+    }
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+    } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+    }
+}
+
+function moveCustomSelectSelection(selectRoot, direction = 1) {
+    const nativeSelect = selectRoot.querySelector(".custom-select-native");
+    if (!nativeSelect) {
+        return;
+    }
+
+    const nextIndex = clamp(nativeSelect.selectedIndex + direction, 0, nativeSelect.options.length - 1);
+    nativeSelect.selectedIndex = nextIndex;
+    syncCustomSelect(selectRoot);
+    nativeSelect.dispatchEvent(new Event("input", { bubbles: true }));
+    nativeSelect.dispatchEvent(new Event("change", { bubbles: true }));
+}
+
 function validateProjectForm() {
     if (!projectForm) {
         return { valid: true, firstInvalidField: null };
@@ -225,10 +283,18 @@ customSelects.forEach((selectRoot) => {
     const trigger = selectRoot.querySelector(".custom-select-trigger");
     const nativeSelect = selectRoot.querySelector(".custom-select-native");
     const optionButtons = selectRoot.querySelectorAll(".custom-select-option");
+    const menu = selectRoot.querySelector(".custom-select-menu");
 
-    if (!trigger || !nativeSelect) {
+    if (!trigger || !nativeSelect || !menu) {
         return;
     }
+
+    const menuId = nativeSelect.name ? `${nativeSelect.name}-menu` : `custom-select-menu-${Math.random().toString(36).slice(2, 8)}`;
+    menu.id = menuId;
+    trigger.setAttribute("aria-controls", menuId);
+    optionButtons.forEach((optionButton) => {
+        optionButton.setAttribute("role", "option");
+    });
 
     syncCustomSelect(selectRoot);
 
@@ -237,6 +303,25 @@ customSelects.forEach((selectRoot) => {
         closeCustomSelects(willOpen ? selectRoot : null);
         selectRoot.classList.toggle("is-open", willOpen);
         trigger.setAttribute("aria-expanded", willOpen ? "true" : "false");
+    });
+
+    trigger.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+            event.preventDefault();
+            if (!selectRoot.classList.contains("is-open")) {
+                closeCustomSelects(selectRoot);
+                selectRoot.classList.add("is-open");
+                trigger.setAttribute("aria-expanded", "true");
+            }
+            moveCustomSelectSelection(selectRoot, event.key === "ArrowDown" ? 1 : -1);
+        }
+
+        if ((event.key === "Enter" || event.key === " ") && !selectRoot.classList.contains("is-open")) {
+            event.preventDefault();
+            closeCustomSelects(selectRoot);
+            selectRoot.classList.add("is-open");
+            trigger.setAttribute("aria-expanded", "true");
+        }
     });
 
     optionButtons.forEach((optionButton) => {
@@ -249,6 +334,13 @@ customSelects.forEach((selectRoot) => {
             nativeSelect.dispatchEvent(new Event("change", { bubbles: true }));
             trigger.focus();
         });
+    });
+
+    menu.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeCustomSelects();
+            trigger.focus();
+        }
     });
 });
 
@@ -270,6 +362,14 @@ document.addEventListener("keydown", (event) => {
         closeSearch();
         closeMobilePanel();
         closeCustomSelects();
+    }
+
+    if (event.key === "Tab" && searchOverlay && !searchOverlay.hidden) {
+        trapFocus(event, searchCard);
+    }
+
+    if (event.key === "Tab" && mobilePanel && !mobilePanel.hidden) {
+        trapFocus(event, mobileDrawer);
     }
 });
 
@@ -415,6 +515,8 @@ updateDepthMotion();
 updateHeroParallax();
 window.addEventListener("scroll", schedulePageSignals, { passive: true });
 window.addEventListener("resize", schedulePageSignals);
+window.addEventListener("scroll", () => closeCustomSelects(), { passive: true });
+window.addEventListener("resize", () => closeCustomSelects());
 
 function searchSection(query) {
     const normalized = query.trim().toLowerCase();
@@ -432,7 +534,7 @@ function searchSection(query) {
     });
 
     if (match) {
-        match.scrollIntoView({ behavior: "smooth", block: "start" });
+        scrollToTarget(`#${match.id}`);
         if (searchFeedback) {
             const title = match.querySelector("h2")?.textContent || "目标区块";
             searchFeedback.textContent = `已为你定位到“${title}”。`;
