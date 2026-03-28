@@ -20,6 +20,9 @@ const revealTargets = document.querySelectorAll(".reveal");
 const counters = document.querySelectorAll("[data-count]");
 const yearTarget = document.getElementById("year");
 const heroStage = document.querySelector(".hero-stage");
+const magneticButtons = document.querySelectorAll(".nav-cta, .primary-button, .secondary-button, .solid-link, .search-submit");
+const breatheTargets = document.querySelectorAll(".metric-card, .technology-panel");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 if (yearTarget) {
     yearTarget.textContent = new Date().getFullYear().toString();
@@ -203,19 +206,67 @@ tagButtons.forEach((button) => {
     });
 });
 
+function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+}
+
+let revealTicking = false;
+
+function updateRevealProgress() {
+    if (prefersReducedMotion.matches) {
+        return;
+    }
+
+    const viewportHeight = window.innerHeight || 1;
+
+    revealTargets.forEach((target) => {
+        if (target.classList.contains("is-visible")) {
+            target.style.setProperty("--reveal-progress", "1");
+            return;
+        }
+
+        const rect = target.getBoundingClientRect();
+        const enterStart = viewportHeight * 0.96;
+        const enterEnd = viewportHeight * 0.24;
+        const raw = (enterStart - rect.top) / (enterStart - enterEnd);
+        const progress = clamp(raw, 0, 1);
+        const eased = 1 - Math.pow(1 - progress, 2.2);
+        target.style.setProperty("--reveal-progress", eased.toFixed(3));
+    });
+}
+
+function scheduleRevealProgress() {
+    if (revealTicking || prefersReducedMotion.matches) {
+        return;
+    }
+
+    revealTicking = true;
+    requestAnimationFrame(() => {
+        updateRevealProgress();
+        revealTicking = false;
+    });
+}
+
 const revealObserver = new IntersectionObserver(
     (entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
+                entry.target.style.setProperty("--reveal-progress", "1");
                 entry.target.classList.add("is-visible");
                 revealObserver.unobserve(entry.target);
             }
         });
     },
-    { threshold: 0.14 }
+    { threshold: 0.18, rootMargin: "0px 0px -8% 0px" }
 );
 
 revealTargets.forEach((target) => revealObserver.observe(target));
+
+if (!prefersReducedMotion.matches) {
+    updateRevealProgress();
+    window.addEventListener("scroll", scheduleRevealProgress, { passive: true });
+    window.addEventListener("resize", scheduleRevealProgress);
+}
 
 function animateCounter(element) {
     const targetValue = Number.parseFloat(element.dataset.count || "0");
@@ -256,7 +307,49 @@ const counterObserver = new IntersectionObserver(
 
 counters.forEach((counter) => counterObserver.observe(counter));
 
-if (heroStage && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+function resetMagnetic(button) {
+    button.style.setProperty("--magnetic-x", "0px");
+    button.style.setProperty("--magnetic-y", "0px");
+    button.classList.remove("is-magnetic-active");
+}
+
+if (!prefersReducedMotion.matches) {
+    magneticButtons.forEach((button) => {
+        resetMagnetic(button);
+
+        button.addEventListener("pointermove", (event) => {
+            const rect = button.getBoundingClientRect();
+            const x = clamp((event.clientX - rect.left) / rect.width, 0, 1);
+            const y = clamp((event.clientY - rect.top) / rect.height, 0, 1);
+            const translateX = (x - 0.5) * 14;
+            const translateY = (y - 0.5) * 10;
+
+            button.style.setProperty("--magnetic-x", `${translateX.toFixed(2)}px`);
+            button.style.setProperty("--magnetic-y", `${translateY.toFixed(2)}px`);
+            button.classList.add("is-magnetic-active");
+        });
+
+        button.addEventListener("pointerleave", () => resetMagnetic(button));
+        button.addEventListener("blur", () => resetMagnetic(button));
+    });
+
+    breatheTargets.forEach((target, index) => {
+        target.style.setProperty("--breathe-delay", `${(index % 4) * 180}ms`);
+    });
+
+    const breatheObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                entry.target.classList.toggle("is-breathing", entry.isIntersecting);
+            });
+        },
+        { threshold: 0.35 }
+    );
+
+    breatheTargets.forEach((target) => breatheObserver.observe(target));
+}
+
+if (heroStage && !prefersReducedMotion.matches) {
     const resetHeroStage = () => {
         heroStage.style.setProperty("--tilt-x", "0deg");
         heroStage.style.setProperty("--tilt-y", "0deg");

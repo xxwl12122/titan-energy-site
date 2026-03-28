@@ -274,6 +274,18 @@ body[data-theme="light"] .topbar .brand-copy strong {
   transition: transform var(--transition), background-color var(--transition), color var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
+.nav-cta,
+.primary-button,
+.secondary-button,
+.solid-link,
+.search-submit {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  will-change: transform, box-shadow;
+  transform: translate3d(var(--magnetic-x, 0px), var(--magnetic-y, 0px), 0);
+}
+
 .mobile-menu-entry {
   display: none;
   align-items: center;
@@ -339,7 +351,8 @@ body[data-theme="light"] .topbar .brand-copy strong {
 .primary-button:hover,
 .solid-link:hover,
 .search-submit:hover {
-  transform: translateY(-2px);
+  transform: translate3d(var(--magnetic-x, 0px), calc(var(--magnetic-y, 0px) - 2px), 0) scale(1.01);
+  box-shadow: 0 24px 42px rgba(15, 63, 103, 0.3);
 }
 
 .secondary-button {
@@ -352,6 +365,26 @@ body[data-theme="light"] .topbar .brand-copy strong {
 
 .secondary-button:hover {
   background: var(--panel);
+  transform: translate3d(var(--magnetic-x, 0px), calc(var(--magnetic-y, 0px) - 2px), 0) scale(1.01);
+  box-shadow: 0 18px 34px rgba(8, 14, 24, 0.18);
+}
+
+.nav-cta.is-magnetic-active,
+.primary-button.is-magnetic-active,
+.secondary-button.is-magnetic-active,
+.solid-link.is-magnetic-active,
+.search-submit.is-magnetic-active {
+  box-shadow:
+    0 22px 40px rgba(15, 63, 103, 0.24),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+.nav-cta:active,
+.primary-button:active,
+.secondary-button:active,
+.solid-link:active,
+.search-submit:active {
+  transform: translate3d(var(--magnetic-x, 0px), calc(var(--magnetic-y, 0px) + 1px), 0) scale(0.992);
 }
 
 .menu-toggle {
@@ -559,12 +592,22 @@ body[data-theme="light"] .topbar .brand-copy strong {
 .metric-card {
   padding: 18px;
   border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+  --breathe-shadow-rest: var(--shadow-soft);
+  --breathe-shadow-peak:
+    0 24px 50px rgba(7, 13, 22, 0.22),
+    0 0 0 1px rgba(255, 189, 142, 0.08) inset;
 }
 
 .hero .metric-card {
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.1);
   box-shadow: none;
+  --breathe-shadow-rest: none;
+  --breathe-shadow-peak:
+    0 18px 36px rgba(3, 8, 14, 0.26),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset;
 }
 
 .metric-card span {
@@ -585,6 +628,39 @@ body[data-theme="light"] .topbar .brand-copy strong {
 
 .hero .metric-value {
   color: #fff;
+}
+
+.metric-card::after,
+.technology-panel::after {
+  content: "";
+  position: absolute;
+  inset: -24% -18%;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255, 187, 136, 0.2), transparent 42%),
+    radial-gradient(circle at 82% 78%, rgba(88, 170, 255, 0.14), transparent 44%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.technology-panel {
+  --breathe-shadow-rest: var(--shadow-soft);
+  --breathe-shadow-peak:
+    0 28px 56px rgba(7, 13, 22, 0.24),
+    0 0 0 1px rgba(255, 189, 142, 0.08) inset;
+}
+
+.metric-card.is-breathing,
+.technology-panel.is-breathing {
+  animation: panel-breathe 6.8s ease-in-out infinite;
+  animation-delay: var(--breathe-delay, 0ms);
+}
+
+.metric-card.is-breathing::after,
+.technology-panel.is-breathing::after {
+  opacity: 1;
+  animation: panel-breathe-glow 6.8s ease-in-out infinite;
+  animation-delay: var(--breathe-delay, 0ms);
 }
 
 .hero-panel {
@@ -1207,15 +1283,70 @@ body[data-theme="light"] .cta-card {
   border-color: rgba(240, 139, 84, 0.3);
 }
 
+.product-card::before,
+.scenario-card::before,
+.capability-card::before,
+.technology-panel::before,
+.timeline-item::before,
+.cta-card::before,
+.signal-card::before,
+.note-card::before {
+  content: "";
+  position: absolute;
+  inset: -42% -56%;
+  background: linear-gradient(
+    118deg,
+    transparent 18%,
+    rgba(255, 255, 255, 0.02) 34%,
+    rgba(255, 255, 255, 0.16) 47%,
+    rgba(255, 175, 116, 0.26) 52%,
+    transparent 72%
+  );
+  transform: translate3d(-132%, 0, 0) rotate(-16deg);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 880ms cubic-bezier(0.22, 1, 0.36, 1), opacity 220ms ease;
+}
+
 .product-card:hover,
 .scenario-card:hover,
 .capability-card:hover,
 .timeline-item:hover,
 .cta-card:hover,
-.technology-panel:hover {
-  transform: translateY(-4px);
+.technology-panel:hover,
+.signal-card:hover,
+.note-card:hover,
+.product-card:focus-within,
+.scenario-card:focus-within,
+.capability-card:focus-within,
+.timeline-item:focus-within,
+.cta-card:focus-within,
+.technology-panel:focus-within,
+.signal-card:focus-within,
+.note-card:focus-within {
+  transform: translateY(-6px) scale(1.006);
   border-color: rgba(255, 173, 116, 0.24);
-  box-shadow: 0 26px 48px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 30px 56px rgba(0, 0, 0, 0.24);
+}
+
+.product-card:hover::before,
+.scenario-card:hover::before,
+.capability-card:hover::before,
+.timeline-item:hover::before,
+.cta-card:hover::before,
+.technology-panel:hover::before,
+.signal-card:hover::before,
+.note-card:hover::before,
+.product-card:focus-within::before,
+.scenario-card:focus-within::before,
+.capability-card:focus-within::before,
+.timeline-item:focus-within::before,
+.cta-card:focus-within::before,
+.technology-panel:focus-within::before,
+.signal-card:focus-within::before,
+.note-card:focus-within::before {
+  opacity: 0.92;
+  transform: translate3d(132%, 0, 0) rotate(-16deg);
 }
 
 .product-kicker,
@@ -2120,21 +2251,48 @@ body[data-theme="light"] .footer-badges span {
   width: 100%;
 }
 
+@keyframes panel-breathe {
+  0%,
+  100% {
+    box-shadow: var(--breathe-shadow-rest);
+  }
+
+  50% {
+    box-shadow: var(--breathe-shadow-peak);
+  }
+}
+
+@keyframes panel-breathe-glow {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.94);
+  }
+
+  50% {
+    opacity: 0.72;
+    transform: scale(1.04);
+  }
+}
+
 .reveal {
-  opacity: 0;
-  transform: translateY(28px) scale(0.985);
-  filter: blur(8px);
+  --reveal-progress: 0;
+  opacity: calc(0.16 + var(--reveal-progress, 0) * 0.84);
+  transform: translate3d(0, calc((1 - var(--reveal-progress, 0)) * 42px), 0) scale(calc(0.964 + var(--reveal-progress, 0) * 0.036));
+  filter: blur(calc((1 - var(--reveal-progress, 0)) * 10px));
+  will-change: opacity, transform, filter;
   transition:
-    opacity 680ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 680ms cubic-bezier(0.22, 1, 0.36, 1),
-    filter 680ms cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: var(--reveal-delay, 0ms);
+    opacity 220ms ease,
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 280ms ease;
 }
 
 .reveal.is-visible {
+  --reveal-progress: 1;
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0) scale(1);
   filter: blur(0);
+  transition-delay: var(--reveal-delay, 0ms);
 }
 
 :focus-visible {
@@ -2636,5 +2794,6 @@ body[data-theme="light"] .footer-badges span {
   .reveal {
     opacity: 1;
     transform: none;
+    filter: none;
   }
 }
