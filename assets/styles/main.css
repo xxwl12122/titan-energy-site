@@ -1310,6 +1310,13 @@ body[data-theme="light"] .product-spec span {
   align-items: start;
 }
 
+.process-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  gap: 26px;
+  align-items: start;
+}
+
 .parameter-layout {
   display: grid;
   grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
@@ -1653,6 +1660,14 @@ body[data-theme="light"] .technology-visual {
   object-position: center;
 }
 
+.scenario-card:nth-child(3) .scenario-visual img {
+  object-position: 72% center;
+}
+
+.scenario-card:nth-child(4) .scenario-visual img {
+  object-position: center 54%;
+}
+
 .scenario-meta {
   display: flex;
   flex-wrap: wrap;
@@ -1683,6 +1698,67 @@ body[data-theme="light"] .scenario-meta span {
 body[data-theme="light"] .scenario-meta span {
   color: var(--muted);
   background: rgba(15, 63, 103, 0.05);
+}
+
+.process-visual {
+  position: relative;
+  margin: 0;
+  min-height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    radial-gradient(circle at top right, rgba(255, 157, 96, 0.14), transparent 26%),
+    linear-gradient(180deg, rgba(19, 23, 31, 0.92), rgba(10, 13, 18, 0.98));
+  box-shadow: var(--shadow-soft);
+}
+
+.process-visual img {
+  display: block;
+  width: 100%;
+  min-height: 520px;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% center;
+}
+
+.process-caption {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  display: grid;
+  gap: 10px;
+  max-width: 320px;
+  padding: 20px;
+  border-radius: 24px;
+  background: linear-gradient(145deg, rgba(8, 17, 25, 0.86), rgba(15, 63, 103, 0.74));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.24);
+}
+
+.process-caption span,
+.process-caption strong {
+  color: #fff;
+}
+
+.process-caption span {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.process-caption strong {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  line-height: 1.3;
+}
+
+body[data-theme="light"] .process-visual {
+  border-color: var(--line);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.08)),
+    var(--panel);
 }
 
 .timeline-item {
@@ -2018,6 +2094,7 @@ body[data-theme="light"] .scenario-meta span {
   .hero-grid,
   .technology-grid,
   .cta-grid,
+  .process-layout,
   .product-grid,
   .scenario-grid,
   .parameter-layout,
@@ -2319,6 +2396,19 @@ body[data-theme="light"] .scenario-meta span {
   .timeline-item span {
     width: 56px;
     height: 56px;
+  }
+
+  .process-visual img {
+    min-height: 360px;
+  }
+
+  .process-caption {
+    top: auto;
+    right: 16px;
+    bottom: 16px;
+    left: 16px;
+    max-width: none;
+    padding: 16px;
   }
 
   .hero-actions {
