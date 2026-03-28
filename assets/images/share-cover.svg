@@ -1,60 +1,122 @@
 <svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bg" x1="94" y1="32" x2="1086" y2="578" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#111721"/>
+    <linearGradient id="bg" x1="120" y1="24" x2="1080" y2="606" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111823"/>
+      <stop offset="0.52" stop-color="#091018"/>
       <stop offset="1" stop-color="#05070B"/>
     </linearGradient>
-    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(204 170) rotate(41.1956) scale(338.876)">
-      <stop stop-color="#F08B54" stop-opacity="0.24"/>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(246 170) rotate(42.6) scale(380.467 260.822)">
+      <stop stop-color="#F08B54" stop-opacity="0.28"/>
       <stop offset="1" stop-color="#F08B54" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(926 496) rotate(149.892) scale(314.649)">
-      <stop stop-color="#4D90D2" stop-opacity="0.18"/>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(930 524) rotate(155.239) scale(356.102 254.363)">
+      <stop stop-color="#4D90D2" stop-opacity="0.22"/>
       <stop offset="1" stop-color="#4D90D2" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="batteryBody" x1="650" y1="206" x2="1054" y2="338" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#F8F2EB"/>
-      <stop offset="0.42" stop-color="#E6D4C6"/>
-      <stop offset="0.76" stop-color="#9A8476"/>
-      <stop offset="1" stop-color="#241B17"/>
+    <linearGradient id="titleAccent" x1="87" y1="328" x2="557" y2="412" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFE5D3"/>
+      <stop offset="0.42" stop-color="#FFAA73"/>
+      <stop offset="1" stop-color="#E8F0F8"/>
     </linearGradient>
-    <radialGradient id="batteryCap" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(985 225) rotate(90) scale(110)">
-      <stop stop-color="#FFF7EE"/>
-      <stop offset="0.38" stop-color="#EAD8C2"/>
-      <stop offset="0.76" stop-color="#AB7B4D"/>
-      <stop offset="1" stop-color="#291C15"/>
-    </radialGradient>
-    <filter id="shadow" x="583" y="93" width="504" height="310" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feDropShadow dx="0" dy="28" stdDeviation="28" flood-color="#000000" flood-opacity="0.4"/>
+    <linearGradient id="badgeBlue" x1="88" y1="0" x2="237" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4F93D6"/>
+      <stop offset="1" stop-color="#356DAE"/>
+    </linearGradient>
+    <linearGradient id="panelStroke" x1="704" y1="74" x2="1134" y2="556" gradientUnits="userSpaceOnUse">
+      <stop stop-color="rgba(255,255,255,0.18)"/>
+      <stop offset="1" stop-color="rgba(255,255,255,0.04)"/>
+    </linearGradient>
+    <linearGradient id="panelBg" x1="704" y1="74" x2="1134" y2="556" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#171E29"/>
+      <stop offset="1" stop-color="#0C1017"/>
+    </linearGradient>
+    <linearGradient id="miniPanel" x1="704" y1="406" x2="1128" y2="556" gradientUnits="userSpaceOnUse">
+      <stop stop-color="rgba(255,255,255,0.06)"/>
+      <stop offset="1" stop-color="rgba(255,255,255,0.02)"/>
+    </linearGradient>
+    <linearGradient id="overlayGrad" x1="704" y1="278" x2="704" y2="384" gradientUnits="userSpaceOnUse">
+      <stop stop-color="rgba(7,10,14,0)"/>
+      <stop offset="1" stop-color="rgba(7,10,14,0.92)"/>
+    </linearGradient>
+    <filter id="softShadow" x="670" y="42" width="498" height="548" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="22" stdDeviation="22" flood-color="#000000" flood-opacity="0.3"/>
     </filter>
+    <clipPath id="heroClip">
+      <rect x="704" y="74" width="430" height="312" rx="28"/>
+    </clipPath>
   </defs>
-  <rect width="1200" height="630" rx="36" fill="url(#bg)"/>
-  <rect x="0.5" y="0.5" width="1199" height="629" rx="35.5" stroke="white" stroke-opacity="0.08"/>
-  <rect x="46" y="42" width="1108" height="546" rx="28" fill="url(#glowA)"/>
-  <rect x="46" y="42" width="1108" height="546" rx="28" fill="url(#glowB)"/>
-  <path d="M81 78H114V98H96L84 121H81L90 98H81V78Z" fill="#F08B54"/>
-  <path d="M130 121H97V101H115L127 78H130L121 101H130V121Z" fill="#4D90D2"/>
-  <text x="157" y="95" fill="#F5F7FA" font-size="24" font-weight="700" font-family="Manrope, Noto Sans SC, sans-serif">泰坦能量</text>
-  <text x="157" y="123" fill="#93A0B0" font-size="14" letter-spacing="3" font-family="Manrope, Noto Sans SC, sans-serif">TITAN ENERGY SYSTEMS</text>
-  <text x="88" y="214" fill="#F08B54" font-size="18" font-weight="700" letter-spacing="4" font-family="Manrope, Noto Sans SC, sans-serif">工业级能源解决方案</text>
-  <text x="88" y="304" fill="#F5F7FA" font-size="68" font-weight="800" font-family="Manrope, Noto Sans SC, sans-serif">为高强度场景打造</text>
-  <text x="88" y="382" fill="#FFB382" font-size="68" font-weight="800" font-family="Manrope, Noto Sans SC, sans-serif">更稳的能源底座</text>
-  <text x="88" y="446" fill="#A2ADBA" font-size="24" font-family="Manrope, Noto Sans SC, sans-serif">工业自动化 / 医疗检测 / 物联网终端 / 户外设备</text>
-  <g filter="url(#shadow)">
-    <ellipse cx="850" cy="345" rx="188" ry="30" fill="#F08B54" fill-opacity="0.18"/>
-    <rect x="640" y="259" width="285" height="86" rx="43" transform="rotate(-18 640 259)" fill="url(#batteryBody)"/>
-    <circle cx="985" cy="272" r="94" fill="url(#batteryCap)"/>
-    <circle cx="985" cy="272" r="63" fill="#FFE0AF"/>
-    <circle cx="985" cy="272" r="38" fill="#FFF8EF"/>
-    <circle cx="985" cy="272" r="80" stroke="#FFC779" stroke-opacity="0.68" stroke-width="18"/>
+
+  <rect width="1200" height="630" rx="40" fill="url(#bg)"/>
+  <rect x="0.5" y="0.5" width="1199" height="629" rx="39.5" stroke="white" stroke-opacity="0.08"/>
+  <rect x="44" y="38" width="1112" height="554" rx="30" fill="url(#glowA)"/>
+  <rect x="44" y="38" width="1112" height="554" rx="30" fill="url(#glowB)"/>
+
+  <g opacity="0.14">
+    <path d="M640 78H1122" stroke="white"/>
+    <path d="M640 402H1122" stroke="white"/>
+    <path d="M922 402V556" stroke="white"/>
   </g>
-  <rect x="88" y="458" width="148" height="54" rx="27" fill="#3C81C7"/>
-  <text x="134" y="493" fill="white" font-size="22" font-weight="700" font-family="Manrope, Noto Sans SC, sans-serif">48h</text>
-  <text x="185" y="493" fill="#DDE8F3" font-size="18" font-family="Manrope, Noto Sans SC, sans-serif">首轮反馈</text>
-  <rect x="258" y="458" width="170" height="54" rx="27" fill="white" fill-opacity="0.06" stroke="white" stroke-opacity="0.12"/>
-  <text x="306" y="493" fill="white" font-size="22" font-weight="700" font-family="Manrope, Noto Sans SC, sans-serif">99.92%</text>
-  <text x="389" y="493" fill="#DDE8F3" font-size="18" font-family="Manrope, Noto Sans SC, sans-serif">供能稳定度</text>
-  <rect x="452" y="458" width="156" height="54" rx="27" fill="white" fill-opacity="0.06" stroke="white" stroke-opacity="0.12"/>
-  <text x="504" y="493" fill="white" font-size="22" font-weight="700" font-family="Manrope, Noto Sans SC, sans-serif">120+</text>
-  <text x="564" y="493" fill="#DDE8F3" font-size="18" font-family="Manrope, Noto Sans SC, sans-serif">场景适配</text>
+
+  <path d="M84 78H116V98H99L87 121H84L92 98H84V78Z" fill="#F08B54"/>
+  <path d="M132 121H100V101H117L129 78H132L124 101H132V121Z" fill="#4D90D2"/>
+  <text x="158" y="95" fill="#F5F7FA" font-size="24" font-weight="700" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">泰坦能量</text>
+  <text x="158" y="123" fill="#93A0B0" font-size="14" letter-spacing="3" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">TITAN ENERGY SYSTEMS</text>
+
+  <text x="88" y="208" fill="#F08B54" font-size="18" font-weight="700" letter-spacing="4" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">工业级能源解决方案</text>
+  <text x="88" y="298" fill="#F5F7FA" font-size="66" font-weight="700" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">为高强度场景打造</text>
+  <text x="88" y="378" fill="url(#titleAccent)" font-size="66" font-weight="700" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">更稳的能源底座</text>
+  <text x="88" y="438" fill="#A2ADBA" font-size="24" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">工业自动化 / 医疗检测 / 物联网终端 / 户外设备</text>
+
+  <rect x="88" y="472" width="148" height="54" rx="27" fill="url(#badgeBlue)"/>
+  <text x="133" y="506" fill="white" font-size="22" font-weight="700" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">48h</text>
+  <text x="184" y="506" fill="#E0EBF6" font-size="18" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">首轮反馈</text>
+
+  <rect x="256" y="472" width="176" height="54" rx="27" fill="white" fill-opacity="0.06" stroke="white" stroke-opacity="0.12"/>
+  <text x="306" y="506" fill="white" font-size="22" font-weight="700" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">99.92%</text>
+  <text x="392" y="506" fill="#DEE8F2" font-size="18" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">供能稳定度</text>
+
+  <rect x="452" y="472" width="160" height="54" rx="27" fill="white" fill-opacity="0.06" stroke="white" stroke-opacity="0.12"/>
+  <text x="503" y="506" fill="white" font-size="22" font-weight="700" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">120+</text>
+  <text x="564" y="506" fill="#DEE8F2" font-size="18" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">场景适配</text>
+
+  <g filter="url(#softShadow)">
+    <rect x="704" y="74" width="430" height="312" rx="28" fill="url(#panelBg)"/>
+    <rect x="704.5" y="74.5" width="429" height="311" rx="27.5" stroke="white" stroke-opacity="0.12"/>
+    <g clip-path="url(#heroClip)">
+      <image href="hero-stage.jpg" x="704" y="74" width="430" height="312" preserveAspectRatio="xMidYMid slice"/>
+    </g>
+    <rect x="704" y="278" width="430" height="108" rx="0" fill="url(#overlayGrad)"/>
+    <rect x="726" y="95" width="150" height="34" rx="17" fill="rgba(8,11,16,0.56)" stroke="white" stroke-opacity="0.1"/>
+    <text x="748" y="117" fill="#F5F7FA" font-size="14" letter-spacing="2" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">工业供能模组</text>
+    <rect x="998" y="95" width="114" height="34" rx="17" fill="rgba(94,255,196,0.12)" stroke="rgba(136,248,202,0.24)"/>
+    <text x="1026" y="117" fill="#88F8CA" font-size="14" font-weight="700" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">在线展示</text>
+    <text x="726" y="337" fill="#F5F7FA" font-size="30" font-weight="700" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">真实产品视觉与工业级质感</text>
+    <text x="726" y="366" fill="#A4AFBC" font-size="17" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">让用户在分享页第一眼就理解材料、接口和应用氛围。</text>
+
+    <rect x="704" y="406" width="208" height="150" rx="26" fill="url(#miniPanel)"/>
+    <rect x="704.5" y="406.5" width="207" height="149" rx="25.5" stroke="white" stroke-opacity="0.1"/>
+    <text x="726" y="436" fill="#F08B54" font-size="14" font-weight="700" letter-spacing="2" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">应用场景</text>
+    <text x="726" y="474" fill="#F5F7FA" font-size="28" font-weight="700" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">工业 / 医疗</text>
+    <text x="726" y="510" fill="#F5F7FA" font-size="28" font-weight="700" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">IoT / 户外</text>
+    <rect x="726" y="524" width="74" height="26" rx="13" fill="white" fill-opacity="0.06" stroke="white" stroke-opacity="0.12"/>
+    <text x="743" y="541" fill="#DDE8F3" font-size="12" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">场景 4 类</text>
+    <rect x="810" y="524" width="80" height="26" rx="13" fill="white" fill-opacity="0.06" stroke="white" stroke-opacity="0.12"/>
+    <text x="828" y="541" fill="#DDE8F3" font-size="12" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">快速匹配</text>
+
+    <rect x="926" y="406" width="208" height="150" rx="26" fill="url(#miniPanel)"/>
+    <rect x="926.5" y="406.5" width="207" height="149" rx="25.5" stroke="white" stroke-opacity="0.1"/>
+    <text x="948" y="436" fill="#4D90D2" font-size="14" font-weight="700" letter-spacing="2" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">交付流程</text>
+
+    <rect x="948" y="455" width="164" height="26" rx="13" fill="white" fill-opacity="0.05" stroke="white" stroke-opacity="0.1"/>
+    <text x="961" y="473" fill="#F5F7FA" font-size="13" font-weight="700" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">01 需求评估</text>
+    <text x="1039" y="473" fill="#A5AFBB" font-size="13" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">功耗与环境</text>
+
+    <rect x="948" y="491" width="164" height="26" rx="13" fill="white" fill-opacity="0.05" stroke="white" stroke-opacity="0.1"/>
+    <text x="961" y="509" fill="#F5F7FA" font-size="13" font-weight="700" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">02 样品验证</text>
+    <text x="1039" y="509" fill="#A5AFBB" font-size="13" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">续航与峰值</text>
+
+    <rect x="948" y="527" width="164" height="26" rx="13" fill="white" fill-opacity="0.05" stroke="white" stroke-opacity="0.1"/>
+    <text x="961" y="545" fill="#F5F7FA" font-size="13" font-weight="700" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">03 量产导入</text>
+    <text x="1039" y="545" fill="#A5AFBB" font-size="13" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">平滑切换</text>
+  </g>
 </svg>

@@ -1,5 +1,22 @@
 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="64" height="64" rx="18" fill="#10161F"/>
-  <path d="M14 17H38V31H26L18 47H14L20.5 31H14V17Z" fill="#F08B54"/>
-  <path d="M50 47H26V33H38L46 17H50L43.5 33H50V47Z" fill="#4D90D2"/>
+  <defs>
+    <linearGradient id="favBg" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#151D28"/>
+      <stop offset="1" stop-color="#080B11"/>
+    </linearGradient>
+    <radialGradient id="favGlowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(20 18) rotate(42) scale(22 18)">
+      <stop stop-color="#F08B54" stop-opacity="0.34"/>
+      <stop offset="1" stop-color="#F08B54" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="favGlowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(44 46) rotate(145) scale(20 16)">
+      <stop stop-color="#4D90D2" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#4D90D2" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="url(#favBg)"/>
+  <rect x="0.5" y="0.5" width="63" height="63" rx="17.5" stroke="white" stroke-opacity="0.1"/>
+  <rect x="8" y="8" width="48" height="48" rx="14" fill="url(#favGlowA)"/>
+  <rect x="8" y="8" width="48" height="48" rx="14" fill="url(#favGlowB)"/>
+  <path d="M15 17H33V28H26L19 42H15L19.8 28H15V17Z" fill="#F08B54"/>
+  <path d="M49 47H31V36H38L45 22H49L44.2 36H49V47Z" fill="#4D90D2"/>
 </svg>
