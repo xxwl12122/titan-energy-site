@@ -2115,6 +2115,10 @@ body[data-theme="light"] .process-visual {
     padding: 34px;
   }
 
+  .scenario-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .footer-copy {
     text-align: left;
   }
@@ -2359,9 +2363,29 @@ body[data-theme="light"] .process-visual {
     margin-right: 0;
   }
 
+  .scenario-grid {
+    grid-template-columns: 1fr;
+  }
+
   .scenario-visual {
+    aspect-ratio: 4 / 3;
     margin-left: 0;
     margin-right: 0;
+  }
+
+  .scenario-card {
+    gap: 14px;
+  }
+
+  .scenario-meta {
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .scenario-meta span {
+    min-height: 32px;
+    padding: 0 12px;
+    font-size: 0.78rem;
   }
 
   .spec-summary,
@@ -2410,6 +2434,10 @@ body[data-theme="light"] .process-visual {
     left: 16px;
     max-width: none;
     padding: 16px;
+  }
+
+  .process-caption strong {
+    font-size: 1.04rem;
   }
 
   .hero-actions {
