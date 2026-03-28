@@ -31,6 +31,7 @@ const magneticButtons = document.querySelectorAll(".nav-cta, .primary-button, .s
 const breatheTargets = document.querySelectorAll(".metric-card, .technology-panel");
 const projectForm = document.getElementById("projectForm");
 const projectFormFeedback = document.getElementById("projectFormFeedback");
+const projectFormStatus = document.getElementById("projectFormStatus");
 const projectCopyButton = document.querySelector(".project-copy-button");
 const projectDraftClearButton = document.querySelector(".project-draft-clear");
 const customSelects = document.querySelectorAll("[data-custom-select]");
@@ -43,6 +44,7 @@ const projectPreviewPoints = document.getElementById("projectPreviewPoints");
 const projectReadinessValue = document.getElementById("projectReadinessValue");
 const projectReadinessBar = document.getElementById("projectReadinessBar");
 const backToTopButton = document.querySelector(".back-to-top");
+const ambientVideos = document.querySelectorAll(".hero-stage video, .scenario-visual video");
 const spotlightTargets = document.querySelectorAll(".section-surface, .hero-stage, .technology-visual, .process-visual, .scenario-card-featured .scenario-visual");
 const depthTargets = document.querySelectorAll(".hero-aura, .hero-stage, .technology-visual, .process-visual, .scenario-card-featured .scenario-visual");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -53,6 +55,8 @@ const motionLite = prefersReducedMotion.matches
 const projectDraftKey = "titan-project-draft";
 let searchReturnFocusTarget = null;
 let mobileReturnFocusTarget = null;
+let projectStatusTimer = null;
+let searchFlashTimer = 0;
 
 body.classList.toggle("motion-lite", motionLite);
 
@@ -366,6 +370,16 @@ document.addEventListener("keydown", (event) => {
         openSearch(searchInput?.value || "");
     }
 
+    if (
+        event.key === "/"
+        && !(event.target instanceof HTMLInputElement)
+        && !(event.target instanceof HTMLTextAreaElement)
+        && !(event.target instanceof HTMLSelectElement)
+    ) {
+        event.preventDefault();
+        openSearch(searchInput?.value || "");
+    }
+
     if (event.key === "Escape") {
         closeSearch();
         closeMobilePanel();
@@ -520,6 +534,38 @@ function updatePageSignals() {
     }
 }
 
+function flashSection(target) {
+    if (!(target instanceof HTMLElement)) {
+        return;
+    }
+
+    if (searchFlashTimer) {
+        window.clearTimeout(searchFlashTimer);
+    }
+
+    target.classList.add("is-search-hit");
+    searchFlashTimer = window.setTimeout(() => {
+        target.classList.remove("is-search-hit");
+    }, 1600);
+}
+
+function syncAmbientVideoPlayback(video) {
+    if (!(video instanceof HTMLVideoElement)) {
+        return;
+    }
+
+    const inViewport = video.dataset.inViewport === "true";
+    const shouldPlay = inViewport && !motionLite && !prefersReducedMotion.matches && document.visibilityState === "visible";
+
+    if (shouldPlay) {
+        video.play().catch(() => {
+            // Ignore autoplay failures and keep the page usable.
+        });
+    } else {
+        video.pause();
+    }
+}
+
 function schedulePageSignals() {
     if (pageSignalTicking) {
         return;
@@ -585,6 +631,7 @@ function searchSection(query) {
 
     if (bestMatch && bestScore > 0) {
         scrollToTarget(`#${bestMatch.id}`);
+        flashSection(bestMatch);
         if (searchFeedback) {
             const title = bestMatch.querySelector("h2")?.textContent || "目标区块";
             searchFeedback.textContent = `已为你定位到“${title}”。`;
@@ -619,6 +666,27 @@ function setProjectFeedback(message) {
     }
 }
 
+function setProjectStatus(message, timeoutMs = 2200) {
+    if (!projectFormStatus) {
+        return;
+    }
+
+    projectFormStatus.textContent = message;
+
+    if (projectStatusTimer) {
+        window.clearTimeout(projectStatusTimer);
+        projectStatusTimer = null;
+    }
+
+    if (timeoutMs > 0 && message) {
+        projectStatusTimer = window.setTimeout(() => {
+            if (projectFormStatus.textContent === message) {
+                projectFormStatus.textContent = "";
+            }
+        }, timeoutMs);
+    }
+}
+
 function buildProjectDraft(form) {
     const formData = new FormData(form);
     return {
@@ -643,8 +711,10 @@ function saveProjectDraft() {
     try {
         if (hasContent) {
             window.localStorage.setItem(projectDraftKey, JSON.stringify(draft));
+            setProjectStatus("草稿已自动保存到当前浏览器。", 1400);
         } else {
             window.localStorage.removeItem(projectDraftKey);
+            setProjectStatus("", 0);
         }
     } catch (error) {
         // Ignore storage errors and keep the form usable.
@@ -679,6 +749,7 @@ function restoreProjectDraft() {
             customSelects.forEach((selectRoot) => syncCustomSelect(selectRoot));
             updateProjectPreview();
             setProjectFeedback("已恢复你上次未发送的项目草稿。");
+            setProjectStatus("已恢复上次未发送的草稿。", 2600);
         }
     } catch (error) {
         window.localStorage.removeItem(projectDraftKey);
@@ -705,6 +776,7 @@ function clearProjectDraft(shouldResetForm = false) {
         field.classList.remove("is-invalid");
     });
     updateProjectPreview();
+    setProjectStatus("", 0);
 }
 
 function getFormValue(formData, name) {
@@ -928,7 +1000,9 @@ projectForm?.addEventListener("submit", (event) => {
     const subject = encodeURIComponent(`[项目咨询] ${subjectBase}`);
     const bodyText = encodeURIComponent(summary);
 
+    clearProjectDraft(false);
     setProjectFeedback("已为你生成邮件草稿；如果没有自动打开邮件客户端，也可以先复制摘要。");
+    setProjectStatus("草稿已转为邮件内容。", 2200);
     window.location.href = `mailto:sales@titanenergy.cn?subject=${subject}&body=${bodyText}`;
 });
 
@@ -950,6 +1024,7 @@ projectCopyButton?.addEventListener("click", async () => {
 projectDraftClearButton?.addEventListener("click", () => {
     clearProjectDraft(true);
     setProjectFeedback("当前浏览器里的项目草稿已清空。");
+    setProjectStatus("草稿已清空。", 2200);
 });
 
 projectForm?.addEventListener("input", (event) => {
@@ -972,6 +1047,37 @@ projectForm?.addEventListener("change", (event) => {
 
 restoreProjectDraft();
 updateProjectPreview();
+
+if (motionLite || prefersReducedMotion.matches) {
+    ambientVideos.forEach((video) => {
+        video.pause();
+        video.removeAttribute("autoplay");
+    });
+} else {
+    const ambientVideoObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                const video = entry.target;
+                if (!(video instanceof HTMLVideoElement)) {
+                    return;
+                }
+
+                video.dataset.inViewport = entry.isIntersecting ? "true" : "false";
+                syncAmbientVideoPlayback(video);
+            });
+        },
+        { threshold: 0.35 }
+    );
+
+    ambientVideos.forEach((video) => {
+        video.dataset.inViewport = "false";
+        ambientVideoObserver.observe(video);
+    });
+
+    document.addEventListener("visibilitychange", () => {
+        ambientVideos.forEach((video) => syncAmbientVideoPlayback(video));
+    });
+}
 
 function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);

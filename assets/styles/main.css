@@ -1574,6 +1574,14 @@ body[data-theme="light"] .section-surface::before {
   opacity: 1;
 }
 
+.section-surface.is-search-hit {
+  border-color: rgba(255, 166, 104, 0.28);
+  box-shadow:
+    0 38px 88px rgba(0, 0, 0, 0.24),
+    0 0 0 1px rgba(255, 166, 104, 0.12),
+    0 0 0 12px rgba(255, 166, 104, 0.04);
+}
+
 .section-head {
   max-width: 760px;
   margin-bottom: 36px;
@@ -3715,9 +3723,16 @@ body[data-theme="light"] .case-detail-output-head span {
 }
 
 .project-form-note,
+.project-form-status,
 .project-form-feedback {
   margin: 0;
   color: var(--muted);
+}
+
+.project-form-status {
+  min-height: 22px;
+  color: rgba(236, 241, 247, 0.58);
+  font-size: 0.84rem;
 }
 
 .project-form-feedback {
@@ -3761,6 +3776,10 @@ body[data-theme="light"] .project-draft-clear {
 }
 
 body[data-theme="light"] .form-field span {
+  color: var(--muted);
+}
+
+body[data-theme="light"] .project-form-status {
   color: var(--muted);
 }
 
