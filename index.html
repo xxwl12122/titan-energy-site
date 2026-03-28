@@ -914,44 +914,65 @@
             <section class="section cta-section" id="contact" data-search="联系 咨询 方案 沟通 合作 表单 邮件 电话 提交">
                 <div class="container section-surface cta-grid">
                     <div class="cta-copy reveal">
-                        <p class="eyebrow">获取方案</p>
-                        <h2>如果你已经有项目需求，现在就可以进入方案沟通阶段</h2>
-                        <p>告诉我们设备类型、使用频率和部署环境，我们会更快给出可执行的选型建议。</p>
-                        <div class="cta-badges">
-                            <span>48h 首轮反馈</span>
-                            <span>支持打样验证</span>
-                            <span>量产切换协同</span>
-                        </div>
-                        <div class="cta-journey reveal">
-                            <div class="cta-journey-head">
-                                <span>Response Flow</span>
-                                <strong>进入沟通后，我们通常会按这条推进线把项目收拢清楚</strong>
+                        <div class="cta-copy-intro">
+                            <p class="eyebrow">获取方案</p>
+                            <h2>把项目关键约束先收拢，再进入更高效的方案沟通</h2>
+                            <p>这块不再只是留联系方式，而是先把设备方向、阶段和环境约束收齐，让首轮建议更快落到可执行动作。</p>
+                            <div class="cta-badges">
+                                <span>48h 首轮反馈</span>
+                                <span>支持打样验证</span>
+                                <span>量产切换协同</span>
                             </div>
-                            <div class="cta-journey-track">
-                                <article class="cta-lane">
-                                    <span>48h</span>
-                                    <strong>边界判断</strong>
-                                    <p>先确认设备方向、功耗重点和环境约束，给出第一版建议框架。</p>
-                                </article>
-                                <article class="cta-lane">
-                                    <span>7d</span>
-                                    <strong>样品验证</strong>
-                                    <p>把峰值、温区和维护节奏放进同一轮回看，快速筛出更稳方案。</p>
-                                </article>
-                                <article class="cta-lane">
-                                    <span>30d</span>
-                                    <strong>规格冻结</strong>
-                                    <p>明确接口、封装、追溯和导入节奏，让量产切换更平滑。</p>
-                                </article>
+                            <div class="cta-pulse">
+                                <span>Fast Intake</span>
+                                <strong>字段不需要一次填满，先把核心边界交代清楚，我们就能先给方向。</strong>
                             </div>
                         </div>
-                        <div class="cta-prep">
-                            <p>建议先准备这 3 类信息：</p>
-                            <ul>
-                                <li>设备类型与结构尺寸限制</li>
-                                <li>峰值电流、工作周期与待机时长</li>
-                                <li>部署环境，例如温差、震动或户外使用</li>
-                            </ul>
+                        <div class="cta-support-grid">
+                            <div class="cta-journey reveal">
+                                <div class="cta-journey-head">
+                                    <span>Response Flow</span>
+                                    <strong>沟通通常会先走这 3 段，不会一上来把信息摊得过散</strong>
+                                </div>
+                                <div class="cta-journey-track">
+                                    <article class="cta-lane">
+                                        <div class="cta-lane-meta">
+                                            <span>01</span>
+                                            <em>48h</em>
+                                        </div>
+                                        <strong>边界判断</strong>
+                                        <p>先确认设备方向、功耗重点和环境约束，收出第一版建议框架。</p>
+                                    </article>
+                                    <article class="cta-lane">
+                                        <div class="cta-lane-meta">
+                                            <span>02</span>
+                                            <em>7d</em>
+                                        </div>
+                                        <strong>样品验证</strong>
+                                        <p>把峰值、温区和维护节奏放进同一轮回看，快速筛出更稳方案。</p>
+                                    </article>
+                                    <article class="cta-lane">
+                                        <div class="cta-lane-meta">
+                                            <span>03</span>
+                                            <em>30d</em>
+                                        </div>
+                                        <strong>规格冻结</strong>
+                                        <p>明确接口、封装、追溯和导入节奏，让量产切换更平滑。</p>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="cta-prep">
+                                <div class="cta-prep-head">
+                                    <span>准备清单</span>
+                                    <strong>建议先带上这 3 类信息</strong>
+                                </div>
+                                <ul>
+                                    <li>设备类型与结构尺寸限制</li>
+                                    <li>峰值电流、工作周期与待机时长</li>
+                                    <li>部署环境，例如温差、震动或户外使用</li>
+                                </ul>
+                                <p class="cta-prep-note">信息不完整也没关系，先把主要限制讲清楚，我们会帮你继续收边界。</p>
+                            </div>
                         </div>
                     </div>
                     <form class="project-form reveal" id="projectForm">
@@ -962,24 +983,51 @@
                         <div class="project-form-grid">
                             <label class="form-field">
                                 <span>设备类型</span>
-                                <select name="deviceType" required>
-                                    <option value="">请选择设备方向</option>
-                                    <option value="工业自动化">工业自动化</option>
-                                    <option value="医疗检测设备">医疗检测设备</option>
-                                    <option value="物联网终端">物联网终端</option>
-                                    <option value="户外巡检设备">户外巡检设备</option>
-                                    <option value="其他设备">其他设备</option>
-                                </select>
+                                <div class="custom-select" data-custom-select>
+                                    <button class="custom-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                                        <span class="custom-select-value">请选择设备方向</span>
+                                        <span class="custom-select-arrow" aria-hidden="true"></span>
+                                    </button>
+                                    <div class="custom-select-menu" role="listbox">
+                                        <button class="custom-select-option is-placeholder" type="button" data-value="">请选择设备方向</button>
+                                        <button class="custom-select-option" type="button" data-value="工业自动化">工业自动化</button>
+                                        <button class="custom-select-option" type="button" data-value="医疗检测设备">医疗检测设备</button>
+                                        <button class="custom-select-option" type="button" data-value="物联网终端">物联网终端</button>
+                                        <button class="custom-select-option" type="button" data-value="户外巡检设备">户外巡检设备</button>
+                                        <button class="custom-select-option" type="button" data-value="其他设备">其他设备</button>
+                                    </div>
+                                    <select class="custom-select-native" name="deviceType">
+                                        <option value="">请选择设备方向</option>
+                                        <option value="工业自动化">工业自动化</option>
+                                        <option value="医疗检测设备">医疗检测设备</option>
+                                        <option value="物联网终端">物联网终端</option>
+                                        <option value="户外巡检设备">户外巡检设备</option>
+                                        <option value="其他设备">其他设备</option>
+                                    </select>
+                                </div>
                             </label>
                             <label class="form-field">
                                 <span>项目阶段</span>
-                                <select name="projectStage" required>
-                                    <option value="">请选择当前阶段</option>
-                                    <option value="样机评估中">样机评估中</option>
-                                    <option value="样品验证中">样品验证中</option>
-                                    <option value="量产切换中">量产切换中</option>
-                                    <option value="已有方案待优化">已有方案待优化</option>
-                                </select>
+                                <div class="custom-select" data-custom-select>
+                                    <button class="custom-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                                        <span class="custom-select-value">请选择当前阶段</span>
+                                        <span class="custom-select-arrow" aria-hidden="true"></span>
+                                    </button>
+                                    <div class="custom-select-menu" role="listbox">
+                                        <button class="custom-select-option is-placeholder" type="button" data-value="">请选择当前阶段</button>
+                                        <button class="custom-select-option" type="button" data-value="样机评估中">样机评估中</button>
+                                        <button class="custom-select-option" type="button" data-value="样品验证中">样品验证中</button>
+                                        <button class="custom-select-option" type="button" data-value="量产切换中">量产切换中</button>
+                                        <button class="custom-select-option" type="button" data-value="已有方案待优化">已有方案待优化</button>
+                                    </div>
+                                    <select class="custom-select-native" name="projectStage">
+                                        <option value="">请选择当前阶段</option>
+                                        <option value="样机评估中">样机评估中</option>
+                                        <option value="样品验证中">样品验证中</option>
+                                        <option value="量产切换中">量产切换中</option>
+                                        <option value="已有方案待优化">已有方案待优化</option>
+                                    </select>
+                                </div>
                             </label>
                             <label class="form-field">
                                 <span>峰值电流</span>

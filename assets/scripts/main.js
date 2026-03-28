@@ -29,6 +29,7 @@ const breatheTargets = document.querySelectorAll(".metric-card, .technology-pane
 const projectForm = document.getElementById("projectForm");
 const projectFormFeedback = document.getElementById("projectFormFeedback");
 const projectCopyButton = document.querySelector(".project-copy-button");
+const customSelects = document.querySelectorAll("[data-custom-select]");
 const projectPreviewTitle = document.getElementById("projectPreviewTitle");
 const projectPreviewFocusLabel = document.getElementById("projectPreviewFocusLabel");
 const projectPreviewFocusText = document.getElementById("projectPreviewFocusText");
@@ -129,6 +130,128 @@ function closeMobilePanel() {
     setBodyLock(Boolean(searchOverlay && !searchOverlay.hidden));
 }
 
+function closeCustomSelects(except = null) {
+    customSelects.forEach((selectRoot) => {
+        if (selectRoot === except) {
+            return;
+        }
+
+        selectRoot.classList.remove("is-open");
+        selectRoot.querySelector(".custom-select-trigger")?.setAttribute("aria-expanded", "false");
+    });
+}
+
+function syncCustomSelect(selectRoot) {
+    const nativeSelect = selectRoot.querySelector(".custom-select-native");
+    const valueElement = selectRoot.querySelector(".custom-select-value");
+    const options = selectRoot.querySelectorAll(".custom-select-option");
+
+    if (!nativeSelect || !valueElement) {
+        return;
+    }
+
+    const selectedOption = nativeSelect.options[nativeSelect.selectedIndex];
+    const selectedValue = nativeSelect.value;
+    valueElement.textContent = selectedOption?.textContent?.trim() || "";
+    selectRoot.classList.toggle("is-placeholder", !selectedValue);
+
+    options.forEach((option) => {
+        option.classList.toggle("is-selected", option.dataset.value === selectedValue);
+    });
+}
+
+function setFieldInvalidState(field, invalid) {
+    if (!field) {
+        return;
+    }
+
+    if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
+        field.classList.toggle("is-invalid", invalid);
+        return;
+    }
+
+    const customSelect = field.closest(".custom-select");
+    customSelect?.classList.toggle("is-invalid", invalid);
+}
+
+function focusProjectField(field) {
+    if (!field) {
+        return;
+    }
+
+    const customSelect = field.closest(".custom-select");
+
+    if (customSelect) {
+        closeCustomSelects(customSelect);
+        customSelect.classList.add("is-open");
+        customSelect.querySelector(".custom-select-trigger")?.setAttribute("aria-expanded", "true");
+        customSelect.querySelector(".custom-select-trigger")?.focus();
+        return;
+    }
+
+    field.focus();
+}
+
+function validateProjectForm() {
+    if (!projectForm) {
+        return { valid: true, firstInvalidField: null };
+    }
+
+    const requiredFields = [
+        projectForm.querySelector('[name="deviceType"]'),
+        projectForm.querySelector('[name="projectStage"]'),
+        projectForm.querySelector('[name="contact"]')
+    ];
+
+    let firstInvalidField = null;
+
+    requiredFields.forEach((field) => {
+        const value = typeof field?.value === "string" ? field.value.trim() : "";
+        const invalid = !value;
+        setFieldInvalidState(field, invalid);
+
+        if (invalid && !firstInvalidField) {
+            firstInvalidField = field;
+        }
+    });
+
+    return {
+        valid: !firstInvalidField,
+        firstInvalidField
+    };
+}
+
+customSelects.forEach((selectRoot) => {
+    const trigger = selectRoot.querySelector(".custom-select-trigger");
+    const nativeSelect = selectRoot.querySelector(".custom-select-native");
+    const optionButtons = selectRoot.querySelectorAll(".custom-select-option");
+
+    if (!trigger || !nativeSelect) {
+        return;
+    }
+
+    syncCustomSelect(selectRoot);
+
+    trigger.addEventListener("click", () => {
+        const willOpen = !selectRoot.classList.contains("is-open");
+        closeCustomSelects(willOpen ? selectRoot : null);
+        selectRoot.classList.toggle("is-open", willOpen);
+        trigger.setAttribute("aria-expanded", willOpen ? "true" : "false");
+    });
+
+    optionButtons.forEach((optionButton) => {
+        optionButton.addEventListener("click", () => {
+            nativeSelect.value = optionButton.dataset.value || "";
+            setFieldInvalidState(nativeSelect, false);
+            syncCustomSelect(selectRoot);
+            closeCustomSelects();
+            nativeSelect.dispatchEvent(new Event("input", { bubbles: true }));
+            nativeSelect.dispatchEvent(new Event("change", { bubbles: true }));
+            trigger.focus();
+        });
+    });
+});
+
 searchToggle?.addEventListener("click", () => openSearch());
 searchClose?.addEventListener("click", closeSearch);
 searchOverlay?.addEventListener("click", (event) => {
@@ -146,7 +269,17 @@ document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
         closeSearch();
         closeMobilePanel();
+        closeCustomSelects();
     }
+});
+
+document.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Element) || target.closest("[data-custom-select]")) {
+        return;
+    }
+
+    closeCustomSelects();
 });
 
 function scrollToTarget(selector) {
@@ -542,8 +675,11 @@ async function copyText(text) {
 projectForm?.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    if (!projectForm.reportValidity()) {
+    const validation = validateProjectForm();
+
+    if (!validation.valid) {
         setProjectFeedback("请先补全设备类型、项目阶段和联系方式。");
+        focusProjectField(validation.firstInvalidField);
         return;
     }
 
@@ -571,8 +707,22 @@ projectCopyButton?.addEventListener("click", async () => {
     }
 });
 
-projectForm?.addEventListener("input", updateProjectPreview);
-projectForm?.addEventListener("change", updateProjectPreview);
+projectForm?.addEventListener("input", (event) => {
+    const target = event.target;
+    if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement) {
+        setFieldInvalidState(target, false);
+    }
+    updateProjectPreview();
+});
+
+projectForm?.addEventListener("change", (event) => {
+    const target = event.target;
+    if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement) {
+        setFieldInvalidState(target, false);
+    }
+    updateProjectPreview();
+});
+
 updateProjectPreview();
 
 function clamp(value, min, max) {
