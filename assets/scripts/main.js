@@ -10,7 +10,7 @@ const searchClose = document.querySelector(".search-close");
 const searchForm = document.getElementById("searchForm");
 const searchInput = document.getElementById("siteSearch");
 const searchFeedback = document.getElementById("searchFeedback");
-const tagButtons = document.querySelectorAll(".tag-button");
+const queryButtons = document.querySelectorAll("[data-query]");
 const menuToggle = document.querySelector(".mobile-menu-entry");
 const mobilePanel = document.getElementById("mobilePanel");
 const mobileDrawer = document.querySelector(".mobile-drawer");
@@ -427,6 +427,18 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
 
 let activeSectionId = sections[0]?.id || "hero";
 let pageSignalTicking = false;
+const searchIntentMap = {
+    hero: ["首页", "首屏", "能源", "工业级", "品牌"],
+    trust: ["信任", "合作", "验证", "方法", "保障", "保密"],
+    products: ["产品", "系列", "模组", "电池", "锂电", "classic", "prime", "pulse"],
+    parameters: ["参数", "规格", "容量", "温度", "电流", "寿命", "封装", "对比"],
+    technology: ["技术", "研发", "输出", "架构", "稳定", "寿命", "环境适配"],
+    scenarios: ["场景", "行业", "医疗", "工业自动化", "物联网", "户外", "iot"],
+    process: ["交付", "流程", "打样", "量产", "评估", "验证", "推进"],
+    proof: ["案例", "结果", "成效", "项目结果", "案例封面"],
+    "case-detail": ["案例拆解", "拆解", "详情", "难点", "判断逻辑"],
+    contact: ["联系", "咨询", "方案", "电话", "邮箱", "表单", "邮件", "销售"]
+};
 
 function setCurrentSection(sectionId) {
     navigationLinks.forEach((link) => {
@@ -499,6 +511,7 @@ function updatePageSignals() {
 
     if (backToTopButton) {
         backToTopButton.classList.toggle("is-visible", window.scrollY > 560);
+        backToTopButton.style.setProperty("--top-progress", progress.toFixed(3));
     }
 
     if (nextSectionId !== activeSectionId) {
@@ -540,15 +553,40 @@ function searchSection(query) {
         return;
     }
 
-    const match = Array.from(sections).find((section) => {
-        const keywords = (section.getAttribute("data-search") || "").toLowerCase();
-        return keywords.includes(normalized);
+    const tokens = normalized.split(/[\s/、,，]+/).filter(Boolean);
+    let bestMatch = null;
+    let bestScore = 0;
+
+    sections.forEach((section) => {
+        const sectionId = section.id;
+        const sourceText = [
+            section.getAttribute("data-search") || "",
+            searchIntentMap[sectionId]?.join(" ") || "",
+            section.querySelector("h2")?.textContent || ""
+        ].join(" ").toLowerCase();
+
+        let score = 0;
+
+        if (sourceText.includes(normalized)) {
+            score += 5;
+        }
+
+        tokens.forEach((token) => {
+            if (sourceText.includes(token)) {
+                score += token.length >= 3 ? 2 : 1;
+            }
+        });
+
+        if (score > bestScore) {
+            bestScore = score;
+            bestMatch = section;
+        }
     });
 
-    if (match) {
-        scrollToTarget(`#${match.id}`);
+    if (bestMatch && bestScore > 0) {
+        scrollToTarget(`#${bestMatch.id}`);
         if (searchFeedback) {
-            const title = match.querySelector("h2")?.textContent || "目标区块";
+            const title = bestMatch.querySelector("h2")?.textContent || "目标区块";
             searchFeedback.textContent = `已为你定位到“${title}”。`;
         }
         window.setTimeout(closeSearch, 380);
@@ -565,7 +603,7 @@ searchForm?.addEventListener("submit", (event) => {
     searchSection(searchInput?.value || "");
 });
 
-tagButtons.forEach((button) => {
+queryButtons.forEach((button) => {
     button.addEventListener("click", () => {
         const query = button.getAttribute("data-query") || "";
         if (searchInput) {

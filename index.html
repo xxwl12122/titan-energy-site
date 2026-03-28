@@ -109,7 +109,7 @@
                         <button class="search-close" type="button" aria-label="关闭搜索">关闭</button>
                     </div>
                 </div>
-                <p class="search-hint">输入“产品 / 参数 / 技术 / 行业 / 联系 / 交付”等关键词，页面会自动跳转到最相关的区块。</p>
+                <p class="search-hint">输入“产品 / 参数 / 技术 / 行业 / 联系 / 交付 / 电话 / 邮箱”等关键词，页面会自动跳转到最相关的区块。</p>
                 <form class="search-form" id="searchForm">
                     <label class="sr-only" for="siteSearch">搜索页面内容</label>
                     <input id="siteSearch" class="search-input" type="search" placeholder="例如：工业、参数、锂电、方案、交付" autocomplete="off">
@@ -123,6 +123,24 @@
                     <button type="button" class="tag-button" data-query="行业">行业</button>
                     <button type="button" class="tag-button" data-query="交付">交付</button>
                     <button type="button" class="tag-button" data-query="联系">联系</button>
+                </div>
+                <div class="search-route-grid" aria-label="常用直达">
+                    <button type="button" class="search-route-card" data-query="产品">
+                        <strong>产品矩阵</strong>
+                        <span>先看系列划分和规格方向</span>
+                    </button>
+                    <button type="button" class="search-route-card" data-query="参数">
+                        <strong>参数模块</strong>
+                        <span>直接比容量、温区和寿命</span>
+                    </button>
+                    <button type="button" class="search-route-card" data-query="案例">
+                        <strong>案例结果</strong>
+                        <span>快速看项目推进与结果表达</span>
+                    </button>
+                    <button type="button" class="search-route-card" data-query="联系">
+                        <strong>获取方案</strong>
+                        <span>进入项目表单和沟通入口</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -1114,40 +1132,67 @@
         </div>
 
         <footer class="footer">
-            <div class="container footer-row">
-                <div class="footer-brand">
-                    <div class="brand brand-inline">
-                        <span class="brand-mark" aria-hidden="true"></span>
-                        <span class="brand-copy">
-                            <strong>泰坦能量</strong>
-                            <small>TITAN ENERGY SYSTEMS</small>
-                        </span>
+            <div class="container footer-surface">
+                <div class="footer-top">
+                    <div class="footer-top-copy">
+                        <p class="footer-label">最后一步</p>
+                        <h2>如果项目已经在推进，现在就把关键边界发给我们。</h2>
+                        <p>先把设备方向、环境约束和当前阶段讲清楚，我们会更快把建议收成可执行动作，而不是只给一个泛泛型号。</p>
                     </div>
-                    <p class="footer-text">更稳的能源底座，服务更严苛的工作现场。</p>
-                    <div class="footer-badges">
-                        <span>工业自动化</span>
-                        <span>医疗检测</span>
-                        <span>物联网终端</span>
-                        <span>户外设备</span>
+                    <div class="footer-top-actions">
+                        <a class="primary-button" href="#contact">填写项目表单</a>
+                        <a class="secondary-button" href="mailto:sales@titanenergy.cn">邮件联系</a>
+                    </div>
+                    <div class="footer-top-stats">
+                        <article>
+                            <span>首轮反馈</span>
+                            <strong>48h</strong>
+                        </article>
+                        <article>
+                            <span>样品验证</span>
+                            <strong>7d</strong>
+                        </article>
+                        <article>
+                            <span>规格冻结</span>
+                            <strong>30d</strong>
+                        </article>
                     </div>
                 </div>
-                <div class="footer-block">
-                    <p class="footer-label">站内导航</p>
-                    <div class="footer-links">
-                        <a href="#products">产品矩阵</a>
-                        <a href="#technology">核心技术</a>
-                        <a href="#scenarios">应用场景</a>
-                        <a href="#process">交付流程</a>
-                        <a href="#contact">获取方案</a>
+                <div class="footer-row">
+                    <div class="footer-brand">
+                        <div class="brand brand-inline">
+                            <span class="brand-mark" aria-hidden="true"></span>
+                            <span class="brand-copy">
+                                <strong>泰坦能量</strong>
+                                <small>TITAN ENERGY SYSTEMS</small>
+                            </span>
+                        </div>
+                        <p class="footer-text">更稳的能源底座，服务更严苛的工作现场。</p>
+                        <div class="footer-badges">
+                            <span>工业自动化</span>
+                            <span>医疗检测</span>
+                            <span>物联网终端</span>
+                            <span>户外设备</span>
+                        </div>
                     </div>
+                    <div class="footer-block">
+                        <p class="footer-label">站内导航</p>
+                        <div class="footer-links">
+                            <a href="#products">产品矩阵</a>
+                            <a href="#technology">核心技术</a>
+                            <a href="#scenarios">应用场景</a>
+                            <a href="#process">交付流程</a>
+                            <a href="#contact">获取方案</a>
+                        </div>
+                    </div>
+                    <div class="footer-block footer-contact">
+                        <p class="footer-label">联系支持</p>
+                        <a href="mailto:sales@titanenergy.cn">sales@titanenergy.cn</a>
+                        <a href="tel:400-820-2048">400-820-2048</a>
+                        <span>工作日 09:00 - 18:00</span>
+                    </div>
+                    <p class="footer-copy">© <span id="year"></span> 泰坦能量. 工业级供能方案展示站点。</p>
                 </div>
-                <div class="footer-block footer-contact">
-                    <p class="footer-label">联系支持</p>
-                    <a href="mailto:sales@titanenergy.cn">sales@titanenergy.cn</a>
-                    <a href="tel:400-820-2048">400-820-2048</a>
-                    <span>工作日 09:00 - 18:00</span>
-                </div>
-                <p class="footer-copy">© <span id="year"></span> 泰坦能量. 工业级供能方案展示站点。</p>
             </div>
         </footer>
     </div>
