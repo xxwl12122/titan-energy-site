@@ -1292,7 +1292,9 @@ body[data-theme="light"] .section-surface::before {
 .capability-card,
 .technology-panel,
 .timeline-item,
-.cta-card {
+.cta-card,
+.proof-card,
+.proof-summary-item {
   padding: 28px;
   position: relative;
   overflow: hidden;
@@ -1333,7 +1335,9 @@ body[data-theme="light"] .scenario-card,
 body[data-theme="light"] .capability-card,
 body[data-theme="light"] .technology-panel,
 body[data-theme="light"] .timeline-item,
-body[data-theme="light"] .cta-card {
+body[data-theme="light"] .cta-card,
+body[data-theme="light"] .proof-card,
+body[data-theme="light"] .proof-summary-item {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.04)),
     var(--panel);
@@ -1354,6 +1358,8 @@ body[data-theme="light"] .cta-card {
 .technology-panel::before,
 .timeline-item::before,
 .cta-card::before,
+.proof-card::before,
+.proof-summary-item::before,
 .signal-card::before,
 .note-card::before {
   content: "";
@@ -1378,6 +1384,8 @@ body[data-theme="light"] .cta-card {
 .capability-card:hover,
 .timeline-item:hover,
 .cta-card:hover,
+.proof-card:hover,
+.proof-summary-item:hover,
 .technology-panel:hover,
 .signal-card:hover,
 .note-card:hover,
@@ -1386,6 +1394,8 @@ body[data-theme="light"] .cta-card {
 .capability-card:focus-within,
 .timeline-item:focus-within,
 .cta-card:focus-within,
+.proof-card:focus-within,
+.proof-summary-item:focus-within,
 .technology-panel:focus-within,
 .signal-card:focus-within,
 .note-card:focus-within {
@@ -1399,6 +1409,8 @@ body[data-theme="light"] .cta-card {
 .capability-card:hover::before,
 .timeline-item:hover::before,
 .cta-card:hover::before,
+.proof-card:hover::before,
+.proof-summary-item:hover::before,
 .technology-panel:hover::before,
 .signal-card:hover::before,
 .note-card:hover::before,
@@ -1407,6 +1419,8 @@ body[data-theme="light"] .cta-card {
 .capability-card:focus-within::before,
 .timeline-item:focus-within::before,
 .cta-card:focus-within::before,
+.proof-card:focus-within::before,
+.proof-summary-item:focus-within::before,
 .technology-panel:focus-within::before,
 .signal-card:focus-within::before,
 .note-card:focus-within::before {
@@ -2255,6 +2269,179 @@ body[data-theme="light"] .process-visual {
   gap: 8px;
 }
 
+.proof-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.8fr) minmax(0, 1.2fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.proof-copy {
+  display: grid;
+  gap: 18px;
+}
+
+.proof-summary {
+  display: grid;
+  gap: 14px;
+}
+
+.proof-summary-item {
+  padding: 22px;
+}
+
+.proof-summary-item span,
+.proof-card-top span,
+.proof-metrics span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(236, 241, 247, 0.72);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.proof-summary-item strong,
+.proof-card-top strong {
+  display: block;
+  margin-top: 12px;
+  font-family: var(--font-heading);
+  line-height: 1.28;
+}
+
+.proof-summary-item strong {
+  font-size: 1.24rem;
+}
+
+.proof-summary-item p {
+  margin: 10px 0 0;
+  color: var(--muted);
+}
+
+.proof-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.proof-card {
+  display: grid;
+  gap: 16px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 163, 109, 0.14), transparent 26%),
+    linear-gradient(180deg, rgba(19, 23, 31, 0.92), rgba(10, 13, 18, 0.98));
+}
+
+.proof-card-featured {
+  padding: 30px;
+}
+
+.proof-card-top strong {
+  font-size: 1.44rem;
+  max-width: 20ch;
+}
+
+.proof-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.proof-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.proof-metrics div {
+  padding: 18px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.proof-metrics strong {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  line-height: 1.35;
+}
+
+.proof-points {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.proof-points li {
+  position: relative;
+  padding-left: 18px;
+  color: rgba(236, 241, 247, 0.72);
+}
+
+.proof-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--brand));
+}
+
+.proof-side {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.proof-mini-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.proof-mini-tags span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(236, 241, 247, 0.72);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
+body[data-theme="light"] .proof-card {
+  background:
+    radial-gradient(circle at top right, rgba(213, 105, 53, 0.12), transparent 26%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.06)),
+    var(--panel);
+}
+
+body[data-theme="light"] .proof-metrics div,
+body[data-theme="light"] .proof-mini-tags span,
+body[data-theme="light"] .proof-summary-item span,
+body[data-theme="light"] .proof-card-top span,
+body[data-theme="light"] .proof-metrics span {
+  border-color: var(--line);
+  background: rgba(15, 63, 103, 0.05);
+  color: var(--muted);
+}
+
+body[data-theme="light"] .proof-points li {
+  color: var(--muted);
+}
+
 .cta-section {
   padding-bottom: 72px;
 }
@@ -2760,6 +2947,14 @@ body[data-theme="light"] .footer-badges span {
     align-items: start;
   }
 
+  .proof-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .proof-side {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .footer-copy {
     text-align: left;
   }
@@ -3046,6 +3241,24 @@ body[data-theme="light"] .footer-badges span {
 
   .hero-brief {
     font-size: 0.92rem;
+  }
+
+  .proof-summary-item,
+  .proof-card,
+  .proof-card-featured {
+    padding: 22px;
+  }
+
+  .proof-side {
+    grid-template-columns: 1fr;
+  }
+
+  .proof-card-top strong {
+    font-size: 1.22rem;
+  }
+
+  .proof-metrics {
+    grid-template-columns: 1fr;
   }
 
   .hero-proofband {
