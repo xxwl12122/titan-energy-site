@@ -163,6 +163,7 @@
                 <a href="#scenarios">场景</a>
                 <a href="#process">流程</a>
                 <a href="#proof">案例</a>
+                <a href="#case-detail">拆解</a>
                 <a href="#contact">联系</a>
             </nav>
         </aside>
@@ -743,7 +744,7 @@
                 </div>
             </section>
 
-            <section class="section proof-section" id="proof" data-search="案例 项目 结果 成效 信任 交付">
+            <section class="section proof-section" id="proof" data-search="案例 项目 结果 成效 信任 交付 封面">
                 <div class="container section-surface proof-grid">
                     <div class="proof-copy">
                         <div class="section-head reveal">
@@ -832,7 +833,71 @@
                 </div>
             </section>
 
-            <section class="section cta-section" id="contact" data-search="联系 咨询 方案 沟通 合作">
+            <section class="section case-detail-section" id="case-detail" data-search="案例 拆解 详情 验证 难点 项目 背景 方法">
+                <div class="container section-surface case-detail-grid">
+                    <div class="case-detail-panel reveal">
+                        <div class="case-detail-visual">
+                            <img src="assets/images/scene-industrial.jpg" srcset="assets/images/scene-industrial-960.jpg 960w, assets/images/scene-industrial.jpg 1600w" sizes="(max-width: 640px) calc(100vw - 88px), (max-width: 1080px) calc(100vw - 108px), 46vw" alt="工业产线传感节点案例拆解封面图" loading="lazy" decoding="async" width="1600" height="893">
+                            <div class="case-detail-visual-copy">
+                                <span>Case Breakdown</span>
+                                <strong>工业产线传感节点 / 分布式部署项目</strong>
+                                <p>从“续航要长”拆回到功耗模型、峰值唤醒、停线代价和维护窗口。</p>
+                            </div>
+                        </div>
+                        <div class="case-detail-metrics">
+                            <article>
+                                <span>部署环境</span>
+                                <strong>高频唤醒 + 温差波动</strong>
+                            </article>
+                            <article>
+                                <span>关键压力</span>
+                                <strong>停线风险高于单纯续航</strong>
+                            </article>
+                            <article>
+                                <span>交付窗口</span>
+                                <strong>48h 建议 / 7d 样品 / 30d 冻结</strong>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="case-detail-copy">
+                        <div class="section-head reveal">
+                            <p class="eyebrow">案例详情模块</p>
+                            <h2>把一个项目从“需求描述”拆到“可执行动作”</h2>
+                            <p>真正的决策不是只看容量，而是先判断供能目标、风险来源和验证路径。下面这套拆法，就是我们跟项目组对齐时最常用的方式。</p>
+                        </div>
+                        <div class="case-detail-steps">
+                            <article class="case-step reveal">
+                                <span>01 背景约束</span>
+                                <strong>节点分散、维护窗口少，现场更怕误报和掉线</strong>
+                                <p>项目表面诉求是“换电周期拉长”，但真正影响业务的是异常恢复成本和停线代价。</p>
+                            </article>
+                            <article class="case-step reveal">
+                                <span>02 判断逻辑</span>
+                                <strong>先算峰值电流、唤醒频率，再决定容量和封装策略</strong>
+                                <p>如果先看容量，很容易把问题做偏；必须把功耗模型、线束限制和温区一起评估。</p>
+                            </article>
+                            <article class="case-step reveal">
+                                <span>03 验证动作</span>
+                                <strong>同步安排样品验证、异常恢复回看和维护节奏确认</strong>
+                                <p>不是单点测试，而是把脉冲负载、低温表现和现场维护动作放在同一轮里回看。</p>
+                            </article>
+                        </div>
+                        <div class="case-detail-output reveal">
+                            <div class="case-detail-output-head">
+                                <span>最终输出</span>
+                                <strong>一份能直接推进项目的建议包</strong>
+                            </div>
+                            <ul>
+                                <li>供能方案建议：容量、峰值余量、接口和封装边界</li>
+                                <li>验证路径清单：样品测试重点、环境回看和异常恢复场景</li>
+                                <li>推进节奏说明：首轮反馈、样品窗口和规格冻结节点</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section cta-section" id="contact" data-search="联系 咨询 方案 沟通 合作 表单 邮件 电话 提交">
                 <div class="container section-surface cta-grid">
                     <div class="cta-copy reveal">
                         <p class="eyebrow">获取方案</p>
@@ -852,28 +917,74 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="cta-card reveal">
-                        <div class="cta-item">
-                            <span>邮件咨询</span>
+                    <form class="project-form reveal" id="projectForm">
+                        <div class="project-form-head">
+                            <span>Project Intake</span>
+                            <strong>先把项目输入给全，我们再给可执行建议</strong>
+                        </div>
+                        <div class="project-form-grid">
+                            <label class="form-field">
+                                <span>设备类型</span>
+                                <select name="deviceType" required>
+                                    <option value="">请选择设备方向</option>
+                                    <option value="工业自动化">工业自动化</option>
+                                    <option value="医疗检测设备">医疗检测设备</option>
+                                    <option value="物联网终端">物联网终端</option>
+                                    <option value="户外巡检设备">户外巡检设备</option>
+                                    <option value="其他设备">其他设备</option>
+                                </select>
+                            </label>
+                            <label class="form-field">
+                                <span>项目阶段</span>
+                                <select name="projectStage" required>
+                                    <option value="">请选择当前阶段</option>
+                                    <option value="样机评估中">样机评估中</option>
+                                    <option value="样品验证中">样品验证中</option>
+                                    <option value="量产切换中">量产切换中</option>
+                                    <option value="已有方案待优化">已有方案待优化</option>
+                                </select>
+                            </label>
+                            <label class="form-field">
+                                <span>峰值电流</span>
+                                <input name="peakCurrent" type="text" placeholder="例如 3A / 5A 脉冲">
+                            </label>
+                            <label class="form-field">
+                                <span>工作温区</span>
+                                <input name="temperatureRange" type="text" placeholder="例如 -20°C 至 60°C">
+                            </label>
+                            <label class="form-field">
+                                <span>目标续航 / 维护周期</span>
+                                <input name="serviceCycle" type="text" placeholder="例如 12 个月免维护">
+                            </label>
+                            <label class="form-field">
+                                <span>联系邮箱或电话</span>
+                                <input name="contact" type="text" placeholder="方便我们回你" required>
+                            </label>
+                            <label class="form-field form-field-wide">
+                                <span>项目补充说明</span>
+                                <textarea name="projectBrief" rows="5" placeholder="例如：设备功耗、结构限制、部署环境、已有方案问题"></textarea>
+                            </label>
+                        </div>
+                        <div class="project-form-actions">
+                            <button class="primary-button" type="submit">生成邮件草稿</button>
+                            <button class="secondary-button project-copy-button" type="button">复制项目摘要</button>
+                        </div>
+                        <div class="project-form-meta">
                             <a href="mailto:sales@titanenergy.cn">sales@titanenergy.cn</a>
-                        </div>
-                        <div class="cta-item">
-                            <span>项目热线</span>
                             <a href="tel:400-820-2048">400-820-2048</a>
+                            <span>工作日 09:00 - 18:00</span>
                         </div>
-                        <div class="cta-item">
-                            <span>服务时间</span>
-                            <strong>工作日 09:00 - 18:00</strong>
-                        </div>
-                        <div class="cta-item cta-item-highlight">
-                            <span>沟通建议</span>
-                            <strong>先发设备功耗和环境条件，我们能更快进入选型判断。</strong>
-                        </div>
-                        <button class="primary-button wide" type="button" data-scroll="#hero">回到顶部查看整体概览</button>
-                    </div>
+                        <p class="project-form-note">提交后会打开你的邮件客户端，并自动填好主题和项目摘要；如果你暂时不方便发邮件，也可以先复制摘要再转发给团队。</p>
+                        <p class="project-form-feedback" id="projectFormFeedback" aria-live="polite"></p>
+                    </form>
                 </div>
             </section>
         </main>
+
+        <div class="mobile-cta-dock" aria-label="移动端快捷联系">
+            <button class="mobile-cta-main" type="button" data-scroll="#contact">填写项目表单</button>
+            <a class="mobile-cta-call" href="tel:400-820-2048">电话咨询</a>
+        </div>
 
         <footer class="footer">
             <div class="container footer-row">

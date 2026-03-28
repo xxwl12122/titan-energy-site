@@ -26,9 +26,18 @@ const heroStage = document.querySelector(".hero-stage");
 const heroParallaxTargets = document.querySelectorAll(".hero [data-parallax-speed]");
 const magneticButtons = document.querySelectorAll(".nav-cta, .primary-button, .secondary-button, .solid-link, .search-submit");
 const breatheTargets = document.querySelectorAll(".metric-card, .technology-panel");
+const projectForm = document.getElementById("projectForm");
+const projectFormFeedback = document.getElementById("projectFormFeedback");
+const projectCopyButton = document.querySelector(".project-copy-button");
 const spotlightTargets = document.querySelectorAll(".section-surface, .hero-stage, .technology-visual, .process-visual, .scenario-card-featured .scenario-visual");
 const depthTargets = document.querySelectorAll(".hero-aura, .hero-stage, .technology-visual, .process-visual, .scenario-card-featured .scenario-visual");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+const motionLite = prefersReducedMotion.matches
+    || Boolean(connection?.saveData)
+    || (typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 4);
+
+body.classList.toggle("motion-lite", motionLite);
 
 if (yearTarget) {
     yearTarget.textContent = new Date().getFullYear().toString();
@@ -185,7 +194,7 @@ function setCurrentSection(sectionId) {
 }
 
 function updateDepthMotion() {
-    if (prefersReducedMotion.matches) {
+    if (motionLite) {
         return;
     }
 
@@ -202,7 +211,7 @@ function updateDepthMotion() {
 }
 
 function updateHeroParallax() {
-    if (!hero || prefersReducedMotion.matches) {
+    if (!hero || motionLite) {
         return;
     }
 
@@ -271,7 +280,7 @@ function searchSection(query) {
 
     if (!normalized) {
         if (searchFeedback) {
-            searchFeedback.textContent = "试试输入“产品”、“参数”、“技术”或“联系”。";
+            searchFeedback.textContent = "试试输入“产品”、“参数”、“技术”、“案例”或“表单”。";
         }
         return;
     }
@@ -292,7 +301,7 @@ function searchSection(query) {
     }
 
     if (searchFeedback) {
-        searchFeedback.textContent = "没有直接匹配到结果，试试“产品”、“参数”、“技术”、“行业”、“交付”或“联系”。";
+        searchFeedback.textContent = "没有直接匹配到结果，试试“产品”、“参数”、“技术”、“案例”、“交付”或“表单”。";
     }
 }
 
@@ -309,6 +318,82 @@ tagButtons.forEach((button) => {
         }
         searchSection(query);
     });
+});
+
+function setProjectFeedback(message) {
+    if (projectFormFeedback) {
+        projectFormFeedback.textContent = message;
+    }
+}
+
+function buildProjectSummary(form) {
+    const formData = new FormData(form);
+    const fields = [
+        ["设备类型", formData.get("deviceType")],
+        ["项目阶段", formData.get("projectStage")],
+        ["峰值电流", formData.get("peakCurrent")],
+        ["工作温区", formData.get("temperatureRange")],
+        ["目标续航 / 维护周期", formData.get("serviceCycle")],
+        ["联系邮箱或电话", formData.get("contact")],
+        ["项目补充说明", formData.get("projectBrief")]
+    ];
+
+    const summary = fields
+        .filter(([, value]) => typeof value === "string" && value.trim())
+        .map(([label, value]) => `${label}: ${String(value).trim()}`)
+        .join("\n");
+
+    return `泰坦能量项目咨询\n\n${summary}\n`;
+}
+
+async function copyText(text) {
+    if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        return true;
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "true");
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.append(textarea);
+    textarea.select();
+    const copied = document.execCommand("copy");
+    textarea.remove();
+    return copied;
+}
+
+projectForm?.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (!projectForm.reportValidity()) {
+        setProjectFeedback("请先补全设备类型、项目阶段和联系方式。");
+        return;
+    }
+
+    const summary = buildProjectSummary(projectForm);
+    const subjectBase = projectForm.querySelector('[name="deviceType"]')?.value || "工业供能方案";
+    const subject = encodeURIComponent(`[项目咨询] ${subjectBase}`);
+    const bodyText = encodeURIComponent(summary);
+
+    setProjectFeedback("已为你生成邮件草稿；如果没有自动打开邮件客户端，也可以先复制摘要。");
+    window.location.href = `mailto:sales@titanenergy.cn?subject=${subject}&body=${bodyText}`;
+});
+
+projectCopyButton?.addEventListener("click", async () => {
+    if (!projectForm) {
+        return;
+    }
+
+    const summary = buildProjectSummary(projectForm);
+
+    try {
+        const copied = await copyText(summary);
+        setProjectFeedback(copied ? "项目摘要已复制，你可以直接发给团队或粘贴进邮件。" : "复制没有成功，可以直接提交生成邮件草稿。");
+    } catch (error) {
+        setProjectFeedback("复制没有成功，可以直接提交生成邮件草稿。");
+    }
 });
 
 function clamp(value, min, max) {
@@ -426,7 +511,7 @@ function resetMagnetic(button) {
     button.classList.remove("is-magnetic-active");
 }
 
-if (!prefersReducedMotion.matches) {
+if (!motionLite) {
     spotlightTargets.forEach((target) => {
         resetSpotlight(target);
 
@@ -483,7 +568,7 @@ if (!prefersReducedMotion.matches) {
     breatheTargets.forEach((target) => breatheObserver.observe(target));
 }
 
-if (heroStage && !prefersReducedMotion.matches) {
+if (heroStage && !motionLite) {
     const resetHeroStage = () => {
         heroStage.style.setProperty("--tilt-x", "0deg");
         heroStage.style.setProperty("--tilt-y", "0deg");
