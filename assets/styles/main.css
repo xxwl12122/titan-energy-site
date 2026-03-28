@@ -671,7 +671,8 @@ body[data-theme="light"] .topbar .brand-copy strong {
   z-index: 1;
 }
 
-.hero-stage-media img {
+.hero-stage-media img,
+.hero-stage-media video {
   display: block;
   width: 100%;
   height: 100%;
@@ -1663,7 +1664,8 @@ body[data-theme="light"] .technology-visual {
   background: rgba(255, 255, 255, 0.03);
 }
 
-.scenario-visual img {
+.scenario-visual img,
+.scenario-visual video {
   display: block;
   width: 100%;
   height: 100%;
@@ -2292,7 +2294,8 @@ body[data-theme="light"] .footer-badges span {
     padding: 98px 24px 24px;
   }
 
-  .hero-stage-media img {
+  .hero-stage-media img,
+  .hero-stage-media video {
     object-position: 74% center;
   }
 
@@ -2407,7 +2410,8 @@ body[data-theme="light"] .footer-badges span {
     padding: 86px 20px 20px;
   }
 
-  .hero-stage-media img {
+  .hero-stage-media img,
+  .hero-stage-media video {
     object-position: 72% center;
   }
 
