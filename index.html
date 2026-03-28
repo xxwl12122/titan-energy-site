@@ -788,6 +788,20 @@
                                     <strong>维护窗口更集中</strong>
                                 </div>
                             </div>
+                            <div class="proof-track">
+                                <article>
+                                    <span>01</span>
+                                    <strong>先识别掉线和误报带来的业务代价</strong>
+                                </article>
+                                <article>
+                                    <span>02</span>
+                                    <strong>再校核峰值唤醒和温差波动下的供能余量</strong>
+                                </article>
+                                <article>
+                                    <span>03</span>
+                                    <strong>最后把维护节奏一起压进量产策略</strong>
+                                </article>
+                            </div>
                             <ul class="proof-points">
                                 <li>先评估功耗模型，再安排样品验证</li>
                                 <li>把温差、震动和现场布线一起纳入判断</li>
@@ -908,6 +922,29 @@
                             <span>支持打样验证</span>
                             <span>量产切换协同</span>
                         </div>
+                        <div class="cta-journey reveal">
+                            <div class="cta-journey-head">
+                                <span>Response Flow</span>
+                                <strong>进入沟通后，我们通常会按这条推进线把项目收拢清楚</strong>
+                            </div>
+                            <div class="cta-journey-track">
+                                <article class="cta-lane">
+                                    <span>48h</span>
+                                    <strong>边界判断</strong>
+                                    <p>先确认设备方向、功耗重点和环境约束，给出第一版建议框架。</p>
+                                </article>
+                                <article class="cta-lane">
+                                    <span>7d</span>
+                                    <strong>样品验证</strong>
+                                    <p>把峰值、温区和维护节奏放进同一轮回看，快速筛出更稳方案。</p>
+                                </article>
+                                <article class="cta-lane">
+                                    <span>30d</span>
+                                    <strong>规格冻结</strong>
+                                    <p>明确接口、封装、追溯和导入节奏，让量产切换更平滑。</p>
+                                </article>
+                            </div>
+                        </div>
                         <div class="cta-prep">
                             <p>建议先准备这 3 类信息：</p>
                             <ul>
@@ -965,6 +1002,38 @@
                                 <textarea name="projectBrief" rows="5" placeholder="例如：设备功耗、结构限制、部署环境、已有方案问题"></textarea>
                             </label>
                         </div>
+                        <section class="project-preview" id="projectPreview" aria-label="项目摘要预览">
+                            <div class="project-preview-head">
+                                <span>Live Brief</span>
+                                <strong id="projectPreviewTitle">补齐基本项后，这里会自动生成建议重点</strong>
+                            </div>
+                            <div class="project-preview-grid">
+                                <article>
+                                    <span>当前判断</span>
+                                    <strong id="projectPreviewFocusLabel">等待补全输入</strong>
+                                    <p id="projectPreviewFocusText">选择设备方向和项目阶段后，我们会先标出最值得优先看的风险。</p>
+                                </article>
+                                <article>
+                                    <span>优先动作</span>
+                                    <strong id="projectPreviewActionLabel">先补全设备方向与项目阶段</strong>
+                                    <p id="projectPreviewActionText">这样我们能更快判断该先做选型、样品验证，还是优化现有方案。</p>
+                                </article>
+                            </div>
+                            <div class="project-preview-points" id="projectPreviewPoints">
+                                <span>设备方向</span>
+                                <span>项目阶段</span>
+                                <span>环境约束</span>
+                            </div>
+                            <div class="project-readiness">
+                                <div class="project-readiness-head">
+                                    <span>输入完成度</span>
+                                    <strong id="projectReadinessValue">0%</strong>
+                                </div>
+                                <div class="project-readiness-bar" aria-hidden="true">
+                                    <span id="projectReadinessBar"></span>
+                                </div>
+                            </div>
+                        </section>
                         <div class="project-form-actions">
                             <button class="primary-button" type="submit">生成邮件草稿</button>
                             <button class="secondary-button project-copy-button" type="button">复制项目摘要</button>

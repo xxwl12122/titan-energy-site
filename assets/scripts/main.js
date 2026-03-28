@@ -29,6 +29,14 @@ const breatheTargets = document.querySelectorAll(".metric-card, .technology-pane
 const projectForm = document.getElementById("projectForm");
 const projectFormFeedback = document.getElementById("projectFormFeedback");
 const projectCopyButton = document.querySelector(".project-copy-button");
+const projectPreviewTitle = document.getElementById("projectPreviewTitle");
+const projectPreviewFocusLabel = document.getElementById("projectPreviewFocusLabel");
+const projectPreviewFocusText = document.getElementById("projectPreviewFocusText");
+const projectPreviewActionLabel = document.getElementById("projectPreviewActionLabel");
+const projectPreviewActionText = document.getElementById("projectPreviewActionText");
+const projectPreviewPoints = document.getElementById("projectPreviewPoints");
+const projectReadinessValue = document.getElementById("projectReadinessValue");
+const projectReadinessBar = document.getElementById("projectReadinessBar");
 const spotlightTargets = document.querySelectorAll(".section-surface, .hero-stage, .technology-visual, .process-visual, .scenario-card-featured .scenario-visual");
 const depthTargets = document.querySelectorAll(".hero-aura, .hero-stage, .technology-visual, .process-visual, .scenario-card-featured .scenario-visual");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -326,6 +334,173 @@ function setProjectFeedback(message) {
     }
 }
 
+function getFormValue(formData, name) {
+    const value = formData.get(name);
+    return typeof value === "string" ? value.trim() : "";
+}
+
+function shortLabel(value, fallback, prefix = "") {
+    if (!value) {
+        return fallback;
+    }
+
+    const compactValue = value.length > 18 ? `${value.slice(0, 18)}...` : value;
+    return prefix ? `${prefix} ${compactValue}` : compactValue;
+}
+
+function updateProjectPreview() {
+    if (!projectForm) {
+        return;
+    }
+
+    const formData = new FormData(projectForm);
+    const deviceType = getFormValue(formData, "deviceType");
+    const projectStage = getFormValue(formData, "projectStage");
+    const peakCurrent = getFormValue(formData, "peakCurrent");
+    const temperatureRange = getFormValue(formData, "temperatureRange");
+    const serviceCycle = getFormValue(formData, "serviceCycle");
+    const contact = getFormValue(formData, "contact");
+    const projectBrief = getFormValue(formData, "projectBrief");
+
+    const deviceProfiles = {
+        "工业自动化": {
+            focusLabel: "先压停线与误报成本",
+            focusText: "重点会落在峰值唤醒、线束限制和维护窗口，优先把现场稳定性守住。"
+        },
+        "医疗检测设备": {
+            focusLabel: "先守住关键时刻不断电",
+            focusText: "更看重长期一致性、瞬态响应和关键流程里的可靠供能。"
+        },
+        "物联网终端": {
+            focusLabel: "先把功耗模型算透",
+            focusText: "会优先回看待机、唤醒频率和通信瞬态，避免续航预估偏差太大。"
+        },
+        "户外巡检设备": {
+            focusLabel: "先校核低温与补能频次",
+            focusText: "环境温差、离线时长和维护节奏会一起影响容量与峰值余量判断。"
+        },
+        "其他设备": {
+            focusLabel: "先建立供能边界",
+            focusText: "我们会先拆使用周期、结构限制和环境约束，再反推方案组合。"
+        }
+    };
+
+    const stageProfiles = {
+        "样机评估中": {
+            actionLabel: "先建立选型边界",
+            actionText: "适合先锁定容量、峰值余量和结构限制，尽快缩小候选范围。"
+        },
+        "样品验证中": {
+            actionLabel: "先收拢验证清单",
+            actionText: "更适合同步回看温区、脉冲负载和异常恢复，把测试重点压实。"
+        },
+        "量产切换中": {
+            actionLabel: "先冻结量产规格",
+            actionText: "要优先确认接口、封装、防护与追溯要求，减少导入阶段反复。"
+        },
+        "已有方案待优化": {
+            actionLabel: "先找出现有短板",
+            actionText: "建议先把续航不足、低温掉电或峰值响应问题定位清楚，再做替换。"
+        }
+    };
+
+    const deviceProfile = deviceProfiles[deviceType] || {
+        focusLabel: "等待识别设备方向",
+        focusText: "先补设备方向后，我们会更快锁定场景重点和第一轮判断逻辑。"
+    };
+
+    const stageProfile = stageProfiles[projectStage] || {
+        actionLabel: "等待识别项目阶段",
+        actionText: "补上当前阶段后，我们才能判断是先做选型、验证还是量产切换准备。"
+    };
+
+    let title = "补齐基本项后，这里会自动生成建议重点";
+    if (deviceType && projectStage) {
+        title = `${deviceType} / ${projectStage} 的项目沟通，会先沿这条线推进`;
+    } else if (deviceType) {
+        title = `已识别为${deviceType}方向，再补项目阶段后会更快定位建议`;
+    } else if (projectStage) {
+        title = `当前处于${projectStage}，再补设备方向后会更快锁定判断重点`;
+    }
+
+    const contextNotes = [];
+    if (peakCurrent) {
+        contextNotes.push(`峰值按 ${peakCurrent} 校核`);
+    }
+    if (temperatureRange) {
+        contextNotes.push(`温区按 ${temperatureRange} 回看`);
+    }
+    if (serviceCycle) {
+        contextNotes.push(`维护周期按 ${serviceCycle} 评估`);
+    }
+
+    const contextPrefix = contextNotes.length ? `已记录${contextNotes.join("，")}。` : "";
+    let focusText = `${contextPrefix}${deviceProfile.focusText}`;
+    if (projectBrief) {
+        focusText = `${focusText} 项目补充说明也已填写，可直接带进首轮判断。`;
+    }
+
+    const filledFields = [
+        deviceType,
+        projectStage,
+        peakCurrent,
+        temperatureRange,
+        serviceCycle,
+        contact,
+        projectBrief
+    ].filter(Boolean).length;
+    const readinessPercent = Math.round((filledFields / 7) * 100);
+
+    let actionLabel = stageProfile.actionLabel;
+    let actionText = stageProfile.actionText;
+
+    if (filledFields >= 6) {
+        actionLabel = "信息已接近完整";
+        actionText = "这份输入已经足够整理成首轮建议，适合直接生成邮件草稿发起沟通。";
+    } else if (deviceType && projectStage && contact) {
+        actionText = `${stageProfile.actionText} 联系方式已补齐，可以直接进入方案沟通。`;
+    }
+
+    const tags = [
+        shortLabel(deviceType, "设备方向"),
+        shortLabel(projectStage, "项目阶段"),
+        peakCurrent
+            ? shortLabel(peakCurrent, "环境约束", "峰值")
+            : temperatureRange
+                ? shortLabel(temperatureRange, "环境约束", "温区")
+                : serviceCycle
+                    ? shortLabel(serviceCycle, "环境约束", "周期")
+                    : "环境约束"
+    ];
+
+    if (projectPreviewTitle) {
+        projectPreviewTitle.textContent = title;
+    }
+    if (projectPreviewFocusLabel) {
+        projectPreviewFocusLabel.textContent = deviceProfile.focusLabel;
+    }
+    if (projectPreviewFocusText) {
+        projectPreviewFocusText.textContent = focusText;
+    }
+    if (projectPreviewActionLabel) {
+        projectPreviewActionLabel.textContent = actionLabel;
+    }
+    if (projectPreviewActionText) {
+        projectPreviewActionText.textContent = actionText;
+    }
+    if (projectReadinessValue) {
+        projectReadinessValue.textContent = `${readinessPercent}%`;
+    }
+    if (projectReadinessBar) {
+        projectReadinessBar.style.width = `${readinessPercent}%`;
+    }
+    if (projectPreviewPoints) {
+        Array.from(projectPreviewPoints.querySelectorAll("span")).forEach((element, index) => {
+            element.textContent = tags[index] || "";
+        });
+    }
+}
+
 function buildProjectSummary(form) {
     const formData = new FormData(form);
     const fields = [
@@ -395,6 +570,10 @@ projectCopyButton?.addEventListener("click", async () => {
         setProjectFeedback("复制没有成功，可以直接提交生成邮件草稿。");
     }
 });
+
+projectForm?.addEventListener("input", updateProjectPreview);
+projectForm?.addEventListener("change", updateProjectPreview);
+updateProjectPreview();
 
 function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
