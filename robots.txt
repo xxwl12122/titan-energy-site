@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://titan-energy-site.vercel.app/sitemap.xml

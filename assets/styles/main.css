@@ -1892,7 +1892,7 @@ body[data-theme="light"] .cta-item-highlight {
 
 .footer-row {
   display: grid;
-  grid-template-columns: 1.3fr 1fr auto;
+  grid-template-columns: 1.2fr 0.9fr 0.9fr auto;
   gap: 20px;
   align-items: end;
   padding: 28px;
@@ -1901,16 +1901,71 @@ body[data-theme="light"] .cta-item-highlight {
   backdrop-filter: blur(18px);
 }
 
+.footer-brand,
+.footer-block {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.footer-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .footer-links {
   display: flex;
   flex-wrap: wrap;
   gap: 18px;
 }
 
+.footer-contact a,
+.footer-contact span {
+  color: var(--text);
+}
+
+.footer-contact span {
+  color: var(--muted);
+}
+
+.footer-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.footer-badges span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(236, 241, 247, 0.72);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+
+.footer-text {
+  max-width: 32ch;
+}
+
 .footer-copy {
   margin: 0;
   color: var(--muted);
   text-align: right;
+}
+
+body[data-theme="light"] .footer-badges span {
+  border-color: var(--line);
+  color: var(--muted);
+  background: rgba(15, 63, 103, 0.05);
 }
 
 .search-overlay,
@@ -2184,6 +2239,11 @@ body[data-theme="light"] .cta-item-highlight {
     padding: 34px;
   }
 
+  .footer-row {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
   .scenario-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2426,6 +2486,10 @@ body[data-theme="light"] .cta-item-highlight {
     border-radius: 28px;
   }
 
+  .footer-row {
+    grid-template-columns: 1fr;
+  }
+
   .product-visual {
     min-height: 180px;
     margin-left: 0;
@@ -2530,6 +2594,11 @@ body[data-theme="light"] .cta-item-highlight {
 
   .cta-item-highlight {
     padding: 16px;
+  }
+
+  .footer-links,
+  .footer-badges {
+    gap: 8px;
   }
 
   .hero-actions {

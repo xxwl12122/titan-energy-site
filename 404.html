@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, follow">
+    <meta name="theme-color" content="#0f1724">
+    <title>页面未找到 | 泰坦能量</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="assets/styles/main.css">
+    <style>
+        .not-found-page {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 32px 0;
+        }
+
+        .not-found-card {
+            width: min(880px, 100%);
+            padding: 40px;
+            border-radius: 32px;
+            border: 1px solid var(--line);
+            background:
+                radial-gradient(circle at top right, rgba(240, 139, 84, 0.14), transparent 28%),
+                linear-gradient(180deg, rgba(19, 23, 31, 0.92), rgba(10, 13, 18, 0.98));
+            box-shadow: var(--shadow-soft);
+        }
+
+        .not-found-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+            gap: 28px;
+            align-items: start;
+        }
+
+        .not-found-code {
+            margin: 0 0 18px;
+            color: var(--accent);
+            font-family: var(--font-heading);
+            font-size: clamp(3rem, 10vw, 5rem);
+            line-height: 0.92;
+            letter-spacing: -0.06em;
+        }
+
+        .not-found-title {
+            margin: 0;
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 5vw, 3rem);
+            line-height: 1.05;
+        }
+
+        .not-found-text {
+            margin: 18px 0 0;
+            max-width: 34ch;
+            color: var(--muted);
+            font-size: 1rem;
+        }
+
+        .not-found-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .not-found-panel {
+            display: grid;
+            gap: 14px;
+            padding: 24px;
+            border-radius: 26px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .not-found-panel p {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .not-found-links {
+            display: grid;
+            gap: 10px;
+        }
+
+        .not-found-links a {
+            color: var(--text);
+        }
+
+        @media (max-width: 860px) {
+            .not-found-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .not-found-card {
+                padding: 28px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .not-found-page {
+                padding: 20px 0;
+            }
+
+            .not-found-card {
+                padding: 24px 20px;
+                border-radius: 28px;
+            }
+
+            .not-found-actions {
+                flex-direction: column;
+            }
+
+            .not-found-actions a {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="not-found-page">
+        <div class="container">
+            <section class="not-found-card">
+                <div class="not-found-grid">
+                    <div>
+                        <p class="eyebrow">页面未找到</p>
+                        <p class="not-found-code">404</p>
+                        <h1 class="not-found-title">你访问的页面可能已移动，或者链接本身已经失效。</h1>
+                        <p class="not-found-text">如果你是来了解工业自动化、医疗检测、物联网终端或户外设备的供能方案，可以直接回到首页继续查看产品、场景和交付流程。</p>
+                        <div class="not-found-actions">
+                            <a class="primary-button" href="/">返回首页</a>
+                            <a class="secondary-button" href="/#contact">直接获取方案</a>
+                        </div>
+                    </div>
+                    <aside class="not-found-panel">
+                        <p class="footer-label">你可能要找</p>
+                        <div class="not-found-links">
+                            <a href="/#products">产品矩阵与参数方向</a>
+                            <a href="/#technology">核心技术与结构能力</a>
+                            <a href="/#scenarios">四类应用场景</a>
+                            <a href="/#process">交付流程说明</a>
+                        </div>
+                    </aside>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+</html>
