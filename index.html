@@ -167,13 +167,13 @@
                         </p>
                         <div class="hero-badges reveal" style="--reveal-delay: 240ms;">
                             <span>48h 首轮建议</span>
-                            <span>支持样品验证</span>
-                            <span>量产切换协同</span>
+                            <span>样品验证到量产协同</span>
                         </div>
                         <div class="hero-actions reveal" style="--reveal-delay: 280ms;">
                             <button class="primary-button" type="button" data-scroll="#products">查看产品与参数</button>
                             <button class="secondary-button" type="button" data-scroll="#contact">预约方案沟通</button>
                         </div>
+                        <p class="hero-brief reveal" style="--reveal-delay: 320ms;">从功耗评估、样品验证到量产导入，用更短的决策链把项目推进节奏压缩清楚。</p>
                         <div class="hero-metrics reveal" style="--reveal-delay: 360ms;">
                             <article class="metric-card">
                                 <strong class="metric-value" data-count="48" data-suffix="h">0h</strong>
@@ -232,15 +232,11 @@
                                     <p>从低温到高频唤醒场景，输出曲线更平稳。</p>
                                 </div>
                             </article>
-
-                            <article class="note-card reveal" style="--reveal-delay: 360ms;">
-                                <p>项目常见目标</p>
-                                <ul>
-                                    <li>更长续航但不增加体积</li>
-                                    <li>更稳输出减少误报和掉线</li>
-                                    <li>更快完成样品验证与批量切换</li>
-                                </ul>
-                            </article>
+                            <div class="hero-proofband reveal" style="--reveal-delay: 360ms;">
+                                <span>峰值电流校核</span>
+                                <span>环境验证</span>
+                                <span>量产切换</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -524,7 +520,7 @@
                         <p>同样是“续航要长”，工业传感器和医疗终端的判断标准并不一样。</p>
                     </div>
                     <div class="scenario-grid">
-                        <article class="scenario-card reveal">
+                        <article class="scenario-card scenario-card-featured reveal">
                             <div class="scenario-visual">
                                 <video autoplay muted loop playsinline preload="metadata" poster="assets/images/scene-industrial.jpg" aria-label="工业自动化场景供能视频">
                                     <source src="assets/videos/scenario-industrial-scene.mp4" type="video/mp4">
@@ -533,12 +529,14 @@
                             <span class="scenario-index">01</span>
                             <h3>工业自动化</h3>
                             <p>强调持续稳定与维护便利，减少停机和人工巡检频次。</p>
+                            <p class="scenario-feature-detail">把运行节奏、维护窗口和异常恢复放进同一套判断逻辑，更适合对停线代价敏感的产线项目。</p>
                             <div class="scenario-meta">
                                 <span>连续运行</span>
                                 <span>易维护</span>
+                                <span>在线监测</span>
                             </div>
                         </article>
-                        <article class="scenario-card reveal">
+                        <article class="scenario-card scenario-card-compact reveal">
                             <div class="scenario-visual">
                                 <img src="assets/images/scene-medical.jpg" srcset="assets/images/scene-medical-960.jpg 960w, assets/images/scene-medical.jpg 1600w" sizes="(max-width: 640px) calc(100vw - 88px), (max-width: 1080px) calc(100vw - 108px), 50vw" alt="医疗检测设备使用的电源模组" loading="lazy" decoding="async" width="1600" height="893">
                             </div>
@@ -550,7 +548,7 @@
                                 <span>长寿命</span>
                             </div>
                         </article>
-                        <article class="scenario-card reveal">
+                        <article class="scenario-card scenario-card-compact reveal">
                             <div class="scenario-visual">
                                 <img src="assets/images/scene-iot.jpg" srcset="assets/images/scene-iot-960.jpg 960w, assets/images/scene-iot.jpg 1600w" sizes="(max-width: 640px) calc(100vw - 88px), (max-width: 1080px) calc(100vw - 108px), 50vw" alt="物联网终端适配的紧凑型电源设备" loading="lazy" decoding="async" width="1600" height="893">
                             </div>
@@ -562,7 +560,7 @@
                                 <span>紧凑体积</span>
                             </div>
                         </article>
-                        <article class="scenario-card reveal">
+                        <article class="scenario-card scenario-card-compact reveal">
                             <div class="scenario-visual">
                                 <img src="assets/images/scene-outdoor.jpg" srcset="assets/images/scene-outdoor-960.jpg 960w, assets/images/scene-outdoor.jpg 1600w" sizes="(max-width: 640px) calc(100vw - 88px), (max-width: 1080px) calc(100vw - 108px), 50vw" alt="户外巡检设备搭载的越野电源平台" loading="lazy" decoding="async" width="1600" height="893">
                             </div>
@@ -593,28 +591,63 @@
                                 <strong>需求确认、样品验证与量产导入在同一条流程里闭环推进。</strong>
                             </figcaption>
                         </figure>
-                        <div class="timeline">
-                            <article class="timeline-item reveal">
-                                <span>01</span>
-                                <div>
-                                    <h3>需求评估</h3>
-                                    <p>确认设备功耗模型、使用周期、环境条件与结构限制。</p>
+                        <div class="process-flow">
+                            <article class="process-board reveal">
+                                <div class="process-board-top">
+                                    <div>
+                                        <span>Project Board</span>
+                                        <strong>把输入、输出和下一步放在同一块看板里</strong>
+                                    </div>
+                                    <p>典型推进节奏</p>
+                                </div>
+                                <div class="process-board-track" aria-hidden="true">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                                <div class="process-board-grid">
+                                    <article class="process-board-item">
+                                        <span>输入信息</span>
+                                        <strong>功耗模型 / 环境条件 / 结构限制</strong>
+                                    </article>
+                                    <article class="process-board-item">
+                                        <span>当前输出</span>
+                                        <strong>选型建议 / 样品方案 / 风险提示</strong>
+                                    </article>
+                                    <article class="process-board-item">
+                                        <span>下一节点</span>
+                                        <strong>验证回看 / 规格冻结 / 量产导入</strong>
+                                    </article>
+                                </div>
+                                <div class="process-board-tags">
+                                    <span>48h 初轮反馈</span>
+                                    <span>支持打样验证</span>
+                                    <span>批量切换协同</span>
                                 </div>
                             </article>
-                            <article class="timeline-item reveal">
-                                <span>02</span>
-                                <div>
-                                    <h3>样品验证</h3>
-                                    <p>对比多种供电方案，在真实工作场景下校验续航与峰值响应。</p>
-                                </div>
-                            </article>
-                            <article class="timeline-item reveal">
-                                <span>03</span>
-                                <div>
-                                    <h3>量产导入</h3>
-                                    <p>明确规格、包装、防护与追溯要求，平滑完成批量切换。</p>
-                                </div>
-                            </article>
+                            <div class="timeline">
+                                <article class="timeline-item reveal">
+                                    <span>01</span>
+                                    <div>
+                                        <h3>需求评估</h3>
+                                        <p>确认设备功耗模型、使用周期、环境条件与结构限制。</p>
+                                    </div>
+                                </article>
+                                <article class="timeline-item reveal">
+                                    <span>02</span>
+                                    <div>
+                                        <h3>样品验证</h3>
+                                        <p>对比多种供电方案，在真实工作场景下校验续航与峰值响应。</p>
+                                    </div>
+                                </article>
+                                <article class="timeline-item reveal">
+                                    <span>03</span>
+                                    <div>
+                                        <h3>量产导入</h3>
+                                        <p>明确规格、包装、防护与追溯要求，平滑完成批量切换。</p>
+                                    </div>
+                                </article>
+                            </div>
                         </div>
                     </div>
                 </div>
