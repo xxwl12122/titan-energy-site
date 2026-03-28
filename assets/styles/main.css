@@ -3622,7 +3622,8 @@ body[data-theme="light"] .case-detail-output-head span {
 }
 
 .project-form-meta a,
-.project-form-meta span {
+.project-form-meta span,
+.project-draft-clear {
   display: inline-flex;
   align-items: center;
   min-height: 34px;
@@ -3632,6 +3633,11 @@ body[data-theme="light"] .case-detail-output-head span {
   border: 1px solid rgba(255, 255, 255, 0.08);
   color: rgba(236, 241, 247, 0.72);
   font-size: 0.82rem;
+}
+
+.project-draft-clear:hover {
+  color: var(--text);
+  border-color: rgba(255, 166, 104, 0.28);
 }
 
 .cta-journey {
@@ -3747,7 +3753,8 @@ body[data-theme="light"] .cta-lane,
 body[data-theme="light"] .cta-prep,
 body[data-theme="light"] .cta-prep-head span,
 body[data-theme="light"] .project-form-meta a,
-body[data-theme="light"] .project-form-meta span {
+body[data-theme="light"] .project-form-meta span,
+body[data-theme="light"] .project-draft-clear {
   border-color: var(--line);
   background: rgba(15, 63, 103, 0.05);
   color: var(--text);
@@ -3780,7 +3787,14 @@ body[data-theme="light"] .cta-pulse span,
 body[data-theme="light"] .cta-journey-head span,
 body[data-theme="light"] .cta-prep-head span,
 body[data-theme="light"] .project-form-meta a,
-body[data-theme="light"] .project-form-meta span {
+body[data-theme="light"] .project-form-meta span,
+body[data-theme="light"] .project-draft-clear {
+  color: var(--muted);
+}
+
+body[data-theme="light"] .search-shortcut {
+  border-color: var(--line);
+  background: rgba(15, 63, 103, 0.05);
   color: var(--muted);
 }
 
@@ -3837,6 +3851,64 @@ body[data-theme="light"] .mobile-cta-call {
   border-color: var(--line);
   background: rgba(15, 63, 103, 0.05);
   color: var(--text);
+}
+
+.back-to-top {
+  position: fixed;
+  right: 18px;
+  bottom: 22px;
+  z-index: 47;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 16px 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(8, 12, 18, 0.84);
+  color: rgba(236, 241, 247, 0.84);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 22px 42px rgba(0, 0, 0, 0.24);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(18px);
+  transition: opacity var(--transition), transform var(--transition), visibility var(--transition), border-color var(--transition);
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  border-color: rgba(255, 166, 104, 0.28);
+  color: #fff;
+}
+
+.back-to-top-ring {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.14), transparent 54%),
+    conic-gradient(from 0deg, rgba(255, 176, 119, 0.98), rgba(77, 144, 210, 0.96));
+  mask: radial-gradient(circle at center, transparent 54%, #000 56%);
+}
+
+.back-to-top-label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body[data-theme="light"] .back-to-top {
+  border-color: var(--line);
+  background: rgba(255, 252, 247, 0.9);
+  color: var(--text);
+  box-shadow: 0 18px 34px rgba(12, 20, 31, 0.12);
 }
 
 .cta-prep {
@@ -4021,6 +4093,12 @@ body[data-theme="light"] .footer-badges span {
   gap: 20px;
 }
 
+.search-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .search-head h2 {
   margin: 0;
   font-family: var(--font-heading);
@@ -4036,6 +4114,19 @@ body[data-theme="light"] .footer-badges span {
   background: var(--bg-soft);
   color: var(--text);
   border: 1px solid var(--line);
+}
+
+.search-shortcut {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(236, 241, 247, 0.68);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
 }
 
 .search-hint {
@@ -4902,6 +4993,33 @@ body[data-theme="light"] .footer-badges span {
 
   .mobile-cta-dock {
     display: flex;
+  }
+
+  .back-to-top {
+    right: 12px;
+    bottom: 82px;
+    min-height: 46px;
+    padding: 0 14px 0 10px;
+  }
+
+  .back-to-top-ring {
+    width: 24px;
+    height: 24px;
+  }
+
+  .search-head {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .search-head-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .search-shortcut {
+    min-height: 34px;
+    font-size: 0.74rem;
   }
 
   .footer {

@@ -83,7 +83,7 @@
                     <a href="#contact">获取方案</a>
                 </nav>
                 <div class="nav-actions">
-                    <button class="icon-button search-toggle" type="button" aria-label="打开站内搜索">
+                    <button class="icon-button search-toggle" type="button" aria-label="打开站内搜索" aria-keyshortcuts="Control+K Meta+K">
                         <span aria-hidden="true">搜</span>
                     </button>
                     <button class="icon-button theme-toggle" type="button" aria-label="切换主题">
@@ -104,7 +104,10 @@
                         <p class="eyebrow">站内直达</p>
                         <h2 id="searchTitle">快速定位你想看的内容</h2>
                     </div>
-                    <button class="search-close" type="button" aria-label="关闭搜索">关闭</button>
+                    <div class="search-head-actions">
+                        <span class="search-shortcut" aria-hidden="true">Ctrl / Cmd + K</span>
+                        <button class="search-close" type="button" aria-label="关闭搜索">关闭</button>
+                    </div>
                 </div>
                 <p class="search-hint">输入“产品 / 参数 / 技术 / 行业 / 联系 / 交付”等关键词，页面会自动跳转到最相关的区块。</p>
                 <form class="search-form" id="searchForm">
@@ -1091,13 +1094,19 @@
                             <a href="mailto:sales@titanenergy.cn">sales@titanenergy.cn</a>
                             <a href="tel:400-820-2048">400-820-2048</a>
                             <span>工作日 09:00 - 18:00</span>
+                            <button class="project-draft-clear" type="button">清空草稿</button>
                         </div>
-                        <p class="project-form-note">提交后会打开你的邮件客户端，并自动填好主题和项目摘要；如果你暂时不方便发邮件，也可以先复制摘要再转发给团队。</p>
+                        <p class="project-form-note">输入内容会临时保存在当前浏览器，方便你中途离开后继续填写；提交后会打开邮件客户端，并自动填好主题和项目摘要。</p>
                         <p class="project-form-feedback" id="projectFormFeedback" aria-live="polite"></p>
                     </form>
                 </div>
             </section>
         </main>
+
+        <button class="back-to-top" type="button" aria-label="回到顶部" data-scroll="#hero">
+            <span class="back-to-top-ring" aria-hidden="true"></span>
+            <span class="back-to-top-label">顶部</span>
+        </button>
 
         <div class="mobile-cta-dock" aria-label="移动端快捷联系">
             <button class="mobile-cta-main" type="button" data-scroll="#contact">填写项目表单</button>

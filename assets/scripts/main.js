@@ -32,6 +32,7 @@ const breatheTargets = document.querySelectorAll(".metric-card, .technology-pane
 const projectForm = document.getElementById("projectForm");
 const projectFormFeedback = document.getElementById("projectFormFeedback");
 const projectCopyButton = document.querySelector(".project-copy-button");
+const projectDraftClearButton = document.querySelector(".project-draft-clear");
 const customSelects = document.querySelectorAll("[data-custom-select]");
 const projectPreviewTitle = document.getElementById("projectPreviewTitle");
 const projectPreviewFocusLabel = document.getElementById("projectPreviewFocusLabel");
@@ -41,6 +42,7 @@ const projectPreviewActionText = document.getElementById("projectPreviewActionTe
 const projectPreviewPoints = document.getElementById("projectPreviewPoints");
 const projectReadinessValue = document.getElementById("projectReadinessValue");
 const projectReadinessBar = document.getElementById("projectReadinessBar");
+const backToTopButton = document.querySelector(".back-to-top");
 const spotlightTargets = document.querySelectorAll(".section-surface, .hero-stage, .technology-visual, .process-visual, .scenario-card-featured .scenario-visual");
 const depthTargets = document.querySelectorAll(".hero-aura, .hero-stage, .technology-visual, .process-visual, .scenario-card-featured .scenario-visual");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -48,6 +50,7 @@ const connection = navigator.connection || navigator.mozConnection || navigator.
 const motionLite = prefersReducedMotion.matches
     || Boolean(connection?.saveData)
     || (typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 4);
+const projectDraftKey = "titan-project-draft";
 let searchReturnFocusTarget = null;
 let mobileReturnFocusTarget = null;
 
@@ -358,6 +361,11 @@ mobileClose?.addEventListener("click", closeMobilePanel);
 mobileLinks.forEach((link) => link.addEventListener("click", closeMobilePanel));
 
 document.addEventListener("keydown", (event) => {
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        openSearch(searchInput?.value || "");
+    }
+
     if (event.key === "Escape") {
         closeSearch();
         closeMobilePanel();
@@ -489,6 +497,10 @@ function updatePageSignals() {
         sectionRail.style.setProperty("--rail-progress", progress.toFixed(3));
     }
 
+    if (backToTopButton) {
+        backToTopButton.classList.toggle("is-visible", window.scrollY > 560);
+    }
+
     if (nextSectionId !== activeSectionId) {
         activeSectionId = nextSectionId;
         setCurrentSection(activeSectionId);
@@ -567,6 +579,94 @@ function setProjectFeedback(message) {
     if (projectFormFeedback) {
         projectFormFeedback.textContent = message;
     }
+}
+
+function buildProjectDraft(form) {
+    const formData = new FormData(form);
+    return {
+        deviceType: getFormValue(formData, "deviceType"),
+        projectStage: getFormValue(formData, "projectStage"),
+        peakCurrent: getFormValue(formData, "peakCurrent"),
+        temperatureRange: getFormValue(formData, "temperatureRange"),
+        serviceCycle: getFormValue(formData, "serviceCycle"),
+        contact: getFormValue(formData, "contact"),
+        projectBrief: getFormValue(formData, "projectBrief")
+    };
+}
+
+function saveProjectDraft() {
+    if (!projectForm) {
+        return;
+    }
+
+    const draft = buildProjectDraft(projectForm);
+    const hasContent = Object.values(draft).some(Boolean);
+
+    try {
+        if (hasContent) {
+            window.localStorage.setItem(projectDraftKey, JSON.stringify(draft));
+        } else {
+            window.localStorage.removeItem(projectDraftKey);
+        }
+    } catch (error) {
+        // Ignore storage errors and keep the form usable.
+    }
+}
+
+function restoreProjectDraft() {
+    if (!projectForm) {
+        return;
+    }
+
+    try {
+        const rawDraft = window.localStorage.getItem(projectDraftKey);
+        if (!rawDraft) {
+            return;
+        }
+
+        const draft = JSON.parse(rawDraft);
+        let restored = false;
+
+        Object.entries(draft).forEach(([name, value]) => {
+            const field = projectForm.querySelector(`[name="${name}"]`);
+            if (!field || typeof value !== "string" || !value) {
+                return;
+            }
+
+            field.value = value;
+            restored = true;
+        });
+
+        if (restored) {
+            customSelects.forEach((selectRoot) => syncCustomSelect(selectRoot));
+            updateProjectPreview();
+            setProjectFeedback("已恢复你上次未发送的项目草稿。");
+        }
+    } catch (error) {
+        window.localStorage.removeItem(projectDraftKey);
+    }
+}
+
+function clearProjectDraft(shouldResetForm = false) {
+    try {
+        window.localStorage.removeItem(projectDraftKey);
+    } catch (error) {
+        // Ignore storage errors and keep the form usable.
+    }
+
+    if (!projectForm || !shouldResetForm) {
+        return;
+    }
+
+    projectForm.reset();
+    customSelects.forEach((selectRoot) => {
+        setFieldInvalidState(selectRoot.querySelector(".custom-select-native"), false);
+        syncCustomSelect(selectRoot);
+    });
+    projectForm.querySelectorAll("input, textarea").forEach((field) => {
+        field.classList.remove("is-invalid");
+    });
+    updateProjectPreview();
 }
 
 function getFormValue(formData, name) {
@@ -809,11 +909,17 @@ projectCopyButton?.addEventListener("click", async () => {
     }
 });
 
+projectDraftClearButton?.addEventListener("click", () => {
+    clearProjectDraft(true);
+    setProjectFeedback("当前浏览器里的项目草稿已清空。");
+});
+
 projectForm?.addEventListener("input", (event) => {
     const target = event.target;
     if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement) {
         setFieldInvalidState(target, false);
     }
+    saveProjectDraft();
     updateProjectPreview();
 });
 
@@ -822,9 +928,11 @@ projectForm?.addEventListener("change", (event) => {
     if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement) {
         setFieldInvalidState(target, false);
     }
+    saveProjectDraft();
     updateProjectPreview();
 });
 
+restoreProjectDraft();
 updateProjectPreview();
 
 function clamp(value, min, max) {
