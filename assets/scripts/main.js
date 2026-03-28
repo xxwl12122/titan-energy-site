@@ -45,6 +45,7 @@ const projectReadinessValue = document.getElementById("projectReadinessValue");
 const projectReadinessBar = document.getElementById("projectReadinessBar");
 const backToTopButton = document.querySelector(".back-to-top");
 const ambientVideos = document.querySelectorAll(".hero-stage video, .scenario-visual video");
+const scrollRails = document.querySelectorAll("[data-scroll-rail]");
 const spotlightTargets = document.querySelectorAll(".section-surface, .hero-stage, .technology-visual, .process-visual, .scenario-card-featured .scenario-visual");
 const depthTargets = document.querySelectorAll(".hero-aura, .hero-stage, .technology-visual, .process-visual, .scenario-card-featured .scenario-visual");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -566,6 +567,34 @@ function syncAmbientVideoPlayback(video) {
     }
 }
 
+function syncScrollRail(rail) {
+    if (!(rail instanceof HTMLElement)) {
+        return;
+    }
+
+    const overflowWidth = rail.scrollWidth - rail.clientWidth;
+    const scrollable = overflowWidth > 18;
+    rail.classList.toggle("is-scrollable", scrollable);
+
+    if (!scrollable) {
+        rail.style.setProperty("--rail-progress", "1");
+        rail.classList.remove("is-scrolled");
+        return;
+    }
+
+    const progress = clamp(rail.scrollLeft / overflowWidth, 0, 1);
+    rail.style.setProperty("--rail-progress", progress.toFixed(3));
+    rail.classList.toggle("is-scrolled", rail.scrollLeft > 8);
+}
+
+function syncAllScrollRails() {
+    scrollRails.forEach((rail) => syncScrollRail(rail));
+}
+
+function handleScrollRailScroll(event) {
+    syncScrollRail(event.currentTarget);
+}
+
 function schedulePageSignals() {
     if (pageSignalTicking) {
         return;
@@ -584,10 +613,28 @@ setCurrentSection(activeSectionId);
 updatePageSignals();
 updateDepthMotion();
 updateHeroParallax();
+syncAllScrollRails();
 window.addEventListener("scroll", schedulePageSignals, { passive: true });
 window.addEventListener("resize", schedulePageSignals);
+window.addEventListener("resize", syncAllScrollRails);
+window.addEventListener("load", () => {
+    requestAnimationFrame(syncAllScrollRails);
+});
 window.addEventListener("scroll", () => closeCustomSelects(), { passive: true });
 window.addEventListener("resize", () => closeCustomSelects());
+
+const scrollRailResizeObserver = typeof ResizeObserver === "function"
+    ? new ResizeObserver((entries) => {
+        entries.forEach((entry) => {
+            syncScrollRail(entry.target);
+        });
+    })
+    : null;
+
+scrollRails.forEach((rail) => {
+    rail.addEventListener("scroll", handleScrollRailScroll, { passive: true });
+    scrollRailResizeObserver?.observe(rail);
+});
 
 function searchSection(query) {
     const normalized = query.trim().toLowerCase();
