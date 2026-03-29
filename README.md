@@ -1,4 +1,4 @@
-# 泰坦能量官网
+# 泰坦供能官网
 
 一个部署在 Vercel 的静态品牌站点，使用原生 `HTML + CSS + JavaScript` 构建。
 

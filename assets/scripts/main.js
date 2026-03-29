@@ -1010,7 +1010,7 @@ function buildProjectSummary(form) {
         .map(([label, value]) => `${label}: ${String(value).trim()}`)
         .join("\n");
 
-    return `泰坦能量项目咨询\n\n${summary}\n`;
+    return `泰坦供能项目咨询\n\n${summary}\n`;
 }
 
 async function copyText(text) {

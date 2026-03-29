@@ -59,10 +59,10 @@
 
   <path d="M84 78H116V98H99L87 121H84L92 98H84V78Z" fill="#F08B54"/>
   <path d="M132 121H100V101H117L129 78H132L124 101H132V121Z" fill="#4D90D2"/>
-  <text x="158" y="95" fill="#F5F7FA" font-size="24" font-weight="700" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">泰坦能量</text>
-  <text x="158" y="123" fill="#93A0B0" font-size="14" letter-spacing="3" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">TITAN ENERGY SYSTEMS</text>
+  <text x="158" y="95" fill="#F5F7FA" font-size="24" font-weight="700" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">泰坦供能</text>
+  <text x="158" y="123" fill="#93A0B0" font-size="14" letter-spacing="3" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">TITAN POWER SYSTEMS</text>
 
-  <text x="88" y="208" fill="#F08B54" font-size="18" font-weight="700" letter-spacing="4" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">工业级能源解决方案</text>
+  <text x="88" y="208" fill="#F08B54" font-size="18" font-weight="700" letter-spacing="4" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">工业级供能方案</text>
   <text x="88" y="298" fill="#F5F7FA" font-size="66" font-weight="700" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">为高强度场景打造</text>
   <text x="88" y="378" fill="url(#titleAccent)" font-size="66" font-weight="700" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">更稳的能源底座</text>
   <text x="88" y="438" fill="#A2ADBA" font-size="24" font-family="Segoe UI, Microsoft YaHei UI, sans-serif">工业自动化 / 医疗检测 / 物联网终端 / 户外设备</text>
