@@ -2000,6 +2000,11 @@ body[data-theme="light"] .spec-board {
     var(--panel);
 }
 
+body[data-theme="light"] .spec-glance article {
+  border-color: var(--line);
+  background: rgba(15, 63, 103, 0.05);
+}
+
 .spec-summary-head,
 .spec-board-head {
   display: flex;
@@ -2021,6 +2026,42 @@ body[data-theme="light"] .spec-board {
 .spec-board-head strong {
   font-family: var(--font-heading);
   font-size: 1.14rem;
+}
+
+.spec-glance {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.spec-glance article {
+  display: grid;
+  gap: 8px;
+  padding: 16px 18px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.spec-glance span {
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.spec-glance strong {
+  font-family: var(--font-heading);
+  font-size: 1.02rem;
+  line-height: 1.36;
+}
+
+.spec-glance p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
 }
 
 .summary-bars {
@@ -4905,6 +4946,7 @@ body[data-theme="light"] .search-route-card {
   }
 
   .product-grid,
+  .spec-glance,
   .proof-track,
   .cta-journey-track {
     grid-auto-flow: column;
@@ -4974,12 +5016,14 @@ body[data-theme="light"] .search-route-card {
   }
 
   .product-grid::-webkit-scrollbar,
+  .spec-glance::-webkit-scrollbar,
   .proof-track::-webkit-scrollbar,
   .cta-journey-track::-webkit-scrollbar {
     display: none;
   }
 
   .product-card,
+  .spec-glance article,
   .proof-track article,
   .cta-lane {
     scroll-snap-align: start;
@@ -5017,6 +5061,35 @@ body[data-theme="light"] .search-route-card {
 
   .hero-badges {
     margin-top: 18px;
+  }
+
+  .hero-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 20px;
+    padding: 8px;
+    border-radius: 22px;
+  }
+
+  .hero .metric-card {
+    padding: 12px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .hero .metric-card:last-child {
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .hero .metric-card span {
+    margin-top: 6px;
+    font-size: 0.72rem;
+    line-height: 1.35;
+  }
+
+  .hero .metric-value {
+    font-size: 1.28rem;
   }
 
   .hero-badges span {
@@ -5106,7 +5179,8 @@ body[data-theme="light"] .search-route-card {
   .proof-track[data-scroll-rail],
   .cta-journey-track[data-scroll-rail],
   .spec-table-wrap[data-scroll-rail],
-  .product-grid[data-scroll-rail] {
+  .product-grid[data-scroll-rail],
+  .spec-glance[data-scroll-rail] {
     padding-bottom: 24px;
   }
 
@@ -5324,6 +5398,26 @@ body[data-theme="light"] .search-route-card {
   .spec-summary,
   .spec-board {
     padding: 22px;
+  }
+
+  .spec-glance {
+    gap: 10px;
+    margin-top: 16px;
+    padding-bottom: 24px;
+  }
+
+  .spec-glance article {
+    width: 100%;
+    padding: 15px 16px 16px;
+  }
+
+  .spec-glance strong {
+    font-size: 0.98rem;
+  }
+
+  .spec-glance p {
+    font-size: 0.84rem;
+    line-height: 1.55;
   }
 
   .technology-visual-copy {
