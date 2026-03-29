@@ -323,24 +323,24 @@
                             <span>第一轮判断</span>
                             <strong>从首页继续往下看之前，通常先把这 3 件事说清楚</strong>
                         </div>
-                        <div class="trust-strip-bridge-grid" data-scroll-rail data-rail-label="左右滑动">
-                            <article>
+                        <div class="trust-strip-bridge-grid" data-scroll-rail data-rail-label="左右滑动" id="quick-judgement-track">
+                            <article id="quick-judgement-device">
                                 <span>设备方向</span>
                                 <p>先讲清是工业、医疗、物联还是户外场景，方便快速缩小系列范围。</p>
                             </article>
-                            <article>
+                            <article id="quick-judgement-boundary">
                                 <span>现场边界</span>
                                 <p>温区、体积、接口和维护窗口这些约束，往往比“想要更大容量”更早决定方向。</p>
                             </article>
-                            <article>
+                            <article id="quick-judgement-risk">
                                 <span>最怕什么</span>
                                 <p>先判断更怕停机、误报、低温掉压还是维护过频，后面的建议会准确很多。</p>
                             </article>
                         </div>
                         <div class="trust-strip-bridge-tags">
-                            <span>先讲边界</span>
-                            <span>再讲代价</span>
-                            <span>最后定验证</span>
+                            <button type="button" data-rail-track="#quick-judgement-track" data-rail-target="#quick-judgement-device">先讲边界</button>
+                            <button type="button" data-rail-track="#quick-judgement-track" data-rail-target="#quick-judgement-boundary">再讲代价</button>
+                            <button type="button" data-rail-track="#quick-judgement-track" data-rail-target="#quick-judgement-risk">最后定验证</button>
                         </div>
                     </article>
                 </div>
@@ -1002,10 +1002,10 @@
                             <strong>先把推进节奏讲清楚，再继续看结果、拆解与沟通收口</strong>
                         </div>
                         <div class="section-phase-track" aria-label="项目中后段浏览路径">
-                            <span class="is-active" aria-current="step">01 流程</span>
-                            <span>02 结果</span>
-                            <span>03 拆解</span>
-                            <span>04 沟通</span>
+                            <a class="is-active" href="#process" aria-current="step">01 流程</a>
+                            <a href="#proof">02 结果</a>
+                            <a href="#case-detail">03 拆解</a>
+                            <a href="#contact">04 沟通</a>
                         </div>
                         <p class="section-phase-note">这一段先把输入、输出和下一节点说透，后面的案例判断才更顺。</p>
                     </div>
@@ -1137,10 +1137,10 @@
                             <strong>承接上一段流程，把典型项目结果翻成更直观的判断画面</strong>
                         </div>
                         <div class="section-phase-track" aria-label="项目中后段浏览路径">
-                            <span>01 流程</span>
-                            <span class="is-active" aria-current="step">02 结果</span>
-                            <span>03 拆解</span>
-                            <span>04 沟通</span>
+                            <a href="#process">01 流程</a>
+                            <a class="is-active" href="#proof" aria-current="step">02 结果</a>
+                            <a href="#case-detail">03 拆解</a>
+                            <a href="#contact">04 沟通</a>
                         </div>
                         <p class="section-phase-note">这里开始从“怎么推进”切到“上线后会怎样”，让节奏自然往案例结果过渡。</p>
                     </div>
@@ -1354,10 +1354,10 @@
                             <strong>从结果视角继续下钻，把单个项目拆到可执行动作层</strong>
                         </div>
                         <div class="section-phase-track" aria-label="项目中后段浏览路径">
-                            <span>01 流程</span>
-                            <span>02 结果</span>
-                            <span class="is-active" aria-current="step">03 拆解</span>
-                            <span>04 沟通</span>
+                            <a href="#process">01 流程</a>
+                            <a href="#proof">02 结果</a>
+                            <a class="is-active" href="#case-detail" aria-current="step">03 拆解</a>
+                            <a href="#contact">04 沟通</a>
                         </div>
                         <p class="section-phase-note">这一段负责把判断逻辑讲透，最后再把这些边界回收到方案沟通入口。</p>
                     </div>
@@ -1456,10 +1456,10 @@
                             <strong>把前面的约束、风险和节奏统一收口，进入更高效的方案沟通</strong>
                         </div>
                         <div class="section-phase-track" aria-label="项目中后段浏览路径">
-                            <span>01 流程</span>
-                            <span>02 结果</span>
-                            <span>03 拆解</span>
-                            <span class="is-active" aria-current="step">04 沟通</span>
+                            <a href="#process">01 流程</a>
+                            <a href="#proof">02 结果</a>
+                            <a href="#case-detail">03 拆解</a>
+                            <a class="is-active" href="#contact" aria-current="step">04 沟通</a>
                         </div>
                         <p class="section-phase-note">最后一段不只留联系方式，而是把整页前面讲的判断项真正收进表单里。</p>
                     </div>

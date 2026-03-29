@@ -1466,6 +1466,7 @@ body[data-theme="light"] .hero-intake-grid p {
 .trust-strip-bridge {
   display: grid;
   gap: 16px;
+  min-width: 0;
   padding: 22px 24px;
   border-radius: 28px;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1480,10 +1481,12 @@ body[data-theme="light"] .hero-intake-grid p {
 .trust-strip-bridge-head {
   display: grid;
   gap: 10px;
+  min-width: 0;
 }
 
 .trust-strip-bridge-head span,
 .trust-strip-bridge-grid span,
+.trust-strip-bridge-tags button,
 .trust-strip-bridge-tags span {
   display: inline-flex;
   align-items: center;
@@ -1499,10 +1502,16 @@ body[data-theme="light"] .hero-intake-grid p {
   text-transform: uppercase;
 }
 
+.trust-strip-bridge-tags button {
+  cursor: pointer;
+}
+
 .trust-strip-bridge-head strong {
   font-family: var(--font-heading);
   font-size: 1.16rem;
   line-height: 1.46;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .trust-strip-bridge-grid {
@@ -1751,6 +1760,7 @@ body[data-theme="light"] .trust-strip-bridge {
 body[data-theme="light"] .trust-strip-bridge-head span,
 body[data-theme="light"] .trust-strip-bridge-grid article,
 body[data-theme="light"] .trust-strip-bridge-grid span,
+body[data-theme="light"] .trust-strip-bridge-tags button,
 body[data-theme="light"] .trust-strip-bridge-tags span {
   border-color: var(--line);
   background: rgba(15, 63, 103, 0.05);
@@ -1903,6 +1913,7 @@ body[data-theme="light"] .section-surface::before {
   gap: 10px;
 }
 
+.section-phase-track a,
 .section-phase-track span {
   display: inline-flex;
   align-items: center;
@@ -1916,9 +1927,11 @@ body[data-theme="light"] .section-surface::before {
   font-size: 0.86rem;
   font-weight: 700;
   letter-spacing: 0.04em;
+  text-decoration: none;
   white-space: nowrap;
 }
 
+.section-phase-track a.is-active,
 .section-phase-track span.is-active {
   border-color: rgba(255, 175, 116, 0.28);
   background:
@@ -1945,12 +1958,14 @@ body[data-theme="light"] .section-phase {
 }
 
 body[data-theme="light"] .section-phase-intro span,
+body[data-theme="light"] .section-phase-track a,
 body[data-theme="light"] .section-phase-track span {
   border-color: var(--line);
   background: rgba(15, 63, 103, 0.05);
   color: var(--muted);
 }
 
+body[data-theme="light"] .section-phase-track a.is-active,
 body[data-theme="light"] .section-phase-track span.is-active {
   border-color: rgba(213, 105, 53, 0.22);
   background:
@@ -5525,11 +5540,11 @@ body[data-theme="light"] .search-shortcut {
   right: 12px;
   bottom: 12px;
   z-index: 48;
-  gap: 10px;
-  padding: 10px;
-  border-radius: 22px;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(8, 12, 18, 0.84);
+  background: rgba(8, 12, 18, 0.78);
   backdrop-filter: blur(20px);
   box-shadow: 0 22px 42px rgba(0, 0, 0, 0.24);
 }
@@ -5539,11 +5554,12 @@ body[data-theme="light"] .search-shortcut {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
+  min-height: 44px;
   padding: 0 18px;
-  border-radius: 16px;
+  border-radius: 14px;
   border: 0;
   font-weight: 700;
+  font-size: 0.94rem;
   text-align: center;
 }
 
@@ -6659,6 +6675,7 @@ body[data-theme="light"] .search-route-card {
     font-size: 1rem;
   }
 
+  .section-phase-track a,
   .section-phase-track span {
     min-height: 42px;
     padding: 0 14px;
@@ -6776,6 +6793,7 @@ body[data-theme="light"] .search-route-card {
     padding-bottom: 0;
   }
 
+  .section-phase-track a,
   .section-phase-track span {
     min-height: 40px;
     font-size: 0.8rem;
@@ -7560,13 +7578,15 @@ body[data-theme="light"] .search-route-card {
   }
 
   .trust-strip-bridge-grid {
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(248px, 82vw);
-    grid-template-columns: none;
+    display: flex;
+    gap: 12px;
+    flex-wrap: nowrap;
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
+    scroll-padding-inline: 4px;
     scrollbar-width: none;
+    touch-action: pan-x;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -7575,6 +7595,8 @@ body[data-theme="light"] .search-route-card {
   }
 
   .trust-strip-bridge-grid article {
+    flex: 0 0 min(272px, calc(100vw - 92px));
+    min-width: 0;
     padding: 14px 16px;
     scroll-snap-align: start;
   }
@@ -7962,6 +7984,10 @@ body[data-theme="light"] .search-route-card {
     min-height: 30px;
     padding: 0 12px;
     font-size: 0.76rem;
+  }
+
+  main {
+    padding-bottom: calc(116px + env(safe-area-inset-bottom, 0px));
   }
 
   .primary-button,

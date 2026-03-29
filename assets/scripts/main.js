@@ -47,6 +47,7 @@ const projectReadinessBar = document.getElementById("projectReadinessBar");
 const backToTopButton = document.querySelector(".back-to-top");
 const ambientVideos = document.querySelectorAll(".hero-stage video, .scenario-visual video");
 const scrollRails = document.querySelectorAll("[data-scroll-rail]");
+const railJumpButtons = document.querySelectorAll("[data-rail-target]");
 const spotlightTargets = document.querySelectorAll(".section-surface, .hero-stage, .technology-visual, .process-visual, .scenario-card-featured .scenario-visual");
 const depthTargets = document.querySelectorAll(".hero-aura, .hero-stage, .technology-visual, .process-visual, .scenario-card-featured .scenario-visual");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -597,6 +598,27 @@ function handleScrollRailScroll(event) {
     syncScrollRail(event.currentTarget);
 }
 
+function scrollRailToTarget(button) {
+    if (!(button instanceof HTMLElement)) {
+        return;
+    }
+
+    const railSelector = button.getAttribute("data-rail-track");
+    const targetSelector = button.getAttribute("data-rail-target");
+    const rail = railSelector ? document.querySelector(railSelector) : button.closest("[data-scroll-rail]");
+    const target = targetSelector ? document.querySelector(targetSelector) : null;
+
+    if (!(rail instanceof HTMLElement) || !(target instanceof HTMLElement)) {
+        return;
+    }
+
+    const targetLeft = target.offsetLeft - rail.offsetLeft - 4;
+    rail.scrollTo({
+        left: Math.max(targetLeft, 0),
+        behavior: "smooth"
+    });
+}
+
 function schedulePageSignals() {
     if (pageSignalTicking) {
         return;
@@ -636,6 +658,12 @@ const scrollRailResizeObserver = typeof ResizeObserver === "function"
 scrollRails.forEach((rail) => {
     rail.addEventListener("scroll", handleScrollRailScroll, { passive: true });
     scrollRailResizeObserver?.observe(rail);
+});
+
+railJumpButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        scrollRailToTarget(button);
+    });
 });
 
 function searchSection(query) {
