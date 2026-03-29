@@ -45,12 +45,17 @@ const projectPreviewPoints = document.getElementById("projectPreviewPoints");
 const projectReadinessValue = document.getElementById("projectReadinessValue");
 const projectReadinessBar = document.getElementById("projectReadinessBar");
 const backToTopButton = document.querySelector(".back-to-top");
+const mobileCtaDock = document.querySelector(".mobile-cta-dock");
+const contactSection = document.getElementById("contact");
+const footer = document.querySelector(".footer");
 const ambientVideos = document.querySelectorAll(".hero-stage video, .scenario-visual video");
 const scrollRails = document.querySelectorAll("[data-scroll-rail]");
 const railJumpButtons = document.querySelectorAll("[data-rail-target]");
 const spotlightTargets = document.querySelectorAll(".section-surface, .hero-stage, .technology-visual, .process-visual, .scenario-card-featured .scenario-visual");
 const depthTargets = document.querySelectorAll(".hero-aura, .hero-stage, .technology-visual, .process-visual, .scenario-card-featured .scenario-visual");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const compactFlowLayout = window.matchMedia("(max-width: 860px)");
+const mobileDockLayout = window.matchMedia("(max-width: 640px)");
 const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
 const motionLite = prefersReducedMotion.matches
     || Boolean(connection?.saveData)
@@ -61,6 +66,7 @@ let mobileReturnFocusTarget = null;
 let projectStatusTimer = null;
 let searchFlashTimer = 0;
 let projectFormSubmitting = false;
+let lastScrollY = window.scrollY;
 
 body.classList.toggle("motion-lite", motionLite);
 
@@ -155,6 +161,40 @@ function closeMobilePanel() {
     if (mobileReturnFocusTarget instanceof HTMLElement) {
         mobileReturnFocusTarget.focus();
     }
+}
+
+function syncMobileCtaDock() {
+    if (!mobileCtaDock) {
+        return;
+    }
+
+    if (!mobileDockLayout.matches) {
+        mobileCtaDock.classList.remove("is-hidden");
+        mobileCtaDock.removeAttribute("aria-hidden");
+        lastScrollY = window.scrollY;
+        return;
+    }
+
+    const currentScrollY = window.scrollY;
+    const scrollingDown = currentScrollY > lastScrollY + 6;
+    const contactRect = contactSection?.getBoundingClientRect();
+    const footerRect = footer?.getBoundingClientRect();
+    const nearTop = currentScrollY < 140;
+    const contactVisible = Boolean(contactRect) && contactRect.top < window.innerHeight * 0.72;
+    const footerVisible = Boolean(footerRect) && footerRect.top < window.innerHeight - 36;
+    const shouldHide = (scrollingDown && currentScrollY > 220)
+        || contactVisible
+        || footerVisible
+        || body.classList.contains("no-scroll");
+
+    mobileCtaDock.classList.toggle("is-hidden", !nearTop && shouldHide);
+    if (shouldHide && !nearTop) {
+        mobileCtaDock.setAttribute("aria-hidden", "true");
+    } else {
+        mobileCtaDock.removeAttribute("aria-hidden");
+    }
+
+    lastScrollY = currentScrollY;
 }
 
 function closeCustomSelects(except = null) {
@@ -410,13 +450,36 @@ document.addEventListener("click", (event) => {
 
 function scrollToTarget(selector) {
     const target = document.querySelector(selector);
-    if (!target) {
+    if (!(target instanceof HTMLElement)) {
         return false;
     }
 
+    let resolvedTarget = target;
+    if (compactFlowLayout.matches && target.classList.contains("flow-section")) {
+        const surface = target.querySelector(".section-surface");
+        const contentTarget = surface
+            ? Array.from(surface.children).find((child) => child instanceof HTMLElement && !child.classList.contains("section-phase"))
+            : null;
+
+        if (contentTarget instanceof HTMLElement) {
+            resolvedTarget = contentTarget;
+        }
+    }
+
     const topbarHeight = topbar?.offsetHeight || 0;
-    const topOffset = target.getBoundingClientRect().top + window.scrollY - topbarHeight - 18;
-    window.scrollTo({ top: Math.max(topOffset, 0), behavior: "smooth" });
+    const compactGap = compactFlowLayout.matches && target.classList.contains("flow-section") ? 10 : 18;
+    const topOffset = Math.max(resolvedTarget.getBoundingClientRect().top + window.scrollY - topbarHeight - compactGap, 0);
+    window.scrollTo({ top: topOffset, behavior: "smooth" });
+
+    window.setTimeout(() => {
+        if (Math.abs(window.scrollY - topOffset) <= 8) {
+            return;
+        }
+
+        window.scrollTo(0, topOffset);
+        document.documentElement.scrollTop = topOffset;
+        document.body.scrollTop = topOffset;
+    }, 160);
     return true;
 }
 
@@ -588,6 +651,45 @@ function syncScrollRail(rail) {
     const progress = clamp(rail.scrollLeft / overflowWidth, 0, 1);
     rail.style.setProperty("--rail-progress", progress.toFixed(3));
     rail.classList.toggle("is-scrolled", rail.scrollLeft > 8);
+    syncRailJumpButtons(rail);
+}
+
+function syncRailJumpButtons(rail, forcedTargetSelector = "") {
+    if (!(rail instanceof HTMLElement) || !rail.id) {
+        return;
+    }
+
+    const railSelector = `#${rail.id}`;
+    const relatedButtons = Array.from(railJumpButtons).filter((button) => button.getAttribute("data-rail-track") === railSelector);
+    if (!relatedButtons.length) {
+        return;
+    }
+
+    let activeTargetSelector = forcedTargetSelector || relatedButtons[0].getAttribute("data-rail-target") || "";
+
+    if (!forcedTargetSelector) {
+        let closestDistance = Number.POSITIVE_INFINITY;
+
+        relatedButtons.forEach((button) => {
+            const targetSelector = button.getAttribute("data-rail-target");
+            const target = targetSelector ? document.querySelector(targetSelector) : null;
+            if (!(target instanceof HTMLElement)) {
+                return;
+            }
+
+            const distance = Math.abs(target.offsetLeft - rail.scrollLeft);
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                activeTargetSelector = targetSelector || activeTargetSelector;
+            }
+        });
+    }
+
+    relatedButtons.forEach((button) => {
+        const isActive = (button.getAttribute("data-rail-target") || "") === activeTargetSelector;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", isActive ? "true" : "false");
+    });
 }
 
 function syncAllScrollRails() {
@@ -612,11 +714,29 @@ function scrollRailToTarget(button) {
         return;
     }
 
-    const targetLeft = target.offsetLeft - rail.offsetLeft - 4;
-    rail.scrollTo({
-        left: Math.max(targetLeft, 0),
-        behavior: "smooth"
-    });
+    const railRect = rail.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    const nextLeft = rail.scrollLeft + (targetRect.left - railRect.left) - 4;
+
+    syncRailJumpButtons(rail, targetSelector || "");
+
+    try {
+        rail.scrollTo({
+            left: Math.max(nextLeft, 0),
+            behavior: "smooth"
+        });
+    } catch (error) {
+        rail.scrollLeft = Math.max(nextLeft, 0);
+    }
+
+    window.setTimeout(() => {
+        const fallbackLeft = Math.max(nextLeft, 0);
+        if (Math.abs(rail.scrollLeft - fallbackLeft) <= 6) {
+            return;
+        }
+
+        rail.scrollLeft = fallbackLeft;
+    }, 160);
 }
 
 function schedulePageSignals() {
@@ -629,6 +749,7 @@ function schedulePageSignals() {
         updatePageSignals();
         updateDepthMotion();
         updateHeroParallax();
+        syncMobileCtaDock();
         pageSignalTicking = false;
     });
 }
@@ -638,11 +759,14 @@ updatePageSignals();
 updateDepthMotion();
 updateHeroParallax();
 syncAllScrollRails();
+syncMobileCtaDock();
 window.addEventListener("scroll", schedulePageSignals, { passive: true });
 window.addEventListener("resize", schedulePageSignals);
 window.addEventListener("resize", syncAllScrollRails);
+window.addEventListener("resize", syncMobileCtaDock);
 window.addEventListener("load", () => {
     requestAnimationFrame(syncAllScrollRails);
+    requestAnimationFrame(syncMobileCtaDock);
 });
 window.addEventListener("scroll", () => closeCustomSelects(), { passive: true });
 window.addEventListener("resize", () => closeCustomSelects());

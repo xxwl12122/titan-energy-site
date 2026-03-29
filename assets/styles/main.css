@@ -1419,6 +1419,7 @@ body[data-theme="light"] .hero-intake-grid p {
 
 .trust-strip-stack {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
 }
 
@@ -1467,6 +1468,8 @@ body[data-theme="light"] .hero-intake-grid p {
   display: grid;
   gap: 16px;
   min-width: 0;
+  width: 100%;
+  max-width: 100%;
   padding: 22px 24px;
   border-radius: 28px;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1504,6 +1507,18 @@ body[data-theme="light"] .hero-intake-grid p {
 
 .trust-strip-bridge-tags button {
   cursor: pointer;
+  transition: border-color var(--transition), background var(--transition), color var(--transition), box-shadow var(--transition);
+  touch-action: manipulation;
+}
+
+.trust-strip-bridge-tags button.is-active,
+.trust-strip-bridge-tags button[aria-pressed="true"] {
+  border-color: rgba(255, 175, 116, 0.28);
+  background:
+    linear-gradient(135deg, rgba(255, 178, 124, 0.24), rgba(77, 144, 210, 0.18)),
+    rgba(255, 255, 255, 0.08);
+  color: #fff;
+  box-shadow: 0 18px 34px rgba(15, 63, 103, 0.18);
 }
 
 .trust-strip-bridge-head strong {
@@ -1518,6 +1533,9 @@ body[data-theme="light"] .hero-intake-grid p {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
 }
 
 .trust-strip-bridge-grid article {
@@ -1540,6 +1558,9 @@ body[data-theme="light"] .hero-intake-grid p {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
 }
 
 .trust-proof-grid {
@@ -1765,6 +1786,16 @@ body[data-theme="light"] .trust-strip-bridge-tags span {
   border-color: var(--line);
   background: rgba(15, 63, 103, 0.05);
   color: var(--muted);
+}
+
+body[data-theme="light"] .trust-strip-bridge-tags button.is-active,
+body[data-theme="light"] .trust-strip-bridge-tags button[aria-pressed="true"] {
+  border-color: rgba(213, 105, 53, 0.22);
+  background:
+    linear-gradient(135deg, rgba(213, 105, 53, 0.16), rgba(15, 63, 103, 0.14)),
+    rgba(255, 255, 255, 0.82);
+  color: var(--text);
+  box-shadow: 0 18px 34px rgba(12, 20, 31, 0.12);
 }
 
 .section {
@@ -5547,6 +5578,17 @@ body[data-theme="light"] .search-shortcut {
   background: rgba(8, 12, 18, 0.78);
   backdrop-filter: blur(20px);
   box-shadow: 0 22px 42px rgba(0, 0, 0, 0.24);
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity var(--transition), transform var(--transition), visibility var(--transition), border-color var(--transition);
+}
+
+.mobile-cta-dock.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(calc(100% + env(safe-area-inset-bottom, 0px) + 14px));
+  pointer-events: none;
 }
 
 .mobile-cta-main,
@@ -7584,6 +7626,7 @@ body[data-theme="light"] .search-route-card {
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
     scroll-padding-inline: 4px;
     scrollbar-width: none;
     touch-action: pan-x;
@@ -7599,6 +7642,7 @@ body[data-theme="light"] .search-route-card {
     min-width: 0;
     padding: 14px 16px;
     scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 
   .trust-strip-bridge-grid p {
