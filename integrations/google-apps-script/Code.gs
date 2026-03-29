@@ -4,6 +4,76 @@ const CONFIG = {
   token: "CHANGE_ME_TO_A_SECRET_TOKEN"
 };
 
+function doGet(e) {
+  try {
+    const requestToken = getRequestToken(e);
+    if (requestToken !== CONFIG.token) {
+      return jsonResponse({
+        ok: false,
+        message: "Unauthorized"
+      }, 401);
+    }
+
+    const action = getAction(e);
+    if (action !== "list") {
+      return jsonResponse({
+        ok: false,
+        message: "Unsupported action"
+      }, 400);
+    }
+
+    const limit = getLimit(e);
+    const sheet = getSheet();
+    const rows = sheet.getDataRange().getValues();
+
+    if (!rows.length) {
+      return jsonResponse({
+        ok: true,
+        items: []
+      }, 200);
+    }
+
+    const [headers, ...dataRows] = rows;
+    const items = dataRows
+      .filter(function(row) {
+        return row.some(function(cell) {
+          return String(cell || "").trim() !== "";
+        });
+      })
+      .map(function(row) {
+        const item = {};
+
+        headers.forEach(function(header, index) {
+          item[String(header || "").trim()] = row[index] || "";
+        });
+
+        item.meta = {
+          ip: item.ip || "",
+          userAgent: item.userAgent || "",
+          referer: item.referer || ""
+        };
+
+        delete item.ip;
+        delete item.userAgent;
+        delete item.referer;
+
+        return item;
+      })
+      .reverse()
+      .slice(0, limit);
+
+    return jsonResponse({
+      ok: true,
+      items: items
+    }, 200);
+  } catch (error) {
+    return jsonResponse({
+      ok: false,
+      message: error && error.message ? error.message : "Unknown error"
+    }, 500);
+  }
+}
+
 function doPost(e) {
   try {
     const requestToken = getRequestToken(e);
@@ -84,6 +154,25 @@ function getRequestToken(e) {
   }
 
   return "";
+}
+
+function getAction(e) {
+  if (e && e.parameter && typeof e.parameter.action === "string") {
+    return e.parameter.action.trim();
+  }
+
+  return "";
+}
+
+function getLimit(e) {
+  const rawValue = e && e.parameter ? e.parameter.limit : "";
+  const parsed = parseInt(rawValue, 10);
+
+  if (!isFinite(parsed) || parsed <= 0) {
+    return 100;
+  }
+
+  return Math.min(parsed, 200);
 }
 
 function jsonResponse(payload, status) {

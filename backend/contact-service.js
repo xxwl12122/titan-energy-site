@@ -16,6 +16,10 @@ function normalizeString(value) {
     return typeof value === "string" ? value.trim() : "";
 }
 
+function getConfiguredWebhookUrl(options = {}) {
+    return normalizeString(options.webhookUrl || process.env.CONTACT_WEBHOOK_URL);
+}
+
 function normalizeLimit(value, fallback = 50) {
     const parsed = Number.parseInt(value, 10);
     if (!Number.isFinite(parsed) || parsed <= 0) {
@@ -136,7 +140,7 @@ async function forwardRecordToWebhook(record, webhookUrl) {
 }
 
 async function persistRecord(record, options = {}) {
-    const webhookUrl = normalizeString(options.webhookUrl || process.env.CONTACT_WEBHOOK_URL);
+    const webhookUrl = getConfiguredWebhookUrl(options);
     const runningOnVercel = Boolean(process.env.VERCEL || process.env.VERCEL_ENV);
 
     if (webhookUrl) {
@@ -155,11 +159,61 @@ async function persistRecord(record, options = {}) {
     return appendRecordToFile(record, storageDir);
 }
 
+async function fetchSubmissionsFromWebhook(webhookUrl, limit) {
+    const url = new URL(webhookUrl);
+    url.searchParams.set("action", "list");
+    url.searchParams.set("limit", String(limit));
+
+    let response;
+
+    try {
+        response = await fetch(url, {
+            method: "GET",
+            headers: {
+                accept: "application/json"
+            }
+        });
+    } catch (error) {
+        const networkError = new Error("读取 webhook 记录失败，请检查 Google Apps Script 是否已经重新部署。");
+        networkError.code = "SUBMISSIONS_WEBHOOK_FAILED";
+        networkError.cause = error;
+        throw networkError;
+    }
+
+    let payload = null;
+
+    try {
+        payload = await response.json();
+    } catch (error) {
+        payload = null;
+    }
+
+    if (!response.ok) {
+        const message = payload?.message || `读取 webhook 记录失败，目标返回 HTTP ${response.status}。`;
+        const webhookError = new Error(message);
+        webhookError.code = "SUBMISSIONS_WEBHOOK_FAILED";
+        throw webhookError;
+    }
+
+    const items = Array.isArray(payload?.items) ? payload.items : [];
+
+    return {
+        items,
+        storageMode: "webhook",
+        storageAvailable: true
+    };
+}
+
 async function listContactSubmissions(options = {}) {
     const storageDir = options.storageDir;
     const storagePath = storageDir ? path.join(storageDir, "contact-submissions.ndjson") : "";
     const limit = normalizeLimit(options.limit);
-    const storageMode = normalizeString(options.webhookUrl || process.env.CONTACT_WEBHOOK_URL) ? "webhook" : "file";
+    const webhookUrl = getConfiguredWebhookUrl(options);
+    const storageMode = webhookUrl ? "webhook" : "file";
+
+    if (webhookUrl) {
+        return fetchSubmissionsFromWebhook(webhookUrl, limit);
+    }
 
     if (!storagePath) {
         return {
@@ -238,6 +292,7 @@ async function submitContact(payload, options = {}) {
 
 module.exports = {
     buildProjectSummary,
+    getConfiguredWebhookUrl,
     listContactSubmissions,
     normalizePayload,
     submitContact

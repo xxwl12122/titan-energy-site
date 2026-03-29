@@ -146,6 +146,16 @@ function mapError(error) {
         };
     }
 
+    if (error?.code === "SUBMISSIONS_WEBHOOK_FAILED") {
+        return {
+            statusCode: 502,
+            payload: {
+                ok: false,
+                message: error.message
+            }
+        };
+    }
+
     if (error?.code === "CONTACT_STORAGE_UNAVAILABLE") {
         return {
             statusCode: 503,

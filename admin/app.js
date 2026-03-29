@@ -183,8 +183,8 @@ function updateSummary() {
 
     if (state.storageMode === "webhook") {
         storageHint.textContent = state.storageAvailable
-            ? "当前环境启用了 webhook；这里显示的是本地保留的历史文件。"
-            : "当前环境启用了 webhook，新记录可能不会保存在本地文件。";
+            ? "当前正在通过 webhook 读取 Google Sheets 里的提交记录。"
+            : "当前环境启用了 webhook，但暂时还没有可读取的数据。";
     } else {
         storageHint.textContent = state.storageAvailable
             ? "当前正在读取本地 contact-submissions.ndjson。"
@@ -266,6 +266,12 @@ async function loadSubmissions() {
         if (error.code === "ADMIN_LOCAL_ONLY") {
             setStatus("仅限本机访问", error.message, "warn");
             detailCard.innerHTML = '<div class="empty-state">如果你想在线上查看，请在部署平台配置 ADMIN_TOKEN。</div>';
+            return;
+        }
+
+        if (error.message && error.message.includes("Google Apps Script")) {
+            setStatus("需要更新表格脚本", error.message, "warn");
+            detailCard.innerHTML = '<div class="empty-state">表单已经能写入 Google Sheets，但读取接口还没启用。请把最新 Apps Script 代码重新粘贴并重新部署一次。</div>';
             return;
         }
 

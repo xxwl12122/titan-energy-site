@@ -39,6 +39,20 @@ https://script.google.com/macros/s/你的部署ID/exec?token=你自己设的随�
 
 配置完成后，网站的 `/api/contact` 就会把表单转发到 Google Sheets。
 
+## 如果你还想让网站后台 `/admin` 显示记录
+
+需要把这份代码重新部署成最新版，因为它现在同时支持：
+
+- `POST`：网站提交表单时写入 Google Sheets
+- `GET?action=list`：网站后台读取最近提交记录
+
+更新代码后，请重新执行一次：
+
+1. `部署 -> 管理部署`
+2. 找到当前 Web App
+3. 选择 `编辑`
+4. 重新部署最新版本
+
 ## 建议
 
 - `token` 不要用简单字符串
