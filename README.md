@@ -1,14 +1,7 @@
 # 泰坦供能
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Brand-TITAN%20POWER%20SYSTEMS-F08B54?style=for-the-badge" alt="Brand Badge">
-  <img src="https://img.shields.io/badge/Stack-HTML%20%2B%20CSS%20%2B%20JavaScript-1C2430?style=for-the-badge" alt="Stack Badge">
-  <img src="https://img.shields.io/badge/Deploy-Vercel-0A0A0A?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel Badge">
-  <img src="https://img.shields.io/badge/Mirror-GitHub%20Pages-1F6FEB?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Pages Badge">
-</p>
-
-> 一个面向工业自动化、医疗检测、物联网终端与户外设备的工业级供能方案展示站点。  
-> 重点不只是“把页面做出来”，而是把品牌气质、区块节奏、案例叙事和表单转化一起收进一套完整表达。
+工业级供能方案单页品牌站。  
+围绕品牌气质、区块节奏、案例叙事和表单转化打造的原生前端项目。
 
 <p align="center">
   <a href="https://titan-energy-site.vercel.app"><strong>生产环境</strong></a>
@@ -18,9 +11,7 @@
   <a href="https://github.com/xxwl12122/titan-energy-site"><strong>GitHub 仓库</strong></a>
 </p>
 
-<p align="center">
-  <img src="assets/images/readme-showcase.png" alt="泰坦供能 README 展示横幅" width="96%">
-</p>
+![泰坦供能封面图](assets/images/share-cover.png)
 
 ## 快速概览
 
@@ -120,7 +111,6 @@
 ├─ assets
 │  ├─ images
 │  │  ├─ share-cover.png
-│  │  ├─ readme-showcase.png
 │  │  ├─ readme-hero.png
 │  │  ├─ readme-flow.png
 │  │  └─ readme-contact.png
