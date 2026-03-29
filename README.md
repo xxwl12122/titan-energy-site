@@ -1,7 +1,7 @@
 # 泰坦供能
 
-工业级供能方案单页品牌站。  
-围绕品牌气质、区块节奏、案例叙事和表单转化打造的原生前端项目。
+工业级供能方案单页品牌站，面向工业自动化、医疗检测、物联网终端与户外设备。  
+使用原生 `HTML + CSS + JavaScript` 构建，重点打磨品牌质感、区块节奏、案例叙事和表单收口。
 
 <p align="center">
   <a href="https://titan-energy-site.vercel.app"><strong>生产环境</strong></a>
@@ -11,7 +11,7 @@
   <a href="https://github.com/xxwl12122/titan-energy-site"><strong>GitHub 仓库</strong></a>
 </p>
 
-![泰坦供能封面图](assets/images/share-cover.png)
+![泰坦供能首页预览](assets/images/readme-hero.png)
 
 ## 快速概览
 
