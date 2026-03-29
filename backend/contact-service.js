@@ -137,9 +137,14 @@ async function forwardRecordToWebhook(record, webhookUrl) {
 
 async function persistRecord(record, options = {}) {
     const webhookUrl = normalizeString(options.webhookUrl || process.env.CONTACT_WEBHOOK_URL);
+    const runningOnVercel = Boolean(process.env.VERCEL || process.env.VERCEL_ENV);
 
     if (webhookUrl) {
         return forwardRecordToWebhook(record, webhookUrl);
+    }
+
+    if (runningOnVercel) {
+        throw createStorageError("当前 Vercel 线上环境还没有配置 CONTACT_WEBHOOK_URL，所以表单会自动回退到邮件草稿。");
     }
 
     const storageDir = options.storageDir;
