@@ -341,11 +341,17 @@ async function updateSubmissionStatusInWebhook(id, status, webhookUrl) {
         status
     });
 
-    return normalizeSubmissionRecord(result?.item || {
-        id,
-        status,
-        updatedAt: new Date().toISOString()
-    });
+    const item = result?.item && typeof result.item === "object"
+        ? normalizeSubmissionRecord(result.item)
+        : null;
+
+    if (!item || item.id !== id || item.status !== status) {
+        const webhookError = new Error("Google Apps Script 还没有更新到支持状态回写的版本，请重新粘贴最新版 Code.gs 并重新部署 Web App。");
+        webhookError.code = "SUBMISSIONS_WEBHOOK_FAILED";
+        throw webhookError;
+    }
+
+    return item;
 }
 
 async function listContactSubmissions(options = {}) {

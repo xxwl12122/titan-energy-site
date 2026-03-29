@@ -486,6 +486,8 @@ async function updateSelectedStatus(nextStatus) {
 
         if (error.code === "ADMIN_UNAUTHORIZED") {
             setStatus("需要管理口令", error.message, "warn");
+        } else if (error.message && error.message.includes("Google Apps Script")) {
+            setStatus("需要更新表格脚本", error.message, "warn");
         } else {
             setStatus("更新失败", error.message || "状态更新失败，请稍后重试。", "error");
         }
