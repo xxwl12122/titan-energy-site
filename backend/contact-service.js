@@ -2,6 +2,8 @@ const fs = require("node:fs/promises");
 const path = require("node:path");
 const { randomUUID } = require("node:crypto");
 
+const defaultSubmissionStatus = "新提交";
+const allowedSubmissionStatuses = ["新提交", "已联系", "跟进中", "已完成", "无效线索"];
 const fieldDefinitions = [
     ["deviceType", "设备类型"],
     ["projectStage", "项目阶段"],
@@ -20,6 +22,11 @@ function getConfiguredWebhookUrl(options = {}) {
     return normalizeString(options.webhookUrl || process.env.CONTACT_WEBHOOK_URL);
 }
 
+function normalizeSubmissionStatus(status) {
+    const normalized = normalizeString(status);
+    return allowedSubmissionStatuses.includes(normalized) ? normalized : "";
+}
+
 function normalizeLimit(value, fallback = 50) {
     const parsed = Number.parseInt(value, 10);
     if (!Number.isFinite(parsed) || parsed <= 0) {
@@ -36,6 +43,24 @@ function normalizePayload(payload = {}) {
         result[name] = normalizeString(source[name]);
         return result;
     }, {});
+}
+
+function normalizeSubmissionRecord(record = {}) {
+    const normalized = normalizePayload(record);
+    const createdAt = normalizeString(record.createdAt);
+    const updatedAt = normalizeString(record.updatedAt) || createdAt;
+    const status = normalizeSubmissionStatus(record.status) || defaultSubmissionStatus;
+
+    return {
+        id: normalizeString(record.id),
+        createdAt,
+        updatedAt,
+        source: normalizeString(record.source) || "website",
+        status,
+        summary: normalizeString(record.summary),
+        ...normalized,
+        meta: sanitizeRequestMeta(record.meta)
+    };
 }
 
 function buildProjectSummary(payload) {
@@ -60,6 +85,18 @@ function createStorageError(message, cause) {
     if (cause) {
         error.cause = cause;
     }
+    return error;
+}
+
+function createSubmissionStatusError(message) {
+    const error = new Error(message);
+    error.code = "SUBMISSION_STATUS_INVALID";
+    return error;
+}
+
+function createSubmissionNotFoundError(id) {
+    const error = new Error(`没有找到提交记录：${id}`);
+    error.code = "SUBMISSION_NOT_FOUND";
     return error;
 }
 
@@ -88,6 +125,20 @@ function sanitizeRequestMeta(requestMeta = {}) {
         userAgent: normalizeString(requestMeta.userAgent),
         referer: normalizeString(requestMeta.referer)
     };
+}
+
+function buildWebhookUrl(webhookUrl, params = {}) {
+    const url = new URL(webhookUrl);
+
+    Object.entries(params).forEach(([key, value]) => {
+        if (value === undefined || value === null || value === "") {
+            return;
+        }
+
+        url.searchParams.set(key, String(value));
+    });
+
+    return url;
 }
 
 async function appendRecordToFile(record, storageDir) {
@@ -139,6 +190,42 @@ async function forwardRecordToWebhook(record, webhookUrl) {
     };
 }
 
+async function postWebhookAction(webhookUrl, action, payload) {
+    const requestUrl = buildWebhookUrl(webhookUrl, { action });
+    let response;
+
+    try {
+        response = await fetch(requestUrl, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+    } catch (error) {
+        const networkError = new Error("操作 webhook 失败，请检查 Google Apps Script 是否已经重新部署。");
+        networkError.code = "SUBMISSIONS_WEBHOOK_FAILED";
+        networkError.cause = error;
+        throw networkError;
+    }
+
+    let result = null;
+
+    try {
+        result = await response.json();
+    } catch (error) {
+        result = null;
+    }
+
+    if (!response.ok || result?.ok === false) {
+        const webhookError = new Error(result?.message || `操作 webhook 失败，目标返回 HTTP ${response.status}。`);
+        webhookError.code = "SUBMISSIONS_WEBHOOK_FAILED";
+        throw webhookError;
+    }
+
+    return result;
+}
+
 async function persistRecord(record, options = {}) {
     const webhookUrl = getConfiguredWebhookUrl(options);
     const runningOnVercel = Boolean(process.env.VERCEL || process.env.VERCEL_ENV);
@@ -160,11 +247,11 @@ async function persistRecord(record, options = {}) {
 }
 
 async function fetchSubmissionsFromWebhook(webhookUrl, limit) {
-    const url = new URL(webhookUrl);
-    url.searchParams.set("action", "list");
-    url.searchParams.set("limit", String(limit));
-
     let response;
+    const url = buildWebhookUrl(webhookUrl, {
+        action: "list",
+        limit
+    });
 
     try {
         response = await fetch(url, {
@@ -198,10 +285,67 @@ async function fetchSubmissionsFromWebhook(webhookUrl, limit) {
     const items = Array.isArray(payload?.items) ? payload.items : [];
 
     return {
-        items,
+        items: items.map((item) => normalizeSubmissionRecord(item)),
         storageMode: "webhook",
         storageAvailable: true
     };
+}
+
+async function updateSubmissionStatusInFile(id, status, storageDir) {
+    const storagePath = path.join(storageDir, "contact-submissions.ndjson");
+    let rawContent = "";
+
+    try {
+        rawContent = await fs.readFile(storagePath, "utf8");
+    } catch (error) {
+        if (error?.code === "ENOENT") {
+            throw createSubmissionNotFoundError(id);
+        }
+
+        throw error;
+    }
+
+    const records = rawContent
+        .split(/\r?\n/)
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .map((line) => {
+            try {
+                return JSON.parse(line);
+            } catch (error) {
+                return null;
+            }
+        })
+        .filter(Boolean);
+
+    const targetRecord = records.find((record) => normalizeString(record.id) === id);
+    if (!targetRecord) {
+        throw createSubmissionNotFoundError(id);
+    }
+
+    targetRecord.status = status;
+    targetRecord.updatedAt = new Date().toISOString();
+
+    await fs.writeFile(
+        storagePath,
+        `${records.map((record) => JSON.stringify(record)).join("\n")}\n`,
+        "utf8"
+    );
+
+    return normalizeSubmissionRecord(targetRecord);
+}
+
+async function updateSubmissionStatusInWebhook(id, status, webhookUrl) {
+    const result = await postWebhookAction(webhookUrl, "updateStatus", {
+        id,
+        status
+    });
+
+    return normalizeSubmissionRecord(result?.item || {
+        id,
+        status,
+        updatedAt: new Date().toISOString()
+    });
 }
 
 async function listContactSubmissions(options = {}) {
@@ -251,6 +395,7 @@ async function listContactSubmissions(options = {}) {
             }
         })
         .filter(Boolean)
+        .map((record) => normalizeSubmissionRecord(record))
         .sort((left, right) => {
             const leftTime = Date.parse(left.createdAt || "");
             const rightTime = Date.parse(right.createdAt || "");
@@ -265,6 +410,31 @@ async function listContactSubmissions(options = {}) {
     };
 }
 
+async function updateContactSubmissionStatus(id, status, options = {}) {
+    const normalizedId = normalizeString(id);
+    const normalizedStatus = normalizeSubmissionStatus(status);
+    const webhookUrl = getConfiguredWebhookUrl(options);
+
+    if (!normalizedId) {
+        throw createSubmissionStatusError("缺少提交 ID，无法更新状态。");
+    }
+
+    if (!normalizedStatus) {
+        throw createSubmissionStatusError(`状态无效，请使用：${allowedSubmissionStatuses.join(" / ")}`);
+    }
+
+    if (webhookUrl) {
+        return updateSubmissionStatusInWebhook(normalizedId, normalizedStatus, webhookUrl);
+    }
+
+    const storageDir = options.storageDir;
+    if (!storageDir) {
+        throw createStorageError("当前环境没有可用的表单存储目标。");
+    }
+
+    return updateSubmissionStatusInFile(normalizedId, normalizedStatus, storageDir);
+}
+
 async function submitContact(payload, options = {}) {
     const normalizedPayload = normalizePayload(payload);
     const validation = validatePayload(normalizedPayload);
@@ -276,7 +446,9 @@ async function submitContact(payload, options = {}) {
     const record = {
         id: randomUUID(),
         createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         source: normalizeString(options.source) || "website",
+        status: defaultSubmissionStatus,
         summary: buildProjectSummary(normalizedPayload),
         ...normalizedPayload,
         meta: sanitizeRequestMeta(options.requestMeta)
@@ -291,9 +463,12 @@ async function submitContact(payload, options = {}) {
 }
 
 module.exports = {
+    allowedSubmissionStatuses,
     buildProjectSummary,
+    defaultSubmissionStatus,
     getConfiguredWebhookUrl,
     listContactSubmissions,
     normalizePayload,
-    submitContact
+    submitContact,
+    updateContactSubmissionStatus
 };

@@ -1,4 +1,4 @@
-const { listContactSubmissions, submitContact } = require("./contact-service");
+const { listContactSubmissions, submitContact, updateContactSubmissionStatus } = require("./contact-service");
 
 function sendJson(res, statusCode, payload) {
     res.statusCode = statusCode;
@@ -156,6 +156,26 @@ function mapError(error) {
         };
     }
 
+    if (error?.code === "SUBMISSION_STATUS_INVALID") {
+        return {
+            statusCode: 400,
+            payload: {
+                ok: false,
+                message: error.message
+            }
+        };
+    }
+
+    if (error?.code === "SUBMISSION_NOT_FOUND") {
+        return {
+            statusCode: 404,
+            payload: {
+                ok: false,
+                message: error.message
+            }
+        };
+    }
+
     if (error?.code === "CONTACT_STORAGE_UNAVAILABLE") {
         return {
             statusCode: 503,
@@ -226,29 +246,41 @@ async function handleContactRequest(req, res, options = {}) {
 }
 
 async function handleSubmissionsRequest(req, res, options = {}) {
-    if (req.method !== "GET") {
-        res.setHeader("Allow", "GET");
+    if (req.method !== "GET" && req.method !== "POST") {
+        res.setHeader("Allow", "GET, POST");
         return sendJson(res, 405, {
             ok: false,
-            message: "只支持 GET 读取。"
+            message: "只支持 GET 读取和 POST 更新。"
         });
     }
 
     try {
         const access = ensureAdminAccess(req);
-        const requestUrl = new URL(req.url || "/", `http://${req.headers.host || "127.0.0.1"}`);
-        const limit = requestUrl.searchParams.get("limit");
-        const result = await listContactSubmissions({
-            ...options,
-            limit
-        });
+        if (req.method === "GET") {
+            const requestUrl = new URL(req.url || "/", `http://${req.headers.host || "127.0.0.1"}`);
+            const limit = requestUrl.searchParams.get("limit");
+            const result = await listContactSubmissions({
+                ...options,
+                limit
+            });
+
+            return sendJson(res, 200, {
+                ok: true,
+                items: result.items,
+                count: result.items.length,
+                storageMode: result.storageMode,
+                storageAvailable: result.storageAvailable,
+                accessMode: access.accessMode
+            });
+        }
+
+        const payload = await readJsonBody(req);
+        const updatedItem = await updateContactSubmissionStatus(payload.id, payload.status, options);
 
         return sendJson(res, 200, {
             ok: true,
-            items: result.items,
-            count: result.items.length,
-            storageMode: result.storageMode,
-            storageAvailable: result.storageAvailable,
+            message: "提交状态已更新。",
+            item: updatedItem,
             accessMode: access.accessMode
         });
     } catch (error) {

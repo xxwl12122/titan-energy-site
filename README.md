@@ -95,10 +95,10 @@
 | `assets/scripts/main.js` | 搜索、滚动、主题、表单、动态摘要、状态同步 |
 | `server.js` | 本地 Node 服务，负责静态资源、`/api/contact` 和 `/api/submissions` |
 | `api/contact.js` | Vercel Serverless 表单接口入口 |
-| `api/submissions.js` | 提交记录读取接口，可供管理页调用 |
+| `api/submissions.js` | 提交记录读取/状态更新接口，可供管理页调用 |
 | `backend/contact-service.js` | 表单校验、摘要生成和存储/转发逻辑 |
 | `backend/contact-api.js` | 通用接口处理，供本地服务和 Vercel 复用 |
-| `admin/` | 简单后台页面，用于查看最近提交记录 |
+| `admin/` | 简单后台页面，用于查看、筛选、导出并更新提交状态 |
 | `assets/images/` | 产品图、场景图、分享图和 README 预览图 |
 | `404.html` | 独立 404 页面 |
 | `vercel.json` | Vercel 部署配置 |
@@ -160,6 +160,7 @@ npm start
 - 如果部署环境只有静态托管能力，前端会自动回退到邮件草稿，不会让表单“点了没反应”
 - 本地管理页地址是 [http://127.0.0.1:4173/admin](http://127.0.0.1:4173/admin)
 - 线上如果要查看提交记录，建议配置环境变量 `ADMIN_TOKEN`，然后在后台页输入口令
+- 后台现在支持按状态筛选、修改 `新提交 / 已联系 / 跟进中 / 已完成 / 无效线索`，也可以导出当前筛选结果为 CSV
 
 ### 线上推荐环境变量
 
@@ -202,7 +203,7 @@ flowchart LR
 - 项目已绑定 Vercel
 - 推送到 `main` 后会自动更新生产环境
 - `/api/contact` 可作为站点表单接口
-- `/api/submissions` 可作为后台读取接口，建议配合 `ADMIN_TOKEN` 使用
+- `/api/submissions` 可作为后台读取和状态更新接口，建议配合 `ADMIN_TOKEN` 使用
 - 也可以本地直接执行：
 
 ```bash

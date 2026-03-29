@@ -53,9 +53,22 @@
 
         <section class="workspace">
             <aside class="list-panel">
-                <div class="panel-head">
-                    <strong>提交列表</strong>
-                    <input id="searchInput" type="search" placeholder="搜索联系人、设备类型、备注">
+                <div class="panel-head panel-head-stack">
+                    <div class="panel-head-row">
+                        <strong>提交列表</strong>
+                        <button id="exportButton" class="ghost-button" type="button">导出 CSV</button>
+                    </div>
+                    <div class="panel-filter-row">
+                        <input id="searchInput" type="search" placeholder="搜索联系人、设备类型、备注">
+                        <select id="statusFilter" aria-label="按状态筛选">
+                            <option value="">全部状态</option>
+                            <option value="新提交">新提交</option>
+                            <option value="已联系">已联系</option>
+                            <option value="跟进中">跟进中</option>
+                            <option value="已完成">已完成</option>
+                            <option value="无效线索">无效线索</option>
+                        </select>
+                    </div>
                 </div>
                 <div id="submissionList" class="submission-list">
                     <div class="empty-state">正在加载提交记录...</div>

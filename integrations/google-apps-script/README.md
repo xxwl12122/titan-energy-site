@@ -9,6 +9,7 @@
 - 网站表单提交后自动进表格
 - 收到新提交时自动发内部通知邮件
 - 如果联系人填的是邮箱，可自动回一封确认邮件
+- 后台可直接按状态筛选，并把状态改回 Google Sheets
 - 不需要自己买数据库
 
 ## 使用步骤
@@ -46,6 +47,15 @@ https://script.google.com/macros/s/你的部署ID/exec?token=你自己设的随�
 
 配置完成后，网站的 `/api/contact` 就会把表单转发到 Google Sheets。
 
+## 这份脚本现在额外支持什么
+
+- `GET?action=list`
+  - 让网站后台 `/admin` 读取最近提交记录
+- `POST?action=updateStatus`
+  - 让后台修改 `新提交 / 已联系 / 跟进中 / 已完成 / 无效线索`
+- 自动补齐 `status` 和 `updatedAt` 两列
+  - 旧表格第一次跑新版脚本时，也会自动补上
+
 ## 邮件通知怎么工作
 
 - `notificationRecipients`
@@ -66,6 +76,7 @@ https://script.google.com/macros/s/你的部署ID/exec?token=你自己设的随�
 需要把这份代码重新部署成最新版，因为它现在同时支持：
 
 - `POST`：网站提交表单时写入 Google Sheets
+- `POST?action=updateStatus`：网站后台回写跟进状态
 - `GET?action=list`：网站后台读取最近提交记录
 
 更新代码后，请重新执行一次：
@@ -79,4 +90,4 @@ https://script.google.com/macros/s/你的部署ID/exec?token=你自己设的随�
 
 - `token` 不要用简单字符串
 - 表格第一行会自动创建标题
-- 如果后面你想加邮件提醒、自动回复，也可以继续在 Apps Script 里扩展
+- 如果你已经部署过旧版脚本，换成新版后记得重新部署一次 Web App
