@@ -8,10 +8,10 @@
     :root {
       color-scheme: dark;
       --bg: #071019;
-      --panel: rgba(19, 25, 35, 0.9);
+      --panel: rgba(14, 19, 27, 0.86);
       --line: rgba(255, 255, 255, 0.08);
       --text: #f4f7fb;
-      --muted: #9aa7b5;
+      --muted: #96a3b3;
       --accent: #ef8753;
       --brand: #4d90d2;
     }
@@ -24,30 +24,30 @@
     body {
       margin: 0;
       width: 1280px;
-      height: 720px;
+      height: 560px;
       overflow: hidden;
       font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(239, 135, 83, 0.24), transparent 28%),
-        radial-gradient(circle at top right, rgba(77, 144, 210, 0.16), transparent 26%),
+        radial-gradient(circle at top left, rgba(239, 135, 83, 0.22), transparent 26%),
+        radial-gradient(circle at top right, rgba(77, 144, 210, 0.14), transparent 24%),
         linear-gradient(180deg, #081018, #05080d 100%);
       color: var(--text);
     }
 
     body {
-      padding: 42px;
+      padding: 32px;
     }
 
     .frame {
       position: relative;
       height: 100%;
-      border-radius: 34px;
+      overflow: hidden;
+      border-radius: 30px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 26%),
-        rgba(9, 14, 21, 0.9);
-      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.32);
-      overflow: hidden;
+        linear-gradient(135deg, rgba(255, 255, 255, 0.035), transparent 28%),
+        rgba(8, 13, 19, 0.92);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.28);
     }
 
     .frame::before {
@@ -55,10 +55,10 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
       background-size: 72px 72px;
-      opacity: 0.46;
+      opacity: 0.42;
       pointer-events: none;
     }
 
@@ -66,17 +66,17 @@
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: 420px minmax(0, 1fr);
-      gap: 24px;
+      grid-template-columns: 388px minmax(0, 1fr);
+      gap: 20px;
       height: 100%;
-      padding: 28px;
+      padding: 24px;
     }
 
-    .intro {
+    .copy {
       display: grid;
-      align-content: space-between;
-      gap: 20px;
-      padding: 18px 8px 18px 6px;
+      align-content: center;
+      gap: 16px;
+      padding: 8px 4px 8px 2px;
     }
 
     .eyebrow {
@@ -88,7 +88,7 @@
       border-radius: 999px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       background: rgba(255, 255, 255, 0.05);
-      color: rgba(244, 247, 251, 0.72);
+      color: rgba(244, 247, 251, 0.7);
       font-size: 13px;
       font-weight: 700;
       letter-spacing: 0.08em;
@@ -96,9 +96,9 @@
     }
 
     h1 {
-      margin: 16px 0 0;
-      font-size: 68px;
-      line-height: 0.96;
+      margin: 0;
+      font-size: 64px;
+      line-height: 0.95;
       letter-spacing: -0.05em;
     }
 
@@ -107,180 +107,137 @@
     }
 
     .lede {
-      margin: 18px 0 0;
-      max-width: 24ch;
+      margin: 0;
+      max-width: 22ch;
       color: var(--muted);
-      font-size: 20px;
-      line-height: 1.7;
+      font-size: 18px;
+      line-height: 1.72;
     }
 
-    .metric-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 2px;
     }
 
-    .metric {
-      padding: 16px 18px;
-      border-radius: 22px;
-      border: 1px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.025)),
-        rgba(15, 20, 28, 0.76);
-    }
-
-    .metric strong {
-      display: block;
-      font-size: 28px;
-      line-height: 1;
-    }
-
-    .metric span {
-      display: block;
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: minmax(0, 1.28fr) minmax(280px, 0.72fr);
-      gap: 18px;
+    .visual {
       min-width: 0;
     }
 
-    .gallery-main,
-    .gallery-side article {
+    .hero-card {
       position: relative;
       overflow: hidden;
+      height: 100%;
       border-radius: 28px;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(14, 19, 27, 0.8);
-      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.24);
+      background: rgba(14, 19, 27, 0.82);
+      box-shadow: 0 24px 52px rgba(0, 0, 0, 0.24);
     }
 
-    .gallery-main {
-      min-height: 620px;
-    }
-
-    .gallery-side {
-      display: grid;
-      gap: 18px;
-    }
-
-    .gallery-side article {
-      min-height: 301px;
-    }
-
-    img {
+    .hero-card img {
       display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center top;
     }
 
-    .overlay {
+    .hero-card::after {
+      content: "";
       position: absolute;
-      inset: auto 18px 18px 18px;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(8, 12, 18, 0.04), rgba(8, 12, 18, 0.08) 38%, rgba(8, 12, 18, 0.82)),
+        radial-gradient(circle at 18% 22%, rgba(255, 186, 131, 0.16), transparent 26%);
+      pointer-events: none;
+    }
+
+    .hero-copy {
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      bottom: 18px;
+      z-index: 1;
+      display: grid;
+      gap: 8px;
       padding: 16px 18px;
       border-radius: 22px;
-      background: linear-gradient(180deg, rgba(9, 13, 19, 0.42), rgba(9, 13, 19, 0.88));
+      background: linear-gradient(180deg, rgba(9, 13, 19, 0.36), rgba(9, 13, 19, 0.82));
       backdrop-filter: blur(12px);
     }
 
-    .overlay span {
+    .hero-copy span {
       display: inline-flex;
       align-items: center;
       min-height: 28px;
+      width: fit-content;
       padding: 0 11px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.08);
       color: rgba(244, 247, 251, 0.72);
       font-size: 12px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
-    .overlay strong {
+    .hero-copy strong {
       display: block;
-      margin-top: 12px;
-      font-size: 28px;
-      line-height: 1.15;
-      letter-spacing: -0.03em;
+      font-size: 24px;
+      line-height: 1.14;
+      letter-spacing: -0.04em;
     }
 
-    .overlay p {
-      margin: 10px 0 0;
+    .hero-copy p {
+      margin: 0;
+      max-width: 38ch;
       color: rgba(244, 247, 251, 0.72);
+      font-size: 13px;
+      line-height: 1.58;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 0 15px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(244, 247, 251, 0.86);
       font-size: 14px;
-      line-height: 1.6;
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
   <div class="frame">
     <div class="shell">
-      <section class="intro">
-        <div>
-          <span class="eyebrow">Repository Showcase</span>
-          <h1>
-            泰坦供能
-            <span class="accent">项目展示页</span>
-          </h1>
-          <p class="lede">把品牌质感、页面节奏、案例表达和部署链路一起收进一个更像成品的 GitHub 首页。</p>
-        </div>
+      <section class="copy">
+        <span class="eyebrow">Repository Overview</span>
+        <h1>
+          泰坦供能
+          <span class="accent">项目主页</span>
+        </h1>
+        <p class="lede">把工业品牌气质、页面节奏、案例叙事和表单收口，压进一个更完整的单页展示站。</p>
 
-        <div class="metric-grid">
-          <article class="metric">
-            <strong>Single Page</strong>
-            <span>产品、参数、流程、案例、表单整页闭环</span>
-          </article>
-          <article class="metric">
-            <strong>Project Flow</strong>
-            <span>流程到沟通由同一套节奏系统串联</span>
-          </article>
-          <article class="metric">
-            <strong>Native Stack</strong>
-            <span>HTML、CSS、JavaScript 原生实现</span>
-          </article>
-          <article class="metric">
-            <strong>Dual Deploy</strong>
-            <span>Vercel 主站与 GitHub Pages 镜像同步</span>
-          </article>
+        <div class="pill-row">
+          <span class="pill">Single Page</span>
+          <span class="pill">Project Flow</span>
+          <span class="pill">Native Stack</span>
         </div>
       </section>
 
-      <section class="gallery">
-        <article class="gallery-main">
-          <img src="readme-hero.png" alt="首页主视觉">
-          <div class="overlay">
-            <span>Hero System</span>
-            <strong>更稳的能源底座，从首页第一屏就说清楚</strong>
-            <p>品牌语、主视觉、指标卡与行动路径在同一屏完成聚焦。</p>
+      <section class="visual">
+        <article class="hero-card">
+          <img src="share-cover.png" alt="项目品牌封面">
+          <div class="hero-copy">
+            <span>Hero Preview</span>
+            <strong>从首页第一屏开始，把“更稳的能源底座”讲清楚</strong>
+            <p>品牌语、主视觉、指标与行动按钮集中落位，让仓库首页也能一眼看出项目完成度。</p>
           </div>
         </article>
-
-        <div class="gallery-side">
-          <article>
-            <img src="readme-flow.png" alt="流程区块">
-            <div class="overlay">
-              <span>Flow Section</span>
-              <strong>让区块之间真的形成连续叙事</strong>
-              <p>不是每段单独成立，而是整页向下自然推进。</p>
-            </div>
-          </article>
-
-          <article>
-            <img src="readme-contact.png" alt="联系区块">
-            <div class="overlay">
-              <span>Conversion</span>
-              <strong>把前文的判断项真正收口到表单里</strong>
-              <p>联系模块不是结尾，而是前面全部信息的汇总入口。</p>
-            </div>
-          </article>
-        </div>
       </section>
     </div>
   </div>
