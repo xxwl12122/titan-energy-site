@@ -502,6 +502,24 @@
                                 <li>工作温区会直接影响低温表现和寿命预估</li>
                                 <li>维护周期和空间限制决定容量与封装策略</li>
                             </ul>
+                            <div class="summary-decision-grid">
+                                <article class="summary-decision-item">
+                                    <span>优先判断</span>
+                                    <strong>峰值电流还是待机时长</strong>
+                                    <p>先分清项目更怕瞬时掉压，还是更怕维护过于频繁。</p>
+                                </article>
+                                <article class="summary-decision-item">
+                                    <span>现场边界</span>
+                                    <strong>温区、体积和接口约束</strong>
+                                    <p>很多方案不是不能做，而是要先看结构和连接方式能不能接受。</p>
+                                </article>
+                                <article class="summary-decision-item">
+                                    <span>交付动作</span>
+                                    <strong>样品验证比口头选型更重要</strong>
+                                    <p>把真实负载、环境回看和维护动作一起验证，后面会更稳。</p>
+                                </article>
+                            </div>
+                            <p class="summary-note">如果你已经知道峰值电流、工作温区和维护周期，基本就能先判断该从哪一类系列开始看。</p>
                         </article>
 
                         <div class="spec-board reveal">
@@ -729,6 +747,20 @@
                     <div class="process-layout">
                         <figure class="process-visual reveal">
                             <img src="assets/images/process-delivery.jpg" srcset="assets/images/process-delivery-960.jpg 960w, assets/images/process-delivery.jpg 1600w" sizes="(max-width: 1080px) calc(100vw - 108px), 56vw" alt="电池项目从评估到验证的交付流程工作台" loading="lazy" decoding="async" width="1600" height="893">
+                            <div class="process-visual-notes" aria-label="流程视觉补充说明">
+                                <article>
+                                    <span>需求输入</span>
+                                    <strong>功耗模型 + 环境边界</strong>
+                                </article>
+                                <article>
+                                    <span>验证动作</span>
+                                    <strong>样品回看 + 异常记录</strong>
+                                </article>
+                                <article>
+                                    <span>交付结果</span>
+                                    <strong>规格冻结 + 批量切换</strong>
+                                </article>
+                            </div>
                             <figcaption class="process-caption">
                                 <span>项目推进可视化</span>
                                 <strong>需求确认、样品验证与量产导入在同一条流程里闭环推进。</strong>
@@ -790,7 +822,34 @@
                                         <p>明确规格、包装、防护与追溯要求，平滑完成批量切换。</p>
                                     </div>
                                 </article>
+                                <article class="timeline-item reveal">
+                                    <span>04</span>
+                                    <div>
+                                        <h3>上线回看</h3>
+                                        <p>把实际维护反馈、异常日志和寿命表现回收，给下一批优化留出窗口。</p>
+                                    </div>
+                                </article>
                             </div>
+                            <article class="process-support reveal">
+                                <div class="process-support-head">
+                                    <span>阶段交付包</span>
+                                    <strong>每推进一步，都应该带走可执行内容</strong>
+                                </div>
+                                <div class="process-support-grid">
+                                    <article>
+                                        <span>评估阶段</span>
+                                        <strong>需求清单 + 风险边界</strong>
+                                    </article>
+                                    <article>
+                                        <span>验证阶段</span>
+                                        <strong>样品重点 + 回看计划</strong>
+                                    </article>
+                                    <article>
+                                        <span>导入阶段</span>
+                                        <strong>规格冻结 + 切换节奏</strong>
+                                    </article>
+                                </div>
+                            </article>
                         </div>
                     </div>
                 </div>
@@ -963,6 +1022,40 @@
                                 <div class="proof-mini-tags">
                                     <span>耐温差</span>
                                     <span>离线部署</span>
+                                </div>
+                            </article>
+                            <article class="proof-card reveal">
+                                <div class="proof-cover proof-cover-compact">
+                                    <img src="assets/images/scene-iot.jpg" srcset="assets/images/scene-iot-960.jpg 960w, assets/images/scene-iot.jpg 1600w" sizes="(max-width: 640px) calc(100vw - 88px), (max-width: 1080px) calc(100vw - 108px), 34vw" alt="物联网监测网关案例封面图" loading="lazy" decoding="async" width="1600" height="893">
+                                    <div class="proof-cover-copy">
+                                        <span>Case File 04</span>
+                                        <strong>物联网监测网关</strong>
+                                        <p>先把唤醒频率、离线时长和通信峰值一起算清楚</p>
+                                    </div>
+                                </div>
+                                <div class="proof-card-body">
+                                    <p>这类项目通常更看重低功耗待机和短时通信峰值之间的平衡，不是一味堆容量。</p>
+                                </div>
+                                <div class="proof-mini-tags">
+                                    <span>低功耗待机</span>
+                                    <span>通信峰值</span>
+                                </div>
+                            </article>
+                            <article class="proof-card reveal">
+                                <div class="proof-cover proof-cover-compact">
+                                    <img src="assets/images/product-prime.jpg" alt="关键备电模块案例封面图" loading="lazy" decoding="async" width="1600" height="893">
+                                    <div class="proof-cover-copy">
+                                        <span>Case File 05</span>
+                                        <strong>关键备电模块</strong>
+                                        <p>把寿命、一致性和安全追溯一起纳入交付要求</p>
+                                    </div>
+                                </div>
+                                <div class="proof-card-body">
+                                    <p>更适合关键设备和应急备份场景，重点不是短期参数，而是长期可靠和维护可追溯。</p>
+                                </div>
+                                <div class="proof-mini-tags">
+                                    <span>长期备电</span>
+                                    <span>可追溯交付</span>
                                 </div>
                             </article>
                         </div>
