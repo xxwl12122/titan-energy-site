@@ -201,6 +201,10 @@ function getLimit(e) {
   return Math.min(parsed, 200);
 }
 
+function authorizeMailApp() {
+  return MailApp.getRemainingDailyQuota();
+}
+
 function sendSubmissionEmails(record) {
   const warnings = [];
   let remainingQuota = MailApp.getRemainingDailyQuota();
