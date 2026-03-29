@@ -7,13 +7,8 @@
   <img src="https://img.shields.io/badge/Mirror-GitHub%20Pages-1F6FEB?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Pages Badge">
 </p>
 
-<p align="center">
-  一个面向工业自动化、医疗检测、物联网终端与户外设备的工业级供能方案展示站点。
-</p>
-
-<p align="center">
-  这个项目不是“把内容放上去”的静态页，而是围绕品牌感、信息密度、项目推进节奏和表单转化一起搭出来的单页品牌站。
-</p>
+> 一个面向工业自动化、医疗检测、物联网终端与户外设备的工业级供能方案展示站点。  
+> 重点不只是“把页面做出来”，而是把品牌气质、区块节奏、案例叙事和表单转化一起收进一套完整表达。
 
 <p align="center">
   <a href="https://titan-energy-site.vercel.app"><strong>生产环境</strong></a>
@@ -24,8 +19,18 @@
 </p>
 
 <p align="center">
-  <img src="assets/images/share-cover.png" alt="泰坦供能封面预览" width="100%">
+  <img src="assets/images/readme-showcase.png" alt="泰坦供能 README 展示横幅" width="96%">
 </p>
+
+## 快速概览
+
+| 维度 | 内容 |
+| --- | --- |
+| 品牌名称 | `泰坦供能 / TITAN POWER SYSTEMS` |
+| 项目类型 | 工业级供能方案单页品牌站 |
+| 技术栈 | 原生 `HTML + CSS + JavaScript` |
+| 核心升级 | 统一中后段页面节奏、强化品牌命名、升级仓库首页展示 |
+| 线上访问 | Vercel 主站 + GitHub Pages 镜像 |
 
 ## 项目定位
 
@@ -115,6 +120,7 @@
 ├─ assets
 │  ├─ images
 │  │  ├─ share-cover.png
+│  │  ├─ readme-showcase.png
 │  │  ├─ readme-hero.png
 │  │  ├─ readme-flow.png
 │  │  └─ readme-contact.png
@@ -178,4 +184,3 @@ vercel --prod
 - 补一份品牌规范页，单独说明色板、按钮、间距、标题体系和卡片系统
 - 给 README 增加更多局部模块截图，例如参数区、案例区和移动端效果
 - 如果后面要继续演进，可以再补 CMS 化或内容配置化能力
-
