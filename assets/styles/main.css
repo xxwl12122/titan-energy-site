@@ -1211,6 +1211,87 @@ body[data-theme="light"] .section-rail-nav a.is-current {
   letter-spacing: 0.06em;
 }
 
+.hero-intake-board {
+  display: grid;
+  gap: 14px;
+  padding: 18px 20px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background:
+    radial-gradient(circle at top right, rgba(77, 144, 210, 0.14), transparent 28%),
+    rgba(255, 255, 255, 0.04);
+}
+
+.hero-intake-head {
+  display: grid;
+  gap: 10px;
+}
+
+.hero-intake-head span,
+.hero-intake-grid span {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(236, 241, 247, 0.72);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-intake-head strong {
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  line-height: 1.42;
+}
+
+.hero-intake-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.hero-intake-grid article {
+  display: grid;
+  gap: 8px;
+  padding: 12px 12px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.hero-intake-grid p {
+  margin: 0;
+  color: rgba(236, 241, 247, 0.72);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+body[data-theme="light"] .hero-intake-board {
+  border-color: var(--line);
+  background:
+    radial-gradient(circle at top right, rgba(15, 63, 103, 0.08), transparent 28%),
+    rgba(255, 255, 255, 0.42);
+}
+
+body[data-theme="light"] .hero-intake-head span,
+body[data-theme="light"] .hero-intake-grid article,
+body[data-theme="light"] .hero-intake-grid span {
+  border-color: var(--line);
+  background: rgba(15, 63, 103, 0.05);
+}
+
+body[data-theme="light"] .hero-intake-head span,
+body[data-theme="light"] .hero-intake-grid span,
+body[data-theme="light"] .hero-intake-grid p {
+  color: var(--muted);
+}
+
 .signal-bars {
   margin: 28px 0 20px;
   display: grid;
@@ -6420,6 +6501,10 @@ body[data-theme="light"] .search-route-card {
     grid-template-columns: 1fr;
   }
 
+  .hero-intake-grid {
+    grid-template-columns: 1fr;
+  }
+
   .technology-panel {
     position: static;
   }
@@ -6642,6 +6727,18 @@ body[data-theme="light"] .search-route-card {
 
   .hero-proofband {
     padding: 12px 14px;
+  }
+
+  .hero-intake-board {
+    padding: 16px;
+  }
+
+  .hero-intake-head strong {
+    font-size: 0.94rem;
+  }
+
+  .hero-intake-grid p {
+    font-size: 0.82rem;
   }
 
   .technology-visual {
