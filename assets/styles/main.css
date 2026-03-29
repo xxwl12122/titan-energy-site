@@ -5161,12 +5161,106 @@ body[data-theme="light"] .back-to-top {
   line-height: 1.6;
 }
 
+.cta-handoff-board {
+  display: grid;
+  gap: 18px;
+  padding: 24px;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    radial-gradient(circle at top right, rgba(255, 163, 109, 0.14), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02)),
+    rgba(12, 16, 22, 0.64);
+  box-shadow: var(--shadow-soft);
+}
+
+.cta-handoff-head {
+  display: grid;
+  gap: 10px;
+}
+
+.cta-handoff-head span,
+.cta-handoff-item span,
+.cta-handoff-tags span {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(236, 241, 247, 0.72);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cta-handoff-head strong,
+.cta-handoff-item strong {
+  font-family: var(--font-heading);
+}
+
+.cta-handoff-head strong {
+  font-size: 1.18rem;
+  line-height: 1.42;
+}
+
+.cta-handoff-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.cta-handoff-item {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 18px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cta-handoff-item strong {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.cta-handoff-item p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.cta-handoff-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 body[data-theme="light"] .cta-prep,
-body[data-theme="light"] .cta-item-highlight {
+body[data-theme="light"] .cta-item-highlight,
+body[data-theme="light"] .cta-handoff-board {
   border-color: var(--line);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.06)),
     var(--panel);
+}
+
+body[data-theme="light"] .cta-handoff-head span,
+body[data-theme="light"] .cta-handoff-item,
+body[data-theme="light"] .cta-handoff-item span,
+body[data-theme="light"] .cta-handoff-tags span {
+  border-color: var(--line);
+  background: rgba(15, 63, 103, 0.05);
+}
+
+body[data-theme="light"] .cta-handoff-head span,
+body[data-theme="light"] .cta-handoff-item span,
+body[data-theme="light"] .cta-handoff-tags span {
+  color: var(--muted);
 }
 
 .wide {
@@ -5872,6 +5966,10 @@ body[data-theme="light"] .search-route-card {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .cta-handoff-grid {
+    grid-template-columns: 1fr;
+  }
+
   .footer-copy {
     text-align: left;
   }
@@ -6469,6 +6567,34 @@ body[data-theme="light"] .search-route-card {
 
   .project-form-actions {
     flex-direction: column;
+  }
+
+  .cta-handoff-board {
+    padding: 22px;
+  }
+
+  .cta-handoff-head strong {
+    font-size: 1.08rem;
+  }
+
+  .cta-handoff-head span,
+  .cta-handoff-item span,
+  .cta-handoff-tags span {
+    min-height: 30px;
+    padding: 0 12px;
+    font-size: 0.74rem;
+  }
+
+  .cta-handoff-item {
+    padding: 16px;
+  }
+
+  .cta-handoff-item strong {
+    font-size: 0.96rem;
+  }
+
+  .cta-handoff-item p {
+    font-size: 0.9rem;
   }
 
   .project-form-meta {
