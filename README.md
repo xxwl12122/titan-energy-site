@@ -170,6 +170,19 @@ npm start
   - 用途：让线上 `/api/submissions` 和 `/admin` 后台可以安全查看记录
   - 不配置时：后台接口默认只允许本机访问，本地调试没问题，线上不会直接裸露
 
+### 免费优先方案
+
+如果你想先用免费方案，最推荐的是 `Google Sheets + Apps Script Web App`：
+
+- 你可以把 Apps Script 部署成 Web App，拿到一个真实 webhook URL
+- 再把这个 URL 配进 `CONTACT_WEBHOOK_URL`
+- 提交记录会直接进 Google Sheets
+
+仓库里已经放好了模板：
+
+- `integrations/google-apps-script/Code.gs`
+- `integrations/google-apps-script/README.md`
+
 ## 部署链路
 
 ```mermaid
