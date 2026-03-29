@@ -464,6 +464,17 @@ body[data-theme="light"] .topbar .desktop-nav a.is-current {
   transform: translate3d(var(--magnetic-x, 0px), calc(var(--magnetic-y, 0px) + 1px), 0) scale(0.992);
 }
 
+.nav-cta:disabled,
+.primary-button:disabled,
+.secondary-button:disabled,
+.solid-link:disabled,
+.search-submit:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  box-shadow: none;
+  transform: translate3d(0, 0, 0);
+}
+
 .menu-toggle {
   display: none;
   flex-direction: column;

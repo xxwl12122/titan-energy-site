@@ -1066,7 +1066,7 @@
                             </div>
                         </div>
                     </div>
-                    <form class="project-form reveal" id="projectForm">
+                    <form class="project-form reveal" id="projectForm" action="/api/contact" method="post">
                         <div class="project-form-head">
                             <span>Project Intake</span>
                             <strong>先把项目输入给全，我们再给可执行建议</strong>
@@ -1174,7 +1174,7 @@
                             </div>
                         </section>
                         <div class="project-form-actions">
-                            <button class="primary-button" type="submit">生成邮件草稿</button>
+                            <button class="primary-button" type="submit">提交项目需求</button>
                             <button class="secondary-button project-copy-button" type="button">复制项目摘要</button>
                         </div>
                         <div class="project-form-meta">
@@ -1183,7 +1183,7 @@
                             <span>工作日 09:00 - 18:00</span>
                             <button class="project-draft-clear" type="button">清空草稿</button>
                         </div>
-                        <p class="project-form-note">输入内容会临时保存在当前浏览器，方便你中途离开后继续填写；提交后会打开邮件客户端，并自动填好主题和项目摘要。</p>
+                        <p class="project-form-note">输入内容会临时保存在当前浏览器，方便你中途离开后继续填写；提交时会优先发送到后台，如果当前环境只支持静态页面，则会自动回退到邮件草稿。</p>
                         <p class="project-form-status" id="projectFormStatus" aria-live="polite"></p>
                         <p class="project-form-feedback" id="projectFormFeedback" aria-live="polite"></p>
                     </form>

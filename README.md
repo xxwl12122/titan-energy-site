@@ -1,7 +1,7 @@
 # 泰坦供能
 
 工业级供能方案单页品牌站，面向工业自动化、医疗检测、物联网终端与户外设备。  
-使用原生 `HTML + CSS + JavaScript` 构建，重点打磨品牌质感、区块节奏、案例叙事和表单收口。
+前端使用原生 `HTML + CSS + JavaScript` 构建，并补充了一个轻量 `Node.js` 表单后端，重点打磨品牌质感、区块节奏、案例叙事和表单收口。
 
 <p align="center">
   <a href="https://titan-energy-site.vercel.app"><strong>生产环境</strong></a>
@@ -19,7 +19,7 @@
 | --- | --- |
 | 品牌名称 | `泰坦供能 / TITAN POWER SYSTEMS` |
 | 项目类型 | 工业级供能方案单页品牌站 |
-| 技术栈 | 原生 `HTML + CSS + JavaScript` |
+| 技术栈 | 原生 `HTML + CSS + JavaScript` + 轻量 `Node.js` 后端 |
 | 核心升级 | 统一中后段页面节奏、强化品牌命名、升级仓库首页展示 |
 | 线上访问 | Vercel 主站 + GitHub Pages 镜像 |
 
@@ -46,7 +46,7 @@
 | 视觉语言 | 深色工业底、橙蓝对比、高密度卡片、玻璃感面板和渐变光带 |
 | 页面节奏 | `流程 → 结果 → 拆解 → 沟通` 通过统一的 `Project Flow` 阶段条串联 |
 | 信息结构 | 产品矩阵、参数概览、技术、场景、流程、案例、表单全部在单页内闭环 |
-| 表单体验 | 自定义下拉、项目摘要生成、输入完成度、邮件草稿复制 |
+| 表单体验 | 自定义下拉、项目摘要生成、输入完成度、后台提交、邮件草稿回退 |
 | 双部署 | Vercel 主站 + GitHub Pages 镜像页 |
 
 ## 页面模块拆解
@@ -93,6 +93,12 @@
 | `index.html` | 页面结构、SEO 元信息、主要文案和区块顺序 |
 | `assets/styles/main.css` | 全站视觉系统、组件样式、响应式和动画规则 |
 | `assets/scripts/main.js` | 搜索、滚动、主题、表单、动态摘要、状态同步 |
+| `server.js` | 本地 Node 服务，负责静态资源、`/api/contact` 和 `/api/submissions` |
+| `api/contact.js` | Vercel Serverless 表单接口入口 |
+| `api/submissions.js` | 提交记录读取接口，可供管理页调用 |
+| `backend/contact-service.js` | 表单校验、摘要生成和存储/转发逻辑 |
+| `backend/contact-api.js` | 通用接口处理，供本地服务和 Vercel 复用 |
+| `admin/` | 简单后台页面，用于查看最近提交记录 |
 | `assets/images/` | 产品图、场景图、分享图和 README 预览图 |
 | `404.html` | 独立 404 页面 |
 | `vercel.json` | Vercel 部署配置 |
@@ -105,9 +111,21 @@
 .
 ├─ index.html
 ├─ 404.html
+├─ package.json
+├─ server.js
 ├─ robots.txt
 ├─ sitemap.xml
 ├─ vercel.json
+├─ api
+│  ├─ contact.js
+│  └─ submissions.js
+├─ admin
+│  ├─ app.js
+│  ├─ index.html
+│  └─ style.css
+├─ backend
+│  ├─ contact-api.js
+│  └─ contact-service.js
 ├─ assets
 │  ├─ images
 │  │  ├─ share-cover.png
@@ -127,13 +145,21 @@
 
 ## 本地预览
 
-这个项目没有打包步骤，直接作为静态站点运行即可。
+项目依然没有打包步骤，但如果你希望联系表单真的走后端，建议直接启动 Node 服务。
 
 ```bash
-python -m http.server 4173
+npm start
 ```
 
 启动后访问 [http://127.0.0.1:4173](http://127.0.0.1:4173)。
+
+### 表单数据存储
+
+- 本地 `Node` 服务会把提交结果追加到 `data/contact-submissions.ndjson`
+- 如果配置了环境变量 `CONTACT_WEBHOOK_URL`，后端会优先把表单转发到这个地址
+- 如果部署环境只有静态托管能力，前端会自动回退到邮件草稿，不会让表单“点了没反应”
+- 本地管理页地址是 [http://127.0.0.1:4173/admin](http://127.0.0.1:4173/admin)
+- 线上如果要查看提交记录，建议配置环境变量 `ADMIN_TOKEN`，然后在后台页输入口令
 
 ## 部署链路
 
@@ -144,7 +170,7 @@ flowchart LR
   C --> D["GitHub Actions<br/>Deploy GitHub Pages"]
   C --> E["Vercel Git Integration"]
   D --> F["GitHub Pages"]
-  E --> G["Vercel Production"]
+  E --> G["Vercel Production + API"]
 ```
 
 ## 自动部署说明
@@ -153,6 +179,8 @@ flowchart LR
 
 - 项目已绑定 Vercel
 - 推送到 `main` 后会自动更新生产环境
+- `/api/contact` 可作为站点表单接口
+- `/api/submissions` 可作为后台读取接口，建议配合 `ADMIN_TOKEN` 使用
 - 也可以本地直接执行：
 
 ```bash
@@ -167,6 +195,8 @@ vercel --prod
 2. 组装静态发布目录 `dist`
 3. 上传 Pages Artifact
 4. 发布到 GitHub Pages
+
+GitHub Pages 只承载静态页面，因此镜像站会自动回退到邮件草稿，不承担后端接口。
 
 ## 当前仓库适合继续往上做的方向
 

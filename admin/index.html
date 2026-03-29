@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>泰坦供能表单后台</title>
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="admin-shell">
+        <header class="hero">
+            <div>
+                <p class="eyebrow">Titan Intake Admin</p>
+                <h1>项目咨询后台</h1>
+                <p class="hero-copy">这里会读取网站表单提交记录。本地启动 `npm start` 后可直接访问；如果要在线上查看，请配置 `ADMIN_TOKEN`。</p>
+            </div>
+            <div class="hero-actions">
+                <button id="refreshButton" class="primary-button" type="button">刷新记录</button>
+                <a class="secondary-button" href="/">返回官网</a>
+            </div>
+        </header>
+
+        <section class="status-grid">
+            <article class="status-card">
+                <span>当前状态</span>
+                <strong id="statusValue">连接中...</strong>
+                <p id="statusHint">正在读取后台记录。</p>
+            </article>
+            <article class="status-card">
+                <span>提交数量</span>
+                <strong id="countValue">0</strong>
+                <p>当前列表最多显示最近 100 条。</p>
+            </article>
+            <article class="status-card">
+                <span>最近提交</span>
+                <strong id="latestValue">暂无</strong>
+                <p id="storageHint">默认读取本地文件存储。</p>
+            </article>
+        </section>
+
+        <section class="token-panel" id="tokenPanel">
+            <div class="token-copy">
+                <strong>管理口令</strong>
+                <p>如果你在线上部署了后台并配置了 `ADMIN_TOKEN`，在这里输入口令后即可查看记录。本地直接访问一般不需要填写。</p>
+            </div>
+            <div class="token-actions">
+                <input id="tokenInput" type="password" placeholder="输入 ADMIN_TOKEN">
+                <button id="saveTokenButton" class="secondary-button" type="button">保存口令</button>
+                <button id="clearTokenButton" class="ghost-button" type="button">清除口令</button>
+            </div>
+        </section>
+
+        <section class="workspace">
+            <aside class="list-panel">
+                <div class="panel-head">
+                    <strong>提交列表</strong>
+                    <input id="searchInput" type="search" placeholder="搜索联系人、设备类型、备注">
+                </div>
+                <div id="submissionList" class="submission-list">
+                    <div class="empty-state">正在加载提交记录...</div>
+                </div>
+            </aside>
+
+            <section class="detail-panel">
+                <div class="panel-head">
+                    <strong>提交详情</strong>
+                    <button id="copyButton" class="ghost-button" type="button">复制详情</button>
+                </div>
+                <div id="detailCard" class="detail-card">
+                    <div class="empty-state">选择左侧一条提交后，这里会显示完整信息。</div>
+                </div>
+            </section>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

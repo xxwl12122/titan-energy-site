@@ -32,6 +32,7 @@ const breatheTargets = document.querySelectorAll(".metric-card, .technology-pane
 const projectForm = document.getElementById("projectForm");
 const projectFormFeedback = document.getElementById("projectFormFeedback");
 const projectFormStatus = document.getElementById("projectFormStatus");
+const projectSubmitButton = projectForm?.querySelector('button[type="submit"]');
 const projectCopyButton = document.querySelector(".project-copy-button");
 const projectDraftClearButton = document.querySelector(".project-draft-clear");
 const customSelects = document.querySelectorAll("[data-custom-select]");
@@ -58,6 +59,7 @@ let searchReturnFocusTarget = null;
 let mobileReturnFocusTarget = null;
 let projectStatusTimer = null;
 let searchFlashTimer = 0;
+let projectFormSubmitting = false;
 
 body.classList.toggle("motion-lite", motionLite);
 
@@ -734,6 +736,17 @@ function setProjectStatus(message, timeoutMs = 2200) {
     }
 }
 
+function setProjectSubmitState(submitting) {
+    if (!projectSubmitButton) {
+        return;
+    }
+
+    projectFormSubmitting = submitting;
+    projectSubmitButton.disabled = submitting;
+    projectSubmitButton.setAttribute("aria-busy", submitting ? "true" : "false");
+    projectSubmitButton.textContent = submitting ? "正在提交..." : "提交项目需求";
+}
+
 function buildProjectDraft(form) {
     const formData = new FormData(form);
     return {
@@ -948,7 +961,7 @@ function updateProjectPreview() {
 
     if (filledFields >= 6) {
         actionLabel = "信息已接近完整";
-        actionText = "这份输入已经足够整理成首轮建议，适合直接生成邮件草稿发起沟通。";
+        actionText = "这份输入已经足够整理成首轮建议，适合直接提交项目需求发起沟通。";
     } else if (deviceType && projectStage && contact) {
         actionText = `${stageProfile.actionText} 联系方式已补齐，可以直接进入方案沟通。`;
     }
@@ -1013,6 +1026,41 @@ function buildProjectSummary(form) {
     return `泰坦供能项目咨询\n\n${summary}\n`;
 }
 
+function openProjectMailDraft(form) {
+    const summary = buildProjectSummary(form);
+    const subjectBase = form.querySelector('[name="deviceType"]')?.value || "工业供能方案";
+    const subject = encodeURIComponent(`[项目咨询] ${subjectBase}`);
+    const bodyText = encodeURIComponent(summary);
+
+    window.location.href = `mailto:sales@titanenergy.cn?subject=${subject}&body=${bodyText}`;
+}
+
+async function submitProjectRequest(payload) {
+    const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    });
+
+    let result = {};
+
+    try {
+        result = await response.json();
+    } catch (error) {
+        // Ignore JSON parsing failures and fall back to a generic message.
+    }
+
+    if (!response.ok) {
+        const requestError = new Error(result.message || "提交失败，请稍后重试。");
+        requestError.status = response.status;
+        throw requestError;
+    }
+
+    return result;
+}
+
 async function copyText(text) {
     if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(text);
@@ -1031,7 +1079,7 @@ async function copyText(text) {
     return copied;
 }
 
-projectForm?.addEventListener("submit", (event) => {
+projectForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const validation = validateProjectForm();
@@ -1042,15 +1090,33 @@ projectForm?.addEventListener("submit", (event) => {
         return;
     }
 
-    const summary = buildProjectSummary(projectForm);
-    const subjectBase = projectForm.querySelector('[name="deviceType"]')?.value || "工业供能方案";
-    const subject = encodeURIComponent(`[项目咨询] ${subjectBase}`);
-    const bodyText = encodeURIComponent(summary);
+    if (projectFormSubmitting) {
+        return;
+    }
 
-    clearProjectDraft(false);
-    setProjectFeedback("已为你生成邮件草稿；如果没有自动打开邮件客户端，也可以先复制摘要。");
-    setProjectStatus("草稿已转为邮件内容。", 2200);
-    window.location.href = `mailto:sales@titanenergy.cn?subject=${subject}&body=${bodyText}`;
+    setProjectSubmitState(true);
+    setProjectFeedback("正在提交项目需求...");
+
+    try {
+        await submitProjectRequest(buildProjectDraft(projectForm));
+        clearProjectDraft(true);
+        setProjectFeedback("项目需求已提交成功，我们会尽快联系你。");
+        setProjectStatus("已提交到后台。", 2600);
+    } catch (error) {
+        const shouldFallbackToMail = [404, 405, 502, 503].includes(error?.status) || error?.status === 0 || error?.name === "TypeError";
+
+        if (shouldFallbackToMail) {
+            setProjectFeedback("当前环境暂时无法直连后台，已为你回退到邮件草稿；如果没有自动打开邮件客户端，也可以先复制摘要。");
+            setProjectStatus("后台暂不可用，已回退到邮件草稿。", 2800);
+            openProjectMailDraft(projectForm);
+            return;
+        }
+
+        setProjectFeedback(error?.message || "提交失败，请稍后重试，也可以先复制项目摘要。");
+        setProjectStatus("提交没有成功。", 2600);
+    } finally {
+        setProjectSubmitState(false);
+    }
 });
 
 projectCopyButton?.addEventListener("click", async () => {
@@ -1062,9 +1128,9 @@ projectCopyButton?.addEventListener("click", async () => {
 
     try {
         const copied = await copyText(summary);
-        setProjectFeedback(copied ? "项目摘要已复制，你可以直接发给团队或粘贴进邮件。" : "复制没有成功，可以直接提交生成邮件草稿。");
+        setProjectFeedback(copied ? "项目摘要已复制，你可以直接发给团队或粘贴进邮件。" : "复制没有成功，可以稍后重试，或直接提交项目需求。");
     } catch (error) {
-        setProjectFeedback("复制没有成功，可以直接提交生成邮件草稿。");
+        setProjectFeedback("复制没有成功，可以稍后重试，或直接提交项目需求。");
     }
 });
 

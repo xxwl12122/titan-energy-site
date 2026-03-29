@@ -1,5 +1,6 @@
 .vercel/
 node_modules/
+data/contact-submissions.ndjson
 .openclaw/
 .clawhub/
 memory/
