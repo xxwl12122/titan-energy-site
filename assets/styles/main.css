@@ -412,6 +412,7 @@ body[data-theme="light"] .topbar .desktop-nav a.is-current {
 
 .nav-cta,
 .primary-button,
+.secondary-button,
 .solid-link,
 .search-submit {
   display: inline-flex;
