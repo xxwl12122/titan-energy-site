@@ -625,12 +625,36 @@ function syncAmbientVideoPlayback(video) {
     const shouldPlay = inViewport && !motionLite && !prefersReducedMotion.matches && document.visibilityState === "visible";
 
     if (shouldPlay) {
+        hydrateDeferredVideo(video);
         video.play().catch(() => {
             // Ignore autoplay failures and keep the page usable.
         });
     } else {
         video.pause();
     }
+}
+
+function hydrateDeferredVideo(video) {
+    if (!(video instanceof HTMLVideoElement) || video.dataset.videoHydrated === "true") {
+        return;
+    }
+
+    const deferredSources = video.querySelectorAll("source[data-src]");
+    if (!deferredSources.length) {
+        video.dataset.videoHydrated = "true";
+        return;
+    }
+
+    deferredSources.forEach((source) => {
+        const nextSrc = source.dataset.src || "";
+        if (nextSrc) {
+            source.src = nextSrc;
+        }
+        source.removeAttribute("data-src");
+    });
+
+    video.dataset.videoHydrated = "true";
+    video.load();
 }
 
 function syncScrollRail(rail) {
@@ -1213,6 +1237,11 @@ async function submitProjectRequest(payload) {
     return result;
 }
 
+function isWebhookFallbackError(error) {
+    const message = typeof error?.message === "string" ? error.message : "";
+    return error?.status === 503 || message.includes("CONTACT_WEBHOOK_URL");
+}
+
 async function copyText(text) {
     if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(text);
@@ -1258,8 +1287,16 @@ projectForm?.addEventListener("submit", async (event) => {
         const shouldFallbackToMail = [404, 405, 502, 503].includes(error?.status) || error?.status === 0 || error?.name === "TypeError";
 
         if (shouldFallbackToMail) {
-            setProjectFeedback("当前环境暂时无法直连后台，已为你回退到邮件草稿；如果没有自动打开邮件客户端，也可以先复制摘要。");
-            setProjectStatus("后台暂不可用，已回退到邮件草稿。", 2800);
+            const missingWebhook = isWebhookFallbackError(error);
+            setProjectFeedback(
+                missingWebhook
+                    ? "官网当前还没有开启在线收单，已为你回退到邮件草稿；如果没有自动打开邮件客户端，也可以先复制摘要。"
+                    : "当前环境暂时无法直连后台，已为你回退到邮件草稿；如果没有自动打开邮件客户端，也可以先复制摘要。"
+            );
+            setProjectStatus(
+                missingWebhook ? "官网暂未开启在线收单，已回退到邮件草稿。" : "后台暂不可用，已回退到邮件草稿。",
+                2800
+            );
             openProjectMailDraft(projectForm);
             return;
         }

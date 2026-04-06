@@ -21,8 +21,8 @@
   --container: min(1180px, calc(100vw - 40px));
   --nav-height: 88px;
   --transition: 220ms ease;
-  --font-heading: "Manrope", "Noto Sans SC", sans-serif;
-  --font-body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-heading: "Aptos", "Segoe UI Variable Display", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Segoe UI Variable Text", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
 }
 
 body[data-theme="light"] {

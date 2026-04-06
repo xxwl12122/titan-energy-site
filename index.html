@@ -23,9 +23,6 @@
     <meta name="twitter:image:alt" content="泰坦供能工业级供能方案分享图">
     <title>泰坦供能 | 工业级供能方案</title>
     <link rel="canonical" href="https://titan-energy-site.vercel.app/">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
     <link rel="stylesheet" href="assets/styles/main.css">
     <script type="application/ld+json">
@@ -454,7 +451,7 @@
                     <div class="product-grid" data-scroll-rail data-rail-label="左右滑动比对系列">
                         <article class="product-card reveal">
                             <div class="product-visual">
-                                <img src="assets/images/product-classic.jpg" alt="超能经典系列产品展示图" loading="lazy">
+                                <img src="assets/images/product-classic.jpg" srcset="assets/images/product-classic-960.jpg 960w, assets/images/product-classic.jpg 1200w" sizes="(max-width: 640px) calc(100vw - 88px), (max-width: 1080px) min(74vw, 560px), 33vw" alt="超能经典系列产品展示图" loading="lazy" decoding="async" width="1200" height="896">
                             </div>
                             <div class="product-kicker">Classic Core</div>
                             <h3>超能经典系列</h3>
@@ -485,7 +482,7 @@
                         </article>
                         <article class="product-card featured reveal">
                             <div class="product-visual">
-                                <img src="assets/images/product-pulse.jpg" alt="锂能专业系列产品展示图" loading="lazy">
+                                <img src="assets/images/product-pulse.jpg" srcset="assets/images/product-pulse-960.jpg 960w, assets/images/product-pulse.jpg 1200w" sizes="(max-width: 640px) calc(100vw - 88px), (max-width: 1080px) min(74vw, 560px), 33vw" alt="锂能专业系列产品展示图" loading="lazy" decoding="async" width="1200" height="896">
                             </div>
                             <div class="product-kicker">Titan Pulse</div>
                             <h3>锂能专业系列</h3>
@@ -516,7 +513,7 @@
                         </article>
                         <article class="product-card reveal">
                             <div class="product-visual">
-                                <img src="assets/images/product-prime.jpg" alt="长续航旗舰系列产品展示图" loading="lazy">
+                                <img src="assets/images/product-prime.jpg" srcset="assets/images/product-prime-960.jpg 960w, assets/images/product-prime.jpg 1200w" sizes="(max-width: 640px) calc(100vw - 88px), (max-width: 1080px) min(74vw, 560px), 33vw" alt="长续航旗舰系列产品展示图" loading="lazy" decoding="async" width="1200" height="896">
                             </div>
                             <div class="product-kicker">Prime Reserve</div>
                             <h3>长续航旗舰系列</h3>
@@ -911,8 +908,8 @@
                     <div class="scenario-grid">
                         <article class="scenario-card scenario-card-featured reveal">
                             <div class="scenario-visual">
-                                <video autoplay muted loop playsinline preload="metadata" poster="assets/images/scene-industrial.jpg" aria-label="工业自动化场景供能视频">
-                                    <source src="assets/videos/scenario-industrial-scene.mp4" type="video/mp4">
+                                <video autoplay muted loop playsinline preload="none" poster="assets/images/scene-industrial.jpg" aria-label="工业自动化场景供能视频">
+                                    <source data-src="assets/videos/scenario-industrial-scene.mp4" type="video/mp4">
                                 </video>
                             </div>
                             <span class="scenario-index">01</span>
