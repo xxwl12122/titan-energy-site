@@ -8,7 +8,7 @@
     "start": "node server.js",
     "build:css": "npx -y lightningcss-cli --minify --bundle assets/styles/main.css -o assets/styles/main.min.css",
     "build:js": "npx -y esbuild assets/scripts/main.js --bundle --minify --outfile=assets/scripts/main.min.js",
-    "build": "npm run build:css && npm run build:js"
+    "minify": "npm run build:css && npm run build:js"
   },
   "engines": {
     "node": ">=18"
