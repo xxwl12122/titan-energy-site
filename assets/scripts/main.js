@@ -92,7 +92,7 @@ function applyTheme(theme) {
         themeColorMeta.setAttribute("content", theme === "dark" ? "#0f1724" : "#f3efe7");
     }
     if (themeToggleText) {
-        themeToggleText.textContent = theme === "dark" ? "�? : "�?;
+        themeToggleText.textContent = theme === "dark" ? "昼" : "夜";
     }
 }
 
@@ -516,16 +516,16 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
 let activeSectionId = sections[0]?.id || "hero";
 let pageSignalTicking = false;
 const searchIntentMap = {
-    hero: ["首页", "首屏", "能源", "工业�?, "品牌"],
+    hero: ["首页", "首屏", "能源", "工业级", "品牌"],
     trust: ["信任", "合作", "验证", "方法", "保障", "保密"],
     products: ["产品", "系列", "模组", "电池", "锂电", "classic", "prime", "pulse"],
     parameters: ["参数", "规格", "容量", "温度", "电流", "寿命", "封装", "对比"],
-    technology: ["技�?, "研发", "输出", "架构", "稳定", "寿命", "环境适配"],
-    scenarios: ["场景", "行业", "医疗", "工业自动�?, "物联�?, "户外", "iot"],
+    technology: ["技术", "研发", "输出", "架构", "稳定", "寿命", "环境适配"],
+    scenarios: ["场景", "行业", "医疗", "工业自动化", "物联网", "户外", "iot"],
     process: ["交付", "流程", "打样", "量产", "评估", "验证", "推进"],
     proof: ["案例", "结果", "成效", "项目结果", "案例封面"],
     "case-detail": ["案例拆解", "拆解", "详情", "难点", "判断逻辑"],
-    contact: ["联系", "咨询", "方案", "电话", "邮箱", "表单", "邮件", "销�?]
+    contact: ["联系", "咨询", "方案", "电话", "邮箱", "表单", "邮件", "销售"]
 };
 
 function setCurrentSection(sectionId) {
@@ -826,12 +826,12 @@ function searchSection(query) {
 
     if (!normalized) {
         if (searchFeedback) {
-            searchFeedback.textContent = "试试输入“产品”、“参数”、“技术”、“案例”或“表单”�?;
+            searchFeedback.textContent = "试试输入“产品”、“参数”、“技术”、“案例”或“表单”。";
         }
         return;
     }
 
-    const tokens = normalized.split(/[\s/�?，]+/).filter(Boolean);
+    const tokens = normalized.split(/[\s/、,，]+/).filter(Boolean);
     let bestMatch = null;
     let bestScore = 0;
 
@@ -866,14 +866,14 @@ function searchSection(query) {
         flashSection(bestMatch);
         if (searchFeedback) {
             const title = bestMatch.querySelector("h2")?.textContent || "目标区块";
-            searchFeedback.textContent = `已为你定位到�?{title}”。`;
+            searchFeedback.textContent = `已为你定位到“${title}”。`;
         }
         window.setTimeout(closeSearch, 380);
         return;
     }
 
     if (searchFeedback) {
-        searchFeedback.textContent = "没有直接匹配到结果，试试“产品”、“参数”、“技术”、“案例”、“交付”或“表单”�?;
+        searchFeedback.textContent = "没有直接匹配到结果，试试“产品”、“参数”、“技术”、“案例”、“交付”或“表单”。";
     }
 }
 
@@ -927,7 +927,7 @@ function setProjectSubmitState(submitting) {
     projectFormSubmitting = submitting;
     projectSubmitButton.disabled = submitting;
     projectSubmitButton.setAttribute("aria-busy", submitting ? "true" : "false");
-    projectSubmitButton.textContent = submitting ? "正在提交..." : "提交项目需�?;
+    projectSubmitButton.textContent = submitting ? "正在提交..." : "提交项目需求";
 }
 
 function buildProjectDraft(form) {
@@ -954,7 +954,7 @@ function saveProjectDraft() {
     try {
         if (hasContent) {
             window.localStorage.setItem(projectDraftKey, JSON.stringify(draft));
-            setProjectStatus("草稿已自动保存到当前浏览器�?, 1400);
+            setProjectStatus("草稿已自动保存到当前浏览器。", 1400);
         } else {
             window.localStorage.removeItem(projectDraftKey);
             setProjectStatus("", 0);
@@ -991,8 +991,8 @@ function restoreProjectDraft() {
         if (restored) {
             customSelects.forEach((selectRoot) => syncCustomSelect(selectRoot));
             updateProjectPreview();
-            setProjectFeedback("已恢复你上次未发送的项目草稿�?);
-            setProjectStatus("已恢复上次未发送的草稿�?, 2600);
+            setProjectFeedback("已恢复你上次未发送的项目草稿。");
+            setProjectStatus("已恢复上次未发送的草稿。", 2600);
         }
     } catch (error) {
         window.localStorage.removeItem(projectDraftKey);
@@ -1051,55 +1051,55 @@ function updateProjectPreview() {
     const projectBrief = getFormValue(formData, "projectBrief");
 
     const deviceProfiles = {
-        "工业自动�?: {
-            focusLabel: "先压停线与误报成�?,
-            focusText: "重点会落在峰值唤醒、线束限制和维护窗口，优先把现场稳定性守住�?
+        "工业自动化": {
+            focusLabel: "先压停线与误报成本",
+            focusText: "重点会落在峰值唤醒、线束限制和维护窗口，优先把现场稳定性守住。"
         },
-        "医疗检测设�?: {
+        "医疗检测设备": {
             focusLabel: "先守住关键时刻不断电",
-            focusText: "更看重长期一致性、瞬态响应和关键流程里的可靠供能�?
+            focusText: "更看重长期一致性、瞬态响应和关键流程里的可靠供能。"
         },
-        "物联网终�?: {
-            focusLabel: "先把功耗模型算�?,
-            focusText: "会优先回看待机、唤醒频率和通信瞬态，避免续航预估偏差太大�?
+        "物联网终端": {
+            focusLabel: "先把功耗模型算透",
+            focusText: "会优先回看待机、唤醒频率和通信瞬态，避免续航预估偏差太大。"
         },
         "户外巡检设备": {
             focusLabel: "先校核低温与补能频次",
-            focusText: "环境温差、离线时长和维护节奏会一起影响容量与峰值余量判断�?
+            focusText: "环境温差、离线时长和维护节奏会一起影响容量与峰值余量判断。"
         },
         "其他设备": {
-            focusLabel: "先建立供能边�?,
-            focusText: "我们会先拆使用周期、结构限制和环境约束，再反推方案组合�?
+            focusLabel: "先建立供能边界",
+            focusText: "我们会先拆使用周期、结构限制和环境约束，再反推方案组合。"
         }
     };
 
     const stageProfiles = {
-        "样机评估�?: {
+        "样机评估中": {
             actionLabel: "先建立选型边界",
-            actionText: "适合先锁定容量、峰值余量和结构限制，尽快缩小候选范围�?
+            actionText: "适合先锁定容量、峰值余量和结构限制，尽快缩小候选范围。"
         },
-        "样品验证�?: {
-            actionLabel: "先收拢验证清�?,
-            actionText: "更适合同步回看温区、脉冲负载和异常恢复，把测试重点压实�?
+        "样品验证中": {
+            actionLabel: "先收拢验证清单",
+            actionText: "更适合同步回看温区、脉冲负载和异常恢复，把测试重点压实。"
         },
-        "量产切换�?: {
-            actionLabel: "先冻结量产规�?,
-            actionText: "要优先确认接口、封装、防护与追溯要求，减少导入阶段反复�?
+        "量产切换中": {
+            actionLabel: "先冻结量产规格",
+            actionText: "要优先确认接口、封装、防护与追溯要求，减少导入阶段反复。"
         },
-        "已有方案待优�?: {
-            actionLabel: "先找出现有短�?,
-            actionText: "建议先把续航不足、低温掉电或峰值响应问题定位清楚，再做替换�?
+        "已有方案待优化": {
+            actionLabel: "先找出现有短板",
+            actionText: "建议先把续航不足、低温掉电或峰值响应问题定位清楚，再做替换。"
         }
     };
 
     const deviceProfile = deviceProfiles[deviceType] || {
         focusLabel: "等待识别设备方向",
-        focusText: "先补设备方向后，我们会更快锁定场景重点和第一轮判断逻辑�?
+        focusText: "先补设备方向后，我们会更快锁定场景重点和第一轮判断逻辑。"
     };
 
     const stageProfile = stageProfiles[projectStage] || {
         actionLabel: "等待识别项目阶段",
-        actionText: "补上当前阶段后，我们才能判断是先做选型、验证还是量产切换准备�?
+        actionText: "补上当前阶段后，我们才能判断是先做选型、验证还是量产切换准备。"
     };
 
     let title = "补齐基本项后，这里会自动生成建议重点";
@@ -1116,13 +1116,13 @@ function updateProjectPreview() {
         contextNotes.push(`峰值按 ${peakCurrent} 校核`);
     }
     if (temperatureRange) {
-        contextNotes.push(`温区�?${temperatureRange} 回看`);
+        contextNotes.push(`温区按 ${temperatureRange} 回看`);
     }
     if (serviceCycle) {
-        contextNotes.push(`维护周期�?${serviceCycle} 评估`);
+        contextNotes.push(`维护周期按 ${serviceCycle} 评估`);
     }
 
-    const contextPrefix = contextNotes.length ? `已记�?{contextNotes.join("�?)}。` : "";
+    const contextPrefix = contextNotes.length ? `已记录${contextNotes.join("，")}。` : "";
     let focusText = `${contextPrefix}${deviceProfile.focusText}`;
     if (projectBrief) {
         focusText = `${focusText} 项目补充说明也已填写，可直接带进首轮判断。`;
@@ -1143,8 +1143,8 @@ function updateProjectPreview() {
     let actionText = stageProfile.actionText;
 
     if (filledFields >= 6) {
-        actionLabel = "信息已接近完�?;
-        actionText = "这份输入已经足够整理成首轮建议，适合直接提交项目需求发起沟通�?;
+        actionLabel = "信息已接近完整";
+        actionText = "这份输入已经足够整理成首轮建议，适合直接提交项目需求发起沟通。";
     } else if (deviceType && projectStage && contact) {
         actionText = `${stageProfile.actionText} 联系方式已补齐，可以直接进入方案沟通。`;
     }
@@ -1153,7 +1153,7 @@ function updateProjectPreview() {
         shortLabel(deviceType, "设备方向"),
         shortLabel(projectStage, "项目阶段"),
         peakCurrent
-            ? shortLabel(peakCurrent, "环境约束", "峰�?)
+            ? shortLabel(peakCurrent, "环境约束", "峰值")
             : temperatureRange
                 ? shortLabel(temperatureRange, "环境约束", "温区")
                 : serviceCycle
@@ -1194,10 +1194,10 @@ function buildProjectSummary(form) {
     const fields = [
         ["设备类型", formData.get("deviceType")],
         ["项目阶段", formData.get("projectStage")],
-        ["峰值电�?, formData.get("peakCurrent")],
+        ["峰值电流", formData.get("peakCurrent")],
         ["工作温区", formData.get("temperatureRange")],
         ["目标续航 / 维护周期", formData.get("serviceCycle")],
-        ["联系邮箱或电�?, formData.get("contact")],
+        ["联系邮箱或电话", formData.get("contact")],
         ["项目补充说明", formData.get("projectBrief")]
     ];
 
@@ -1236,7 +1236,7 @@ async function submitProjectRequest(payload) {
     }
 
     if (!response.ok) {
-        const requestError = new Error(result.message || "提交失败，请稍后重试�?);
+        const requestError = new Error(result.message || "提交失败，请稍后重试。");
         requestError.status = response.status;
         throw requestError;
     }
@@ -1273,7 +1273,7 @@ projectForm?.addEventListener("submit", async (event) => {
     const validation = validateProjectForm();
 
     if (!validation.valid) {
-        setProjectFeedback("请先补全设备类型、项目阶段和联系方式�?);
+        setProjectFeedback("请先补全设备类型、项目阶段和联系方式。");
         focusProjectField(validation.firstInvalidField);
         return;
     }
@@ -1283,13 +1283,13 @@ projectForm?.addEventListener("submit", async (event) => {
     }
 
     setProjectSubmitState(true);
-    setProjectFeedback("正在提交项目需�?..");
+    setProjectFeedback("正在提交项目需求...");
 
     try {
         await submitProjectRequest(buildProjectDraft(projectForm));
         clearProjectDraft(true);
-        setProjectFeedback("项目需求已提交成功，我们会尽快联系你�?);
-        setProjectStatus("已提交到后台�?, 2600);
+        setProjectFeedback("项目需求已提交成功，我们会尽快联系你。");
+        setProjectStatus("已提交到后台。", 2600);
     } catch (error) {
         const shouldFallbackToMail = [404, 405, 502, 503].includes(error?.status) || error?.status === 0 || error?.name === "TypeError";
 
@@ -1297,19 +1297,19 @@ projectForm?.addEventListener("submit", async (event) => {
             const missingWebhook = isWebhookFallbackError(error);
             setProjectFeedback(
                 missingWebhook
-                    ? "官网当前还没有开启在线收单，已为你回退到邮件草稿；如果没有自动打开邮件客户端，也可以先复制摘要�?
-                    : "当前环境暂时无法直连后台，已为你回退到邮件草稿；如果没有自动打开邮件客户端，也可以先复制摘要�?
+                    ? "官网当前还没有开启在线收单，已为你回退到邮件草稿；如果没有自动打开邮件客户端，也可以先复制摘要。"
+                    : "当前环境暂时无法直连后台，已为你回退到邮件草稿；如果没有自动打开邮件客户端，也可以先复制摘要。"
             );
             setProjectStatus(
-                missingWebhook ? "官网暂未开启在线收单，已回退到邮件草稿�? : "后台暂不可用，已回退到邮件草稿�?,
+                missingWebhook ? "官网暂未开启在线收单，已回退到邮件草稿。" : "后台暂不可用，已回退到邮件草稿。",
                 2800
             );
             openProjectMailDraft(projectForm);
             return;
         }
 
-        setProjectFeedback(error?.message || "提交失败，请稍后重试，也可以先复制项目摘要�?);
-        setProjectStatus("提交没有成功�?, 2600);
+        setProjectFeedback(error?.message || "提交失败，请稍后重试，也可以先复制项目摘要。");
+        setProjectStatus("提交没有成功。", 2600);
     } finally {
         setProjectSubmitState(false);
     }
@@ -1324,16 +1324,16 @@ projectCopyButton?.addEventListener("click", async () => {
 
     try {
         const copied = await copyText(summary);
-        setProjectFeedback(copied ? "项目摘要已复制，你可以直接发给团队或粘贴进邮件�? : "复制没有成功，可以稍后重试，或直接提交项目需求�?);
+        setProjectFeedback(copied ? "项目摘要已复制，你可以直接发给团队或粘贴进邮件。" : "复制没有成功，可以稍后重试，或直接提交项目需求。");
     } catch (error) {
-        setProjectFeedback("复制没有成功，可以稍后重试，或直接提交项目需求�?);
+        setProjectFeedback("复制没有成功，可以稍后重试，或直接提交项目需求。");
     }
 });
 
 projectDraftClearButton?.addEventListener("click", () => {
     clearProjectDraft(true);
-    setProjectFeedback("当前浏览器里的项目草稿已清空�?);
-    setProjectStatus("草稿已清空�?, 2200);
+    setProjectFeedback("当前浏览器里的项目草稿已清空。");
+    setProjectStatus("草稿已清空。", 2200);
 });
 
 projectForm?.addEventListener("input", (event) => {
